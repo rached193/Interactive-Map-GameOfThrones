@@ -108,7 +108,7 @@ app.controller("ControladorLogin", ['$scope','$http', '$location','$cookies', fu
     .success(function(data, status, headers, config) {
       $cookies.user = data.nickname;
       $location.path("/index");
-    });
+    })
     .error(function (){
       alert("Usuario o contraseña Incorrectas");
     })

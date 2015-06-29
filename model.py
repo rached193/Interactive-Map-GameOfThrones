@@ -22,6 +22,6 @@ def CheckUser(name, passw):
         return None
     else:
         if usuario.passw==passw:
-            return usuario.nickname
+            return usuario.name
         else:
             return None
