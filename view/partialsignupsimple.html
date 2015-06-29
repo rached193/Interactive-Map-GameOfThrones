@@ -1,0 +1,49 @@
+<div id="wrapper">
+  <div class="container">
+
+
+      <!-- Formulario de registro-->
+      <div class="panel panel-default col-xs-6 col-md-offset-3">
+        <h2>Registro</h2>
+        <form role="form" name="form" novalidate>
+          <div class="form-horizontal">
+            <!-- nombre -->
+            <div class="input-group" style="margin-top: 10px">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-user" ></span></span>
+              <input type="text" class="form-control" placeholder="Nombre" name="uName" ng-model="user.name" required />
+            </div>
+            <div ng-show="form.uName.$invalid">
+              <span ng-show="form.uName.$error.required">	Es necesario un nombre.</span>
+            </div>
+            <!-- email -->
+            <div class="input-group" style="margin-top:10px">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+              <input type="email" class="form-control" placeholder="Email" name="uEmail" ng-model="user.email" required />
+            </div>
+            <div ng-show="form.uEmail.$invalid && form.uEmail.$invalid">
+              <span ng-show="form.uEmail.$error.required">	Es necesario un email.</span>
+              <span ng-show="form.uEmail.$error.email">	Este no es un email valido.</span>
+            </div>
+            <!-- pass -->
+            <div class="input-group" style="margin-top: 10px">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+              <input type="password" class="form-control" placeholder="Contraseña" name="uPass" ng-model="user.pass" required />
+            </div>
+            <div ng-show="form.uPass.$invalid">
+              <span ng-show="form.uPass.$error.required">	Es necesario una contraseña.</span>
+            </div>
+            <!-- repass -->
+            <div class="input-group" style="margin-top: 10px">
+              <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+              <input type="password" class="form-control" placeholder="Repita su contraseña" name="uRepass" ng-model="user.repass" required />
+            </div>
+            <div ng-show="form.uRepass.$invalid">
+              <span ng-show="form.uRepass.$error.required">	Vuelva a escribir su contraseña.</span>
+            </div>
+            <button type="submit" class="btn btn-lg btn-primary btn-block" style="margin-top: 10px"  ng-disabled="form.$invalid" ng-click="update(user)">Registrar</button>
+            <br/>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

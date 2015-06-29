@@ -1,0 +1,60 @@
+application: desembarcodeltemplario
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: false
+
+handlers:
+
+- url: /rest/.*
+  script: main.APP
+
+- url: (.*)/
+  static_files: index.html
+  upload: index.html
+
+- url: /node_modules
+  static_dir: node_modules
+
+- url: (/.*\.js)
+  static_files: js\1
+  upload: js
+
+- url: (/.*\.css)
+  static_files: css\1
+  upload: css
+
+- url: (/.*\.woff)
+  static_files: css\1
+  upload: css
+
+- url: (/.*\.ttf)
+  static_files: css\1
+  upload: css
+
+- url: (/.*\.map)
+  static_files: css\1
+  upload: css
+
+- url: /view
+  static_dir: view
+
+- url: (/.*\.ico)
+  static_files: img\1
+  upload: img
+
+- url: (/.*\.gif)
+  static_files: img\1
+  upload: img
+
+- url: (/.*\.jpg)
+  static_files: img\1
+  upload: img
+
+- url: (/.*\.png)
+  static_files: img\1
+  upload: img
+
+- url: (/.*\.svg)
+  static_files: img\1
+  upload: img
