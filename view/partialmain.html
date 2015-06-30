@@ -3,25 +3,30 @@
     <div class="title">
       <h2>Westeros</h2>
       <span class="byline">Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue</span>
-    </div>
-    <div svg-map></div>
-    <button ng-click="createDummyData()" class="btn btn-block btn-default">Create Dummy Data</button>
-  </p>
-  <div class="regionlist">
-    <div ng-repeat="(key,region) in dummyData">
-      <div>{{key}}</div>
-      <div>{{region.value | number}}</div>
-    </div>
-    <!--
-    <div class="boxA">
-    <span class="fa fa-cloud-download"></span>
-    <p>Praesent pellentesque facilisis elit. Class aptent taciti sociosqu ad  torquent per conubia nostra.</p>
-    <a href="#" class="button button-alt">More Info</a>
-  </div>
-  <div class="boxB">
-  <span class="fa fa-cogs"></span>
-  <p>Etiam neque. Vivamus consequat lorem at nisl. Nullam  wisi a sem semper eleifend. Donec mattis.</p>
+
+      <div class="container">
+                <div svg-map></div>
+              </div>
+                <button ng-click="createDummyData()" class="btn btn-block btn-default">Create Dummy Data</button>
+              </p>
+              <div class="regionlist">
+                <div ng-repeat="(key,region) in dummyData"
+                ng-class="{active:hoverRegion==key}"
+                ng-mouseover="changeHoverRegion(key)"> <!-- Amend this -->
+                <div>{{key}}</div>
+                <div>{{region.value | number}}</div>
+              </div>
+            </div>
+  <!--
+  <div class="boxA">
+  <span class="fa fa-cloud-download"></span>
+  <p>Praesent pellentesque facilisis elit. Class aptent taciti sociosqu ad  torquent per conubia nostra.</p>
   <a href="#" class="button button-alt">More Info</a>
+</div>
+<div class="boxB">
+<span class="fa fa-cogs"></span>
+<p>Etiam neque. Vivamus consequat lorem at nisl. Nullam  wisi a sem semper eleifend. Donec mattis.</p>
+<a href="#" class="button button-alt">More Info</a>
 </div>
 <div class="boxC">
 <span class="fa fa-wrench"></span>
@@ -29,5 +34,6 @@
 <a href="#" class="button button-alt">More Info</a>
 </div>
 -->
+</div>
 </div>
 </div>

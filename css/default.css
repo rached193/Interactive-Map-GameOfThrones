@@ -531,3 +531,13 @@
     display: inline-block;
     width: 48%;
 }
+
+.regionlist > div.active {
+		font-weight: bold;
+		background-color: lightblue;
+}
+
+svg path:hover , path.active { /* Amend this */
+		cursor: pointer;
+		opacity: 1;
+}
