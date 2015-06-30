@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd"
- [
+[
 	<!-- jDip-specific XML additions -->
 	<!-- PROVINCE_DATA -->
 	<!ENTITY % svgExt "| jdipNS:PROVINCE_DATA" >
@@ -165,8 +165,7 @@
 	  hilightOffset CDATA #REQUIRED
 	  hilightCSSClass CDATA #REQUIRED
 	  >
-  ]
->
+]>
 
 <svg xmlns="http://www.w3.org/2000/svg"
      width="916px" height="2202px"
@@ -500,56 +499,56 @@
   <g id="HighestOrderLayer"/>
 
   <g id="BriefLabelLayer" visibliity="hidden">
-    <text id="ah" class="labeltext" x="277" y="1398">AH</text>
-    <text id="arb" class="labeltext" x="78" y="2080">ARB</text>
-    <text id="bg" class="labeltext" x="574" y="1184">BG</text>
-    <text id="bi" class="labeltext" x="194" y="478">BI</text>
-    <text id="bit" class="labeltext" x="670" y="966">BIT</text>
-    <text id="bla" class="labeltext" x="376" y="1844">BLA</text>
-    <text id="blu" class="labeltext" x="373" y="1226">BLU</text>
-    <text id="boc" class="labeltext" x="705" y="1340">BOC</text>
-    <text id="boi" class="labeltext" x="31" y="566">BOI</text>
-    <text id="bos" class="labeltext" x="763" y="750">BOS</text>
-    <text id="bwb" class="labeltext" x="668" y="1447">BWB</text>
-    <text id="bwk" class="labeltext" x="121" y="1849">BWK</text>
-    <text id="bzb" class="labeltext" x="34" y="1113">BZB</text>
-    <text id="cas" class="labeltext" x="113" y="1565">CAS</text>
-    <text id="ccp" class="labeltext" x="517" y="1395">CCP</text>
-    <text id="cid" class="labeltext" x="291" y="1770">CID</text>
-    <text id="cks" class="labeltext" x="29" y="1404">CKS</text>
-    <text id="cra" class="labeltext" x="151" y="1370">CRA</text>
-    <text id="crk" class="labeltext" x="207" y="1751">CRK</text>
-    <text id="cw" class="labeltext" x="611" y="1798">CW</text>
-    <text id="dm" class="labeltext" x="205" y="704">DM</text>
-    <text id="dra" class="labeltext" x="718" y="1415">DRA</text>
-    <text id="drm" class="labeltext" x="329" y="1902">DRM</text>
-    <text id="dus" class="labeltext" x="592" y="1483">DUS</text>
-    <text id="ess" class="labeltext" x="643" y="2164">ESS</text>
-    <text id="eyr" class="labeltext" x="564" y="1116">EYR</text>
-    <text id="ff" class="labeltext" x="126" y="1032">FF</text>
-    <text id="fgs" class="labeltext" x="800" y="1071">FGS</text>
-    <text id="fin" class="labeltext" x="626" y="1103">FIN</text>
-    <text id="fmi" class="labeltext" x="317" y="1292">FMI</text>
-    <text id="frozen_short" class="labeltext" x="83" y="382">FROZEN SHORE</text>
-    <text id="gde" class="labeltext" x="395" y="1338">GDE</text>
-    <text id="gol" class="labeltext" x="204" y="1331">GOL</text>
-    <text id="gul" class="labeltext" x="649" y="1332">GUL</text>
-    <text id="gwk" class="labeltext" x="37" y="1267">GWK</text>
-    <text id="gww" class="labeltext" x="282" y="1072">GWW</text>
+    <text id="ah" class="labeltext" x="277" y="1398">Marcaceniza</text>
+    <text id="arb" class="labeltext" x="78" y="2080">El Rejo</text>
+    <text id="bg" class="labeltext" x="574" y="1184">Puerta de la sangre</text>
+    <text id="bi" class="labeltext" x="194" y="478">Isa del Oso</text>
+    <text id="bit" class="labeltext" x="670" y="966">El Mordisco</text>
+    <text id="bla" class="labeltext" x="376" y="1844">Refugionegro</text>
+    <text id="blu" class="labeltext" x="373" y="1226">Arbolcuervo</text>
+    <text id="boc" class="labeltext" x="705" y="1340">Bahia de los Cangrejos</text>
+    <text id="boi" class="labeltext" x="31" y="566">Bahia del Hielo</text>
+    <text id="bos" class="labeltext" x="763" y="750">Bahia de las focas</text>
+    <text id="bwb" class="labeltext" x="668" y="1447">Bahia de Aguasnegras</text>
+    <text id="bwk" class="labeltext" x="121" y="1849">Aguasclaras</text>
+    <text id="bzb" class="labeltext" x="34" y="1113">Bahia Aguasresplandecientes</text>
+    <text id="cas" class="labeltext" x="113" y="1565">Roca Casterly</text>
+    <text id="ccp" class="labeltext" x="517" y="1395">Vallepardo</text>
+    <text id="cid" class="labeltext" x="291" y="1770">La Sidra</text>
+    <text id="cks" class="labeltext" x="29" y="1404">Mar del Ocaso norte</text>
+    <text id="cra" class="labeltext" x="151" y="1370">El Risco</text>
+    <text id="crk" class="labeltext" x="207" y="1751">Altojardin</text>
+    <text id="cw" class="labeltext" x="611" y="1798">La Selva</text>
+    <text id="dm" class="labeltext" x="205" y="704">Bosquespeso</text>
+    <text id="dra" class="labeltext" x="718" y="1415">Rocadragon</text>
+    <text id="drm" class="labeltext" x="329" y="1902">Marcas de Dorne</text>
+    <text id="dus" class="labeltext" x="592" y="1483">Valleoscuro</text>
+    <text id="ess" class="labeltext" x="643" y="2164">Mar del Verano este</text>
+    <text id="eyr" class="labeltext" x="564" y="1116">Nido de aguilas</text>
+    <text id="ff" class="labeltext" x="126" y="1032">Dedo de Pedernal</text>
+    <text id="fgs" class="labeltext" x="800" y="1071">Mar de los Dedos</text>
+    <text id="fin" class="labeltext" x="626" y="1103">Comezon de Aguasfrias</text>
+    <text id="fmi" class="labeltext" x="317" y="1292">Aguasdulces</text>
+    <text id="frozen_short" class="labeltext" x="83" y="382">Costa helada</text>
+    <text id="gde" class="labeltext" x="395" y="1338">Torreon Bellota</text>
+    <text id="gol" class="labeltext" x="204" y="1331">Fuerte Desolacion</text>
+    <text id="gul" class="labeltext" x="649" y="1332">Puerto Gaviota</text>
+    <text id="gwk" class="labeltext" x="37" y="1267">Gran Wyk</text>
+    <text id="gww" class="labeltext" x="282" y="1072">Atalaya de Aguasgrises</text>
     <text id="gww-ec" class="coasttext" x="398" y="1017">EC</text>
     <text id="gww-wc" class="coasttext" x="283" y="1130">WC</text>
-    <text id="har" class="labeltext" x="466" y="1278">HAR</text>
-    <text id="hh" class="labeltext" x="261" y="1916">HH</text>
-    <text id="hig" class="labeltext" x="158" y="1941">HIG</text>
-    <text id="hrl" class="labeltext" x="199" y="1246">HRL</text>
-    <text id="ib" class="labeltext" x="187" y="1192">IB</text>
-    <text id="kar" class="labeltext" x="604" y="590">KAR</text>
-    <text id="kl" class="labeltext" x="468" y="1644">KL</text>
-    <text id="lan" class="labeltext" x="104" y="1680">LAN</text>
-    <text id="mc" class="labeltext" x="291" y="1001">MC</text>
+    <text id="har" class="labeltext" x="466" y="1278">Harrenhal</text>
+    <text id="hh" class="labeltext" x="261" y="1916">Colina Cuerno</text>
+    <text id="hig" class="labeltext" x="158" y="1941">Tierras Altas</text>
+    <text id="hrl" class="labeltext" x="199" y="1246">Harlaw</text>
+    <text id="ib" class="labeltext" x="187" y="1192">Bahoa de los hombres del hierro</text>
+    <text id="kar" class="labeltext" x="604" y="590">Bastion Kar</text>
+    <text id="kl" class="labeltext" x="468" y="1644">Desembarco del Rey</text>
+    <text id="lan" class="labeltext" x="104" y="1680">Roble Viejo</text>
+    <text id="mc" class="labeltext" x="291" y="1001">Foso Cailin</text>
     <text id="mc-ec" class="coasttext" x="447" y="920">EC</text>
     <text id="mc-wc" class="coasttext" x="286" y="931">WC</text>
-    <text id="mns" class="labeltext" x="784" y="1557">MNS</text>
+    <text id="mns" class="labeltext" x="784" y="1557">Mar Angosto central</text>
     <text id="mom" class="labeltext" x="509" y="1138">MOM</text>
     <text id="nns" class="labeltext" x="816" y="1377">NNS</text>
     <text id="north_of_wall" class="labeltext" x="143" y="209">NORTH OF THE WALL</text>

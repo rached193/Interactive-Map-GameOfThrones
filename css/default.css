@@ -513,3 +513,21 @@
 		text-align: center;
 		color: rgba(0,0,0,.5);
 	}
+	/*********************************************************************************/
+	/* Mapa                                                                    */
+	/*********************************************************************************/
+
+.regionlist {
+    -webkit-column-count: 5; /* Chrome, Safari, Opera */
+    -moz-column-count: 5; /* Firefox */
+    column-count: 5;
+}
+.regionlist > div {
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid grey;
+}
+.regionlist > div > div {
+    display: inline-block;
+    width: 48%;
+}
