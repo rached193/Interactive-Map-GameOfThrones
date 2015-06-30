@@ -50,7 +50,7 @@ app.controller("ControladorPortada",['$scope','$cookies',function($scope,$cookie
 
 
 app.controller("ControladorMapa",['$scope',function($scope){
-  var provinces = ["ah","arb","bg","bi","bit","bla","blu","boc","boi","bos","bwk","bzb","cas","cpp","cid","cks",
+  var provinces = ["ah","arb","bg","bi","bit","bla","blu","boc","boi","bos","bwk","bzb","cas","ccp","cid","cks","cra","crk",
   "cw","dm","dra","drm","dus","ess","eyr","ff","fgs","fin","fmi","frozen_short","gde","gol","gul","gwk","gww",
   "gww-ec","gww-wc","har","hh","hig","hrl","ib","kar","kl","lan","mc","mc-ec","mc-wc","mns","mom","nns","north_of_wall",
   "old","ork","pyk","rea","rfk","rr","rws","san","sbb","sea","sha","shivering_sea","si","sil","ska","sns","sod","sp","ss",
@@ -65,7 +65,6 @@ $scope.createDummyData = function () {
     $scope.dummyData = dataTemp;
 };
 $scope.createDummyData();
-}]);
 }]);
 
 app.controller("ControladorSignUp", ['$scope','$http', '$location', function($scope, $http, $location){
