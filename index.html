@@ -14,8 +14,8 @@ Released   : 20140228
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Desembarco del Templario</title>
-<meta name="keywords" content="" />
-<meta name="description" content="" />
+<meta name="keywords" content="Rol, GoT, Desembarco del templario" />
+<meta name="description" content="Rol por navegador de juego de tronos" />
 
 <!-- Estilos de la web-->
 <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
@@ -48,8 +48,10 @@ Released   : 20140228
     <div id="menu">
       <ul>
         <li class="active"><a href="#/index" accesskey="1" title="">Homepage</a></li>
-        <li><a href="#/signup" accesskey="2" title="">Registro</a></li>
-        <li><a href="#/login" accesskey="3" title="">Login</a></li>
+        <li ng-hide="isLogged()"><a href="#/signup" accesskey="2" title="">Registro</a></li>
+        <li ng-hide="isLogged()" ><a href="#/login" accesskey="3" title="">Login</a></li>
+        <li ng-show="isLogged()" ><a href="#/casas" accesskey="2" title="">Casas</a></li>
+        <li ng-show="isLogged()" ><a href="#/" ng-click="logOut()" accesskey="3" title="">Log Out</a></li>
       </ul>
     </div>
   </div>
@@ -61,6 +63,9 @@ Released   : 20140228
     <ul ng-show="isLogged()" class="actions">
       <li><a href="#" class="button">{{Usuario}}</a></li>
     </ul>
+    <div class="title">
+      <h2 ng-show="isLogged()">{{Casa}}</h2>
+  </div>
   </div>
 <div ng-view>
 </div>

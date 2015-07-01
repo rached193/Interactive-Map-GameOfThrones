@@ -35,7 +35,7 @@ class LoginHandler(RestHandler):
       if checkres is None:
           self.response.set_status(500)
       else:
-          self.SendJson({'nickname': checkres})
+          self.SendJson({'nickname': checkres.name,'casa':checkres.casa})
 
 
 class SeleccionarHandler(RestHandler):

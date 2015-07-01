@@ -2,10 +2,12 @@ from google.appengine.ext import ndb
 import string
 
 class User(ndb.Model):
-  name = ndb.StringProperty()
-  email = ndb.StringProperty()
-  passw = ndb.StringProperty()
-  casa = ndb.StringProperty()
+    name = ndb.StringProperty()
+    email = ndb.StringProperty()
+    passw = ndb.StringProperty()
+    casa = ndb.StringProperty()
+
+
 
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)
@@ -23,7 +25,7 @@ def CheckUser(name, passw):
         return None
     else:
         if usuario.passw==passw:
-            return usuario.name
+            return usuario
         else:
             return None
 
@@ -33,9 +35,14 @@ def RegistrarCasa(name,casa):
     if usuario is None:
         return None
     else:
-        if usuario.casa is None:
-            usuario.casa=casa
-            usuario.put()
-            return usuario
+        qryC = User.query(User.casa == casa)
+        existe = qryC.get()
+        if existe is None:
+            if usuario.casa is None:
+                usuario.casa=casa
+                usuario.put()
+                return usuario
+            else:
+                return None
         else:
             return None

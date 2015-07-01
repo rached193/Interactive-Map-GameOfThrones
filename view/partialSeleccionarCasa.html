@@ -1,5 +1,9 @@
 <div id="wrapper">
   <div class="container">
+    <div align=center >
+      <h1 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >{{slide.nombre}}</h1>
+    </div>
+  </br>
     <div align=center class="container slider">
       <img class="images" data-ng-repeat="slide in slides"
       data-ng-src="{{slide.escudo}}" data-ng-hide="!isCurrentSlideIndex($index)">
