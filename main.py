@@ -38,7 +38,19 @@ class LoginHandler(RestHandler):
           self.SendJson({'nickname': checkres})
 
 
+class SeleccionarHandler(RestHandler):
+
+    def post(self):
+      r = json.loads(self.request.body)
+      checkres = model.RegistrarCasa(r['user'],r['casa'])
+      if checkres is None:
+          self.response.set_status(500)
+      else:
+          self.response.set_status(200)
+
+
 APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/signup', SignUpHandler),
     ('/rest/login', LoginHandler),
+    ('/rest/seleccionar', SeleccionarHandler),
 ], debug=True)

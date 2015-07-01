@@ -1,1 +1,30 @@
-  
+<div id="wrapper">
+  <div class="container">
+    <div align=center class="container slider">
+      <img class="images" data-ng-repeat="slide in slides"
+      data-ng-src="{{slide.escudo}}" data-ng-hide="!isCurrentSlideIndex($index)">
+    </div>
+  </br>
+  <div align=center >
+    <h3 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >{{slide.plot}}</h3>
+  </div>
+</br>
+  <div align=center >
+    <button ng-click="registrar()" type="submit" class="btn btn-lg btn-primary" style="margin-bottom: 10px">Registrar Casa</button>
+  </div>
+</br>
+<div align=center >
+<a href="" data-ng-click="nextSlide()">Anterior</a>
+<a href="" data-ng-click="prevSlide()">Siguiente</a>
+</div>
+</br>
+<div align=center id="opc">
+  <ul>
+    <li data-ng-repeat="slide in slides">
+      <a href="" data-ng-click="setCurrentSlideIndex($index)">{{slide.nombre}}</a>
+    </li>
+  </ul>
+
+</div>
+</div>
+</div>

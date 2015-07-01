@@ -5,6 +5,7 @@ class User(ndb.Model):
   name = ndb.StringProperty()
   email = ndb.StringProperty()
   passw = ndb.StringProperty()
+  casa = ndb.StringProperty()
 
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)
@@ -23,5 +24,18 @@ def CheckUser(name, passw):
     else:
         if usuario.passw==passw:
             return usuario.name
+        else:
+            return None
+
+def RegistrarCasa(name,casa):
+    qry = User.query(User.name == name)
+    usuario = qry.get()
+    if usuario is None:
+        return None
+    else:
+        if usuario.casa is None:
+            usuario.casa=casa
+            usuario.put()
+            return usuario
         else:
             return None

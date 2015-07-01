@@ -25,7 +25,7 @@ angular.module('app-web').directive('region', ['$compile', function ($compile) {
         alert(scope.dummyData[scope.elementId].name);
       };
       element.attr("ng-click", "regionClick()");
-      element.attr("ng-attr-fill", "{{dummyData[elementId].value | map_colour}}"); //<--- THIS BIT!
+      element.attr("ng-attr-fill", "{{dummyData[elementId].color}}"); //<--- THIS BIT!
       element.removeAttr("region"); //Region
       $compile(element)(scope);
     }
