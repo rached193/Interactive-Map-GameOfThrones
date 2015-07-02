@@ -48,9 +48,10 @@ Released   : 20140228
     <div id="menu">
       <ul>
         <li class="active"><a href="#/index" accesskey="1" title="">Homepage</a></li>
+        <li ng-show="isLogged()" ><a href="#/chat" accesskey="2" title="">Chat</a></li>
         <li ng-hide="isLogged()"><a href="#/signup" accesskey="2" title="">Registro</a></li>
         <li ng-hide="isLogged()" ><a href="#/login" accesskey="3" title="">Login</a></li>
-        <li ng-show="isLogged()" ><a href="#/casas" accesskey="2" title="">Casas</a></li>
+        <li ng-show="isLogged()" ><a href="#/casas" accesskey="4" title="">Casas</a></li>
         <li ng-show="isLogged()" ><a href="#/" ng-click="logOut()" accesskey="3" title="">Log Out</a></li>
       </ul>
     </div>

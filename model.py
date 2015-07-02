@@ -7,6 +7,14 @@ class User(ndb.Model):
     passw = ndb.StringProperty()
     casa = ndb.StringProperty()
 
+class Mensaje(ndb.Model):
+    msg = ndb.StringProperty()
+    user = ndb.StringProperty()
+    time = ndb.StringProperty()
+
+class Chat(ndb.Model):
+    sala = ndb.StringProperty()
+    msgs = ndb.StructuredProperty(Mensaje, repeated=True)
 
 
 def InsertUser(name, email, passw):
@@ -46,3 +54,24 @@ def RegistrarCasa(name,casa):
                 return None
         else:
             return None
+
+def QuerySala(sala):
+    qry = Chat.query(Chat.sala == sala)
+    salachat = qry.get()
+    if salachat is None:
+        salaN = Chat(sala=sala)
+        salaN.put();
+        return salaN.msgs
+    else:
+        return salachat.msgs
+
+def NuevoMensaje(sala,user,msg):
+    qry = Chat.query(Chat.sala == sala)
+    salachat = qry.get()
+    if salachat is None:
+        return None
+    else:
+        nuevomsg = Mensaje(msg=msg,user=user)
+        salachat.msgs.append(nuevomsg)
+        salachat.put()
+        return salachat

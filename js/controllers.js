@@ -15,12 +15,9 @@ function($routeProvider){
     templateUrl: partial + "partialmain.html",
     controller: "ControladorMapa"
   })
-  .when("/ficha/:serieID", {
-    templateUrl: partial + "partialficha.html",
-    controller: "ControladorResults"
-  })
-  .when("/opciones", {
-    templateUrl: partial + "partialopciones.html"
+  .when("/chat", {
+    templateUrl: partial + "partialChat.html",
+    controller: "ControladorChat"
   })
   .when("/login", {
     templateUrl: partial + "partiallogin.html",
@@ -188,7 +185,7 @@ app.controller("ControladorSelecionarCasa",['$scope','$cookies','$http','$locati
   {nombre:"Casa Lefford",  provincia:"Colmillo Dorado", escudo:"lefford.png",plot:""},
   {nombre:"Casa Smallwood",  provincia:"Torreón  Bellota", escudo:"smallwood.png",plot:" El asentamiento de la Casa Smallwood es un castillo de roble rodeado de murallas de piedra en territorio de las Tierras de los Ríos. Su lema es: 'Desde estos Comienzos'. Son muy fieles a la Casa Targaryen."},
   {nombre:"Casa Rykker",  provincia:"Valle Oscuro", escudo:"rykker.png",plot:" El dominio de la Casa Rykker es un valle donde destaca una ciudad portuaria en la costa oriental de la Bahía del Aguasnegras, cerca de Rocadragón. Al estar en las Tierras de las Coronas, es vasalla directa de la casa regente de los Siete Reinos, los Targaryen. Gobiernan todo el Valle desde su asentamiento en Fuerte Pardo."},
-  {nombre:"Casa Fossoway de la Manzana Verde",  provincia:"Nuevo Barril", escudo:"fossoway de la manzana verde.png",plot:" Casa noble del territorio del Dominio y vasalla de la Casa Tyrell. Descienden de la familia Fossoway de la manzana roja, escindidos a raíz de un combate entre primos."},
+  {nombre:"Casa Fossoway de la Manzana Verde",  provincia:"Nuevo Barril", escudo:"fossoway.png",plot:" Casa noble del territorio del Dominio y vasalla de la Casa Tyrell. Descienden de la familia Fossoway de la manzana roja, escindidos a raíz de un combate entre primos."},
   {nombre:"Casa Barr Emmon",  provincia:"Punta Aguda", escudo:"barremmon.png",plot:" Es una casa noble de las Tierras de la Corona y vasalla de los Targaryen y fieles a ésta. Su asentamiento, Punta Aguda, está situada al final de Garfio de Massey, se trata de una gran torre similar a un faro con un gran fuego en la cima."},
   {nombre:"Casa Tarth",  provincia:"Tarth", escudo:"thart.png",plot:" Es una casa vasalla de los Baratheon, situada en las Tierras de la Tormenta. Gobiernan en la Isla de Tarth, situada al norte de la Bahía de los Naufragios, en el Castillo del Atardecer. Aseguran estar emparentados con numerosas casas más poderosas, como los Baratheons y los Targaryen."},
   {nombre:"Casa Caswell",  provincia:"Puenteamargo", escudo:"caswell.png",plot:" Su asentamiento, Puenteamargo, se encuentra en las tierras del Dominio, bajo la regencia de los Tyrell. Toma su nombre de un antiguo puente que cruza el cercano río Mander."},
@@ -236,7 +233,25 @@ $scope.registrar = function () {
 };
 }]);
 
+app.controller("ControladorChat",['$scope','$cookies','$http','$route',function($scope,$cookies,$http,  $route){
 
+  $http.post('/rest/queryChat',{sala: "Desembarco"})
+  .success(function(data, status, headers, config) {
+    $scope.msgs=data;
+  });
+
+  $scope.escribir = function (texto) {
+    $http.post('/rest/newMessage',{sala: "Desembarco",  user: $cookies.user, msg:texto})
+    .success(function(data, status, headers, config) {
+      $scope.texto = "";
+      $route.reload();
+    })
+    .error(function (){
+      alert("Fallo en conexion");
+    })
+  };
+
+}]);
 app.animation('.slide-animation', function() {
   return {
     addClass: function (element, className, done) {

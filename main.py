@@ -4,10 +4,12 @@ import time
 
 import model
 
+def AsDictMsg(historial):
+    return {'user':historial.user, 'msg':historial.msg}
+
 class RestHandler(webapp2.RequestHandler):
 
   def dispatch(self):
-    #time.sleep(1)
     super(RestHandler, self).dispatch()
 
 
@@ -48,9 +50,35 @@ class SeleccionarHandler(RestHandler):
       else:
           self.response.set_status(200)
 
+class ChatHandler(RestHandler):
+
+    def post(self):
+      r = json.loads(self.request.body)
+      mensajes = model.QuerySala(r['sala'])
+      if mensajes is None:
+          self.response.set_status(500)
+      else:
+          r = [ AsDictMsg(mensaje) for mensaje in mensajes ]
+          self.SendJson(r)
+
+
+class newMessageHandler(RestHandler):
+
+    def post(self):
+      r = json.loads(self.request.body)
+      checkres = model.NuevoMensaje(r['sala'],r['user'],r['msg'])
+      if checkres is None:
+          self.response.set_status(500)
+      else:
+          self.response.set_status(200)
+
+
+
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/signup', SignUpHandler),
     ('/rest/login', LoginHandler),
     ('/rest/seleccionar', SeleccionarHandler),
+    ('/rest/queryChat', ChatHandler),
+    ('/rest/newMessage', newMessageHandler),
 ], debug=True)

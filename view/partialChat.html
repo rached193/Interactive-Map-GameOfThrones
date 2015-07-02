@@ -1,0 +1,22 @@
+<div id="wrapper">
+  <div class="container">
+    <h2 align="center" style="color:black;">Refrescar para que se actualicen los mensajes</h2>
+    <div class="panel panel-default col-xs-6 col-md-offset-3">
+      <ul>
+        <li data-ng-repeat="msg in msgs">
+          <a style="color:black;" >{{msg.user}}: {{msg.msg}}</a>
+        </li>
+      </ul>
+  </br>
+</br>
+
+    <div class="panel panel-default list-group-item"  role="mForm" name="mForm" novalidate>
+            <div class="input-group col-xs-12" style="margin-bottom: 10px; margin-top: 10px">
+              <textarea type="text" class="form-control" rows="3" placeholder="Escriba su comentario" ng-model="texto" required></textarea>
+            </div>
+            <div class="col-md-offset-8 col-md-4">
+              <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="mForm.$invalid" style="margin-bottom: 10px" ng-click="escribir(texto)">Enviar</button>
+            </div>
+  </div>
+</div>
+</div>
