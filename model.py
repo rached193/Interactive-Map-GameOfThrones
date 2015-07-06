@@ -1,6 +1,12 @@
 from google.appengine.ext import ndb
 import string
 
+class Casa(ndb.Model):
+    name = ndb.StringProperty()
+    provincia = ndb.StringProperty()
+    escudo = ndb.StringProperty()
+    plot =  ndb.StringProperty()
+
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
@@ -10,12 +16,17 @@ class User(ndb.Model):
 class Mensaje(ndb.Model):
     msg = ndb.StringProperty()
     user = ndb.StringProperty()
-    time = ndb.StringProperty()
+    time = ndb.ndb.DateTimeProperty(auto_now_add=True)
 
 class Chat(ndb.Model):
     sala = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Mensaje, repeated=True)
 
+class Provincia(ndb.Model):
+    clave = ndb.StringProperty()
+    nombre = ndb.StringProperty()
+    colores = ndb.StringProperty()
+    propietario = ndb.StringProperty()
 
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)

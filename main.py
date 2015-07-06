@@ -76,9 +76,9 @@ class newMessageHandler(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/rest/signup', SignUpHandler),
-    ('/rest/login', LoginHandler),
-    ('/rest/seleccionar', SeleccionarHandler),
-    ('/rest/queryChat', ChatHandler),
-    ('/rest/newMessage', newMessageHandler),
+    ('/rest/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
+    ('/rest/login', LoginHandler), #{name:"User",passw:"contra"}
+    ('/rest/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
+    ('/rest/queryChat', ChatHandler), #{sala:"Desembarco"}
+    ('/rest/newMessage', newMessageHandler), #{sala:"Desembarco",user:"Usuario",msg:"Hello Work"}
 ], debug=True)
