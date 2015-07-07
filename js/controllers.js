@@ -1,5 +1,5 @@
 var app = angular.module('app-web', [
-  'ngRoute','ngCookies','ngAnimate'
+  'ngRoute','ngCookies','ngAnimate','ngGrid',
 ]);
 
 
@@ -31,9 +31,9 @@ function($routeProvider){
     templateUrl: partial + "partialsignupsimple.html",
     controller: "ControladorSignUp"
   })
-  .when("/insertar", {
-    templateUrl: partial + "partialinsertar.html",
-    controller: "InsertCtrl"
+  .when("/usuarios", {
+    templateUrl: partial + "partialusuarios.html",
+    controller: "ControladorListado"
   })
   .otherwise({ redirectTo: "/index" });
 }]);
@@ -233,7 +233,7 @@ $scope.registrar = function () {
 };
 }]);
 
-app.controller("ControladorChat",['$scope','$cookies','$http','$route',function($scope,$cookies,$http,  $route){
+app.controller("ControladorChat",['$scope','$cookies','$http','$window',function($scope,$cookies,$http, $window){
 
   $http.post('/rest/queryChat',{sala: "Desembarco"})
   .success(function(data, status, headers, config) {
@@ -243,8 +243,7 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$route',function(
   $scope.escribir = function (texto) {
     $http.post('/rest/newMessage',{sala: "Desembarco",  user: $cookies.user, msg:texto})
     .success(function(data, status, headers, config) {
-      $scope.texto = "";
-      $route.reload();
+      $window.location.reload();
     })
     .error(function (){
       alert("Fallo en conexion");
@@ -252,6 +251,20 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$route',function(
   };
 
 }]);
+
+app.controller("ControladorListado",['$scope','$http',function($scope,$http){
+
+  $http.get('/rest/allUser')
+  .success(function(data, status, headers, config) {
+    $scope.myData=data;
+  });
+
+  $scope.gridOptions = { data: 'myData',
+  columnDefs: [{field:'name', displayName:'Nombre'}, {field:'casa', displayName:'Casa'}]
+  };
+
+}]);
+
 app.animation('.slide-animation', function() {
   return {
     addClass: function (element, className, done) {

@@ -16,7 +16,7 @@ class User(ndb.Model):
 class Mensaje(ndb.Model):
     msg = ndb.StringProperty()
     user = ndb.StringProperty()
-    time = ndb.ndb.DateTimeProperty(auto_now_add=True)
+    time = ndb.DateTimeProperty(auto_now_add=True)
 
 class Chat(ndb.Model):
     sala = ndb.StringProperty()
@@ -28,6 +28,14 @@ class Provincia(ndb.Model):
     colores = ndb.StringProperty()
     propietario = ndb.StringProperty()
 
+class UserPj(ndb.Model):
+    user = ndb.StringProperty()
+    nombre = ndb.StringProperty()
+    edad = ndb.IntegerProperty()
+    historia = ndb.StringProperty()
+    casa = ndb.StringProperty()
+
+#USUARIOS
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)
     if qry.get() is None:
@@ -66,6 +74,10 @@ def RegistrarCasa(name,casa):
         else:
             return None
 
+def AllUsers():
+    return User.query()
+
+#CHAT
 def QuerySala(sala):
     qry = Chat.query(Chat.sala == sala)
     salachat = qry.get()
@@ -86,3 +98,27 @@ def NuevoMensaje(sala,user,msg):
         salachat.msgs.append(nuevomsg)
         salachat.put()
         return salachat
+
+#PERSONAJES
+def RegistrarPersonaje(user,nombre,edad,historia):
+    qry = UserPj.query(UserPj.user == user)
+    personaje = qry.get()
+    if personaje is None:
+        return None
+    else:
+        qryC = User.query(User.name == user)
+        user = qryC.get()
+        if user is None:
+            return None
+        else:
+            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=edad,historia=historia,casa=qryC.casa)
+            nuevoPersonaje.put()
+            return nuevoPersonaje
+
+def FechtPersonaje(user):
+    qry = UserPj.query(UserPj.user == user)
+    personaje = qry.get()
+    if personaje is None:
+        return None
+    else:
+        return personaje
