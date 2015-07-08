@@ -11,9 +11,13 @@ var partial = "view/"
 app.config(['$routeProvider',
 function($routeProvider){
   $routeProvider
-  .when("/index", {
+  .when("/mapa", {
     templateUrl: partial + "partialmain.html",
     controller: "ControladorMapa"
+  })
+  .when("/index", {
+    templateUrl: partial + "partialHistoria.html",
+    controller: "ControladorHistoria"
   })
   .when("/chat", {
     templateUrl: partial + "partialChat.html",
@@ -35,16 +39,23 @@ function($routeProvider){
     templateUrl: partial + "partialusuarios.html",
     controller: "ControladorListado"
   })
+  .when("/personaje", {
+    templateUrl: partial + "partialformPersonaje.html",
+  })
   .otherwise({ redirectTo: "/index" });
 }]);
 
 
-app.controller("ControladorPortada",['$scope','$cookies',function($scope,$cookies){
+app.controller("ControladorPortada",['$scope','$cookies','$rootScope',function($scope,$cookies,$rootScope){
   $scope.isLogged = function() {
     $scope.Usuario = $cookies.user;
     $scope.Casa = $cookies.casa;
     return !angular.isUndefined($cookies.user);
   };
+
+  $scope.isSelected = function(checkTab){
+  return $rootScope.tab === checkTab;
+};
 
   $scope.logOut = function(){
     delete $cookies["user"];
@@ -53,7 +64,8 @@ app.controller("ControladorPortada",['$scope','$cookies',function($scope,$cookie
 }]);
 
 
-app.controller("ControladorMapa",['$scope',function($scope){
+app.controller("ControladorMapa",['$scope','$rootScope',function($scope,$rootScope){
+
   var provinces = ["ah","arb","bg","bi","bit","bla","blu","boc","boi","bos","bwb","bwk","bzb","cas","ccp","cid","cks","cra","crk",
   "cw","dm","dra","drm","dus","ess","eyr","ff","fgs","fin","fmi","frozen_short","gde","gol","gul","gwk","gww",
   "har","hh","hig","hrl","ib","kar","kl","lan","mc","mns","mom","nns","north_of_wall",
@@ -94,9 +106,9 @@ $scope.createDummyData = function () {
 $scope.createDummyData();
 }]);
 
-app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies', function($scope, $http, $location,$cookies){
+app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies','$rootScope', function($scope, $http, $location,$cookies,$rootScope){
 
-
+  $rootScope.tab = 3;
   $scope.update = function(user){
 
     if (user.pass == user.repass){
@@ -121,8 +133,8 @@ app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies', f
 }]);
 
 
-app.controller("ControladorLogin", ['$scope','$http', '$location','$cookies', function($scope, $http, $location,	$cookies){
-
+app.controller("ControladorLogin", ['$scope','$http', '$location','$cookies','$rootScope', function($scope, $http, $location,	$cookies,$rootScope){
+  $rootScope.tab = 4;
 
   $scope.submitLogin = function() {
     var user = {
@@ -143,7 +155,8 @@ app.controller("ControladorLogin", ['$scope','$http', '$location','$cookies', fu
 }]);
 
 
-app.controller("ControladorSelecionarCasa",['$scope','$cookies','$http','$location',function($scope,$cookies,$http,$location){
+app.controller("ControladorSelecionarCasa",['$scope','$cookies','$http','$location','$rootScope',function($scope,$cookies,$http,$location,$rootScope){
+  $rootScope.tab = 4;
 
   $scope.slides = [{nombre:"Casa Marbrand",provincia:"Marcaceniza",escudo:"marbrand.png",plot:"Es una casa noble de las Tierras del Oeste y vasalla de la Casa Lannister de Roca Casterly. Su asentamiento es Marcaceniza. Su lema es: 'Ardiendo con intensidad'."},
   {nombre:"Casa Redwyne",provincia:"El Rejo",escudo:"redwyne.png",plot:"Casa noble del Dominio y vasalla de la Casa Tyrell, con quien tiene fuertes lazos. Es la principal administradora de barcos de todo Poniente. Su asentamiento es la isla de El Rejo situada al sur del canal de los susurros."},
@@ -233,8 +246,8 @@ $scope.registrar = function () {
 };
 }]);
 
-app.controller("ControladorChat",['$scope','$cookies','$http','$window',function($scope,$cookies,$http, $window){
-
+app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
+  $rootScope.tab = 3;
   $http.post('/rest/queryChat',{sala: "Desembarco"})
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
@@ -252,7 +265,8 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window',function
 
 }]);
 
-app.controller("ControladorListado",['$scope','$http',function($scope,$http){
+app.controller("ControladorListado",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
+  $rootScope.tab = 2;
 
   $http.get('/rest/allUser')
   .success(function(data, status, headers, config) {
@@ -263,6 +277,10 @@ app.controller("ControladorListado",['$scope','$http',function($scope,$http){
   columnDefs: [{field:'name', displayName:'Nombre'}, {field:'casa', displayName:'Casa'}]
   };
 
+}]);
+
+app.controller("ControladorHistoria",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
+  $rootScope.tab = 1;
 }]);
 
 app.animation('.slide-animation', function() {
