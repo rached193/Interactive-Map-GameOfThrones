@@ -1,34 +1,32 @@
 <div id="wrapper">
   <div  id="three-column" class="container">
-    <form action="" method="post" class="bootstrap-frm">
+    <form name="form" novalidate class="bootstrap-frm">
       <h1>Registro de Personaje
         <span>Please fill all the texts in the fields.</span>
       </h1>
       <label>
         <span>Nombre:</span>
-        <input id="name" type="text" name="name" placeholder="" />
+        <input id="name" type="text" name="name" placeholder="" ng-model="user.name" required/>
       </label>
       <label>
-      <span>Sexo :</span><select name="selection">
-        <option value="Hombre">Hombre</option>
-        <option value="Mujer">Mujer</option>
-      </select>
+      <span>Sexo :</span><input type="radio" ng-model="user.gender" value="hombre" />Hombre
+    <input type="radio" ng-model="user.gender" value="mujer" />Mujer<br />
     </label>
       <label>
         <span>Edad :</span>
-        <input id="edad" type="number" name="edad" placeholder="" />
+        <input id="edad" type="number" name="edad" placeholder="" ng-model="user.edad" required/>
       </label>
       <label>
         <span>Apariencia :</span>
-        <textarea id="apariencia" name="apariencia" placeholder="Apariencia del personaje"></textarea>
+        <textarea id="apariencia" name="apariencia" placeholder="Apariencia del personaje" ng-model="user.apariencia" required></textarea>
       </label>
       <label>
         <span>Historia :</span>
-        <textarea id="historia" name="historia" placeholder="Historia del personaje"></textarea>
+        <textarea id="historia" name="historia" placeholder="Historia del personaje" ng-model="user.historia" required></textarea>
       </label>
         <label>
         <span>&nbsp;</span>
-        <input type="button" class="button" value="Registrar" />
+        <input type="button" class="button" ng-disabled="form.$pending" ng-click="update(user)" value="Registrar" />
       </label>
     </form>
   </div>

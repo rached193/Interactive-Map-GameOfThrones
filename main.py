@@ -90,7 +90,7 @@ class NewPersonajeHandler(RestHandler):
 
     def post(self):
         r = json.loads(self.request.body)
-        checkres = model.RegistrarPersonaje(r['user'],r['nomre'],r['edad'].r['historia'])
+        checkres = model.RegistrarPersonaje(r['user'],r['name'],r['edad'],r['apariencia'],r['historia'])
         if checkres is None:
             self.response.set_status(400)
         else:

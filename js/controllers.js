@@ -41,6 +41,7 @@ function($routeProvider){
   })
   .when("/personaje", {
     templateUrl: partial + "partialformPersonaje.html",
+    controller: "ControladorPersonaje"
   })
   .otherwise({ redirectTo: "/index" });
 }]);
@@ -65,6 +66,8 @@ app.controller("ControladorPortada",['$scope','$cookies','$rootScope',function($
 
 
 app.controller("ControladorMapa",['$scope','$rootScope',function($scope,$rootScope){
+
+  $rootScope.tab = 7;
 
   var provinces = ["ah","arb","bg","bi","bit","bla","blu","boc","boi","bos","bwb","bwk","bzb","cas","ccp","cid","cks","cra","crk",
   "cw","dm","dra","drm","dus","ess","eyr","ff","fgs","fin","fmi","frozen_short","gde","gol","gul","gwk","gww",
@@ -281,6 +284,31 @@ app.controller("ControladorListado",['$scope','$http','$rootScope',function($sco
 
 app.controller("ControladorHistoria",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
   $rootScope.tab = 1;
+}]);
+
+app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location','$cookies',function($scope,$http,$rootScope,$location,$cookies){
+  $rootScope.tab = 6;
+
+  $scope.update = function(user){
+
+      var checkuser = {
+        user : $cookies.user,
+        name: $scope.user.name,
+        gender: $scope.user.gender,
+        edad: $scope.user.edad,
+        apariencia: $scope.user.apariencia,
+        historia: $scope.user.historia,
+      };
+      $http.post("/rest/newPersonaje",checkuser)
+      .success(function (user){
+        $cookies.personaje= $scope.user.name;
+        $location.path("/index");
+      })
+      .error(function (){
+        alert("Error al Crear Personaje.");
+      })
+  };
+
 }]);
 
 app.animation('.slide-animation', function() {
