@@ -59,7 +59,7 @@ Released   : 20140228
           <li ng-class="{active:isSelected(6)}" ng-show="isLogged()"><a href="#/personaje" accesskey="6" title="">Personaje</a></li>
           <li ng-class="{active:isSelected(7)}"><a href="#/mapa" accesskey="7" title="">Mapa</a></li>
           <li ng-class="{active:isSelected(2)}"><a href="#/usuarios" accesskey="2" title="">Usuarios Registrados</a></li>
-          <li ng-class="{active:isSelected(3)}" ng-show="isLogged()" ><a href="#/chat" accesskey="3" title="">Chat</a></li>
+          <li ng-class="{active:isSelected(3)}" ng-show="isRegister()" ><a href="#/chat" accesskey="3" title="">Chat</a></li>
           <li ng-class="{active:isSelected(3)}" ng-hide="isLogged()"><a href="#/signup" accesskey="3" title="">Registro</a></li>
           <li ng-class="{active:isSelected(4)}" ng-hide="isLogged()" ><a href="#/login" accesskey="4" title="">Login</a></li>
           <li ng-class="{active:isSelected(4)}" ng-show="isLogged()" ><a href="#/casas" accesskey="4" title="">Casas</a></li>
@@ -69,10 +69,10 @@ Released   : 20140228
     </div>
     <div id="banner" class="container">
       <ul ng-show="isLogged()" class="actions">
-        <li><a href="#" class="button">{{Usuario}}</a></li>
+        <li><a href="#/perritos/Xavo" class="button">{{Usuario}}</a></li>
       </ul>
       <div class="title">
-        <h2 ng-show="isLogged()">{{Casa}}</h2>
+        <h2 ng-show="isLogged()">Casa {{Casa}}</h2>
       </div>
     </div>
   </div>

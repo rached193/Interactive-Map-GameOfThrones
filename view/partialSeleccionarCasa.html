@@ -1,7 +1,7 @@
 <div id="wrapper">
   <div class="container">
     <div align=center >
-      <h1 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >{{slide.nombre}}</h1>
+      <h1 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >Casa {{slide.nombre}}</h1>
     </div>
   </br>
     <div align=center class="container slider">
@@ -25,7 +25,7 @@
 <div align=center id="opc">
   <ul>
     <li data-ng-repeat="slide in slides">
-      <a href="" data-ng-click="setCurrentSlideIndex($index)">{{slide.nombre}}</a>
+      <a href="" data-ng-click="setCurrentSlideIndex($index)">Casa {{slide.nombre}}</a>
     </li>
   </ul>
 

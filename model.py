@@ -103,7 +103,7 @@ def NuevoMensaje(sala,user,msg):
         return salachat
 
 #PERSONAJES
-def RegistrarPersonaje(user,nombre,edad,apariencia,historia):
+def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
     qry = UserPj.query(UserPj.user == user)
     personaje = qry.get()
     if personaje is None:
@@ -112,7 +112,7 @@ def RegistrarPersonaje(user,nombre,edad,apariencia,historia):
         if userC is None:
             return None
         else:
-            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),historia=historia,apariencia=apariencia,casa=userC.casa,validado=False)
+            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,validado=False)
             nuevoPersonaje.put()
             return nuevoPersonaje
     else:

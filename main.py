@@ -28,7 +28,7 @@ class SignUpHandler(RestHandler):
       r = json.loads(self.request.body)
       checkres = model.InsertUser(r['name'],r['email'],r['passw'])
       if checkres:
-        self.response.write('Todo Correcto')
+        self.response.set_status(200)
       else:
         self.response.set_status(400)
 
@@ -41,7 +41,11 @@ class LoginHandler(RestHandler):
       if checkres is None:
           self.response.set_status(400)
       else:
-          self.SendJson({'nickname': checkres.name,'casa':checkres.casa})
+          perso = model.FechtPersonaje(checkres.name)
+          if perso is None:
+              self.SendJson({'nickname': checkres.name,'casa':checkres.casa,'personaje':"null",'sexo':"null"})
+          else:
+              self.SendJson({'nickname': checkres.name,'casa':checkres.casa,'personaje':perso.nombre,'sexo':perso.sexo})
 
 
 class SeleccionarHandler(RestHandler):
@@ -90,7 +94,7 @@ class NewPersonajeHandler(RestHandler):
 
     def post(self):
         r = json.loads(self.request.body)
-        checkres = model.RegistrarPersonaje(r['user'],r['name'],r['edad'],r['apariencia'],r['historia'])
+        checkres = model.RegistrarPersonaje(r['user'],r['name'],r['edad'],r['gender'],r['apariencia'],r['historia'])
         if checkres is None:
             self.response.set_status(400)
         else:

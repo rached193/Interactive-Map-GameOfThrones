@@ -1,10 +1,13 @@
 <div id="wrapper">
-  <div class="container">
+  <div id="three-column"  class="container">
+    <h1 style="color:black;">Desembarco Del Rey</h1>
+  </br>
     <h2 align="center" style="color:black;">Refrescar para que se actualicen los mensajes</h2>
     <div class="panel panel-default col-xs-6 col-md-offset-3">
       <ul>
         <li data-ng-repeat="msg in msgs">
-          <a style="color:black;" >{{msg.user}}: {{msg.msg}}</a>
+          <h2 style="color:black;" >{{msg.user}}:</h2>
+          <h3 style="color:black;"style="color:black;"> {{msg.msg}}</h3>
         </li>
       </ul>
   </br>
