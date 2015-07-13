@@ -10,6 +10,12 @@ def AsDictMsg(historial):
 def AsDictUser(user):
     return {'name':user.name, 'casa':user.casa}
 
+def AsDictPrivadoMensajes(historial):
+    return {'msg':historial.msg}
+
+def AsDictPrivado(listados):
+    r = [ AsDictPrivadoMensajes(mensaje.msgs) for mensaje in listados ]
+    return {'destinatario':listados.destinatario,'remitente':listados.remitente,'msgs':r}
 
 class RestHandler(webapp2.RequestHandler):
 
@@ -108,7 +114,29 @@ class FetchPersonajeHandler(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
-            self.SendJson({'user':checkres.user,'nombre':checkres.nombre,'edad':checkres.edad,'historia':checkres.historia})
+            self.SendJson({'user':checkres.user,'nombre':checkres.nombre,'edad':checkres.edad,'historia':checkres.historia,'apariencia':checkres.apariencia})
+
+class FetchPrivadoHandler(RestHandler):
+
+    def post(self):
+        r = json.loads(self.request.body)
+        checkres = model.FechtPrivados(r['user'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            r =[ AsDictPrivado(mensaje) for mensaje in checkres ]
+            self.SendJson(r)
+
+
+class NewPrivadoHandler(RestHandler):
+
+    def post(self):
+        r = json.loads(self.request.body)
+        checkres = model.NuevoPrivado(r['destinatario'],r['remitente'],r['mensaje'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
 
 
 
@@ -121,4 +149,7 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/allUser', AllUserHandler),
     ('/rest/newPersonaje', NewPersonajeHandler),
     ('/rest/fetchPersonaje', FetchPersonajeHandler),
+    ('/rest/fetchPrivado', FetchPrivadoHandler),
+    ('/rest/newPrivado', NewPrivadoHandler),
+
 ], debug=True)

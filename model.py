@@ -22,6 +22,15 @@ class Chat(ndb.Model):
     sala = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Mensaje, repeated=True)
 
+class Conversacion(ndb.Model):
+    msg = ndb.StringProperty()
+    time = ndb.DateTimeProperty(auto_now_add=True)
+
+class MensajesPrivados(ndb.Model):
+    destinatario = ndb.StringProperty()
+    remitente = ndb.StringProperty()
+    msgs = ndb.StructuredProperty(Conversacion, repeated=True)
+
 class Provincia(ndb.Model):
     clave = ndb.StringProperty()
     nombre = ndb.StringProperty()
@@ -125,3 +134,36 @@ def FechtPersonaje(user):
         return None
     else:
         return personaje
+
+def FechtPrivados(user):
+    qry = MensajesPrivados.query(MensajesPrivados.destinatario == user)
+    privados = qry.get()
+    if privados is None:
+        return None
+    else:
+        return privados
+
+def NuevoPrivado(destinatario,remitente,msg):
+    qry = UserPj.query(UserPj.user == destinatario)
+    personaje = qry.get()
+    if personaje is None:
+        return None
+    else:
+        qry = UserPj.query(UserPj.user == remitente)
+        personaje = qry.get()
+        if personaje is None:
+            return None
+        else:
+            qryConver = MensajesPrivados.query(MensajesPrivados.destinatario == destinatario,MensajesPrivados.remitente == remitente)
+            conversacion = qryConver.get()
+            if conversacion is None:
+                nuevaconver = Conversacion(msg=msg)
+                nuevomensaje = MensajesPrivados(destinatario=destinatario,remitente=remitente,msgs=nuevaconver)
+                nuevomensaje.put()
+                return nuevomensaje
+            else:
+                nuevaconver = Conversacion(msg=msg)
+                conversacion.msg.append(nuevaconver)
+                conversacion.put()
+                return conversacion
+

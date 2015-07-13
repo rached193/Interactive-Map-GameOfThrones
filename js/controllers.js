@@ -295,10 +295,15 @@ app.controller("ControladorListado",['$scope','$http','$rootScope',function($sco
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
+  $scope.mySelections = [];
 
-  $scope.gridOptions = { data: 'myData',
-  columnDefs: [{field:'name', displayName:'Nombre'}, {field:'casa', displayName:'Casa'}]
+  $scope.gridOptions = {
+    data: 'myData',
+    columnDefs: [{field:'name', displayName:'Nombre'}, {field:'casa', displayName:'Casa'}],
+    multiSelect: false,
+    selectedItems: $scope.mySelections
   };
+
 
 }]);
 
