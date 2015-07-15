@@ -108,6 +108,7 @@ def NuevoMensaje(sala,user,msg):
     else:
         nuevomsg = Mensaje(msg=msg,user=user)
         salachat.msgs.append(nuevomsg)
+        nuevomsg.put()
         salachat.put()
         return salachat
 
@@ -146,15 +147,17 @@ def FechtPrivados(user):
 def NuevoPrivado(destinatario,remitente,msg):
     qry = UserPj.query(UserPj.user == destinatario)
     personaje = qry.get()
+    print personaje
     if personaje is None:
         return None
     else:
         qry = UserPj.query(UserPj.user == remitente)
         personaje = qry.get()
+        print personaje
         if personaje is None:
             return None
         else:
-            qryConver = MensajesPrivados.query(MensajesPrivados.destinatario == destinatario,MensajesPrivados.remitente == remitente)
+            qryConver = MensajesPrivados.query(MensajesPrivados.destinatario == destinatario)
             conversacion = qryConver.get()
             if conversacion is None:
                 nuevaconver = Conversacion(msg=msg)

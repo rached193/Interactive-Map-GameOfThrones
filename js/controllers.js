@@ -23,6 +23,10 @@ function($routeProvider){
     templateUrl: partial + "partialChat.html",
     controller: "ControladorChat"
   })
+  .when("/mensajes", {
+    templateUrl: partial + "partialPrivados.html",
+    controller: "ControladorPrivados"
+  })
   .when("/login", {
     templateUrl: partial + "partiallogin.html",
     controller: "ControladorLogin"
@@ -275,6 +279,30 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootSc
   $scope.escribir = function (texto) {
     if ($cookies.personaje!=null){
     $http.post('/rest/newMessage',{sala: "Desembarco",  user: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
+    .success(function(data, status, headers, config) {
+      $window.location.reload();
+    })
+    .error(function (){
+      alert("Fallo en conexion");
+    })
+  }else{
+    alert("Registra Personaje");
+  }
+  };
+
+}]);
+
+
+app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
+  $rootScope.tab = 3;
+  $http.post('/rest/fetchPrivado',{user: $cookies.personaje})
+  .success(function(data, status, headers, config) {
+    $scope.msgs=data;
+  });
+
+  $scope.escribir = function (mensaje) {
+    if ($cookies.personaje!=null){
+    $http.post('/rest/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.personaje, mensaje:mensaje.text})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })
