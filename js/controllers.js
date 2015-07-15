@@ -294,15 +294,15 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootSc
 
 
 app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
-  $rootScope.tab = 3;
-  $http.post('/rest/fetchPrivado',{user: $cookies.personaje})
+  $rootScope.tab = 8;
+  $http.post('/rest/fetchPrivado',{user: $cookies.casa})
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
   });
 
   $scope.escribir = function (mensaje) {
     if ($cookies.personaje!=null){
-    $http.post('/rest/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.personaje, mensaje:mensaje.text})
+    $http.post('/rest/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.casa, mensaje:mensaje.text})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })

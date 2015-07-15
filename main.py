@@ -10,12 +10,8 @@ def AsDictMsg(historial):
 def AsDictUser(user):
     return {'name':user.name, 'casa':user.casa}
 
-def AsDictPrivadoMensajes(historial):
-    return {'msg':historial.msg}
-
 def AsDictPrivado(listados):
-    r = [ AsDictPrivadoMensajes(mensaje.msgs) for mensaje in listados ]
-    return {'destinatario':listados.destinatario,'remitente':listados.remitente,'msgs':r}
+    return {'remitente':listados.remitente,'msgs':listados.msg}
 
 class RestHandler(webapp2.RequestHandler):
 

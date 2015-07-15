@@ -56,10 +56,11 @@ Released   : 20140228
       <div id="menu">
         <ul>
           <li ng-class="{active:isSelected(1)}"><a href="#/index" accesskey="1" title="">Homepage</a></li>
-          <li ng-class="{active:isSelected(6)}" ng-show="isLogged()"><a href="#/personaje" accesskey="6" title="">Personaje</a></li>
+          <li ng-class="{active:isSelected(6)}" ng-hide="isRegister()" ><a href="#/personaje" accesskey="6" title="">Personaje</a></li>
           <li ng-class="{active:isSelected(7)}"><a href="#/mapa" accesskey="7" title="">Mapa</a></li>
           <li ng-class="{active:isSelected(2)}"><a href="#/usuarios" accesskey="2" title="">Usuarios Registrados</a></li>
-          <li ng-class="{active:isSelected(3)}" ng-show="isRegister()" ><a href="#/chat" accesskey="3" title="">Chat</a></li>
+          <li ng-class="{active:isSelected(8)}" ng-show="isRegister()" ><a href="#/mensajes" accesskey="3" title="">Mensajes Privados</a></li>
+          <li ng-class="{active:isSelected(3)}" ng-show="isRegister()" ><a href="#/chat" accesskey="8" title="">Chat</a></li>
           <li ng-class="{active:isSelected(3)}" ng-hide="isLogged()"><a href="#/signup" accesskey="3" title="">Registro</a></li>
           <li ng-class="{active:isSelected(4)}" ng-hide="isLogged()" ><a href="#/login" accesskey="4" title="">Login</a></li>
           <li ng-class="{active:isSelected(4)}" ng-show="isLogged()" ><a href="#/casas" accesskey="4" title="">Casas</a></li>

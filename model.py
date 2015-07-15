@@ -23,12 +23,12 @@ class Chat(ndb.Model):
     msgs = ndb.StructuredProperty(Mensaje, repeated=True)
 
 class Conversacion(ndb.Model):
+    remitente = ndb.StringProperty()
     msg = ndb.StringProperty()
     time = ndb.DateTimeProperty(auto_now_add=True)
 
 class MensajesPrivados(ndb.Model):
     destinatario = ndb.StringProperty()
-    remitente = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Conversacion, repeated=True)
 
 class Provincia(ndb.Model):
@@ -109,7 +109,6 @@ def NuevoMensaje(sala,user,msg):
         nuevomsg = Mensaje(msg=msg,user=user)
         salachat.msgs.append(nuevomsg)
         nuevomsg.put()
-        salachat.put()
         return salachat
 
 #PERSONAJES
@@ -138,20 +137,20 @@ def FechtPersonaje(user):
 
 def FechtPrivados(user):
     qry = MensajesPrivados.query(MensajesPrivados.destinatario == user)
-    privados = qry.get()
-    if privados is None:
+    qryG = qry.get()
+    if qryG is None:
         return None
     else:
-        return privados
+        return qryG.msgs
 
 def NuevoPrivado(destinatario,remitente,msg):
-    qry = UserPj.query(UserPj.user == destinatario)
+    qry = UserPj.query(UserPj.casa == destinatario)
     personaje = qry.get()
     print personaje
     if personaje is None:
         return None
     else:
-        qry = UserPj.query(UserPj.user == remitente)
+        qry = UserPj.query(UserPj.casa == remitente)
         personaje = qry.get()
         print personaje
         if personaje is None:
@@ -160,13 +159,13 @@ def NuevoPrivado(destinatario,remitente,msg):
             qryConver = MensajesPrivados.query(MensajesPrivados.destinatario == destinatario)
             conversacion = qryConver.get()
             if conversacion is None:
-                nuevaconver = Conversacion(msg=msg)
-                nuevomensaje = MensajesPrivados(destinatario=destinatario,remitente=remitente,msgs=nuevaconver)
+                nuevaconver = Conversacion(msg=msg,remitente=remitente)
+                nuevomensaje = MensajesPrivados(destinatario=destinatario)
+                nuevomensaje.msgs.append(nuevaconver)
                 nuevomensaje.put()
                 return nuevomensaje
             else:
-                nuevaconver = Conversacion(msg=msg)
-                conversacion.msg.append(nuevaconver)
+                nuevaconver = Conversacion(msg=msg,remitente=remitente)
+                conversacion.msgs.append(nuevaconver)
                 conversacion.put()
                 return conversacion
-
