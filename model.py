@@ -108,7 +108,7 @@ def NuevoMensaje(sala,user,msg):
     else:
         nuevomsg = Mensaje(msg=msg,user=user)
         salachat.msgs.append(nuevomsg)
-        nuevomsg.put()
+        salachat.put()
         return salachat
 
 #PERSONAJES

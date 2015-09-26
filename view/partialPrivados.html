@@ -2,7 +2,6 @@
     <div id="three-column" class="container">
         <h1 style="color:black;">Mensajes Privados</h1>
         </br>
-        <h2 align="center" style="color:black;">Refrescar para que se actualicen los mensajes</h2>
 
         <div class="panel panel-default col-xs-6 col-md-offset-3">
             <ul>
@@ -20,8 +19,9 @@
                 <div class="input-group col-xs-12" style="margin-bottom: 10px; margin-top: 10px">
                     <label>
                         <span>Destinatario:</span>
-                        <input id="destinatario" type="text" name="destinatario" placeholder="Nombre personaje" ng-model="mensaje.destinatario"
-                               required/>
+                              <select ng-model="mensaje.destinatario">
+                                <option ng-repeat="item in myData" value="{{item.casa}}">{{item.casa}}</option>
+                                </select>
                     </label>
                     <textarea type="text" class="form-control" rows="3" placeholder="Escriba su comentario"
                               ng-model="mensaje.text" required></textarea>

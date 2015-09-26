@@ -300,6 +300,11 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
     $scope.msgs=data;
   });
 
+    $http.get('/rest/allUser')
+  .success(function(data, status, headers, config) {
+    $scope.myData=data;
+  });
+
   $scope.escribir = function (mensaje) {
     if ($cookies.personaje!=null){
     $http.post('/rest/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.casa, mensaje:mensaje.text})
@@ -371,7 +376,7 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
         }
         $location.path("/index");
       })
-      .error(function (){
+      .error(function (data,status){
         alert("Error al Crear Personaje.");
       })
   };

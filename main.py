@@ -68,7 +68,7 @@ class QueryChatHandler(RestHandler):
       if mensajes is None:
           self.response.set_status(400)
       else:
-          r = [ AsDictMsg(mensaje) for mensaje in mensajes ]
+          r = [ AsDictMsg(mensajes[mensaje]) for mensaje in range(len(mensajes)-1, -1, -1) ]
           self.SendJson(r)
 
 
