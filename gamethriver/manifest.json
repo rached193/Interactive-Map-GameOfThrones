@@ -1,0 +1,8 @@
+{
+  "name": "Desembarco del Templario",
+  "short_name": "DesembarcodelTemplario",
+  "start_url": "/",
+  "display": "standalone",
+  "gcm_sender_id": "292285235350",
+  "gcm_user_visible_only": true
+}

@@ -13,6 +13,18 @@ handlers:
   static_files: index.html
   upload: index.html
 
+- url: /manifest.json
+  static_files: gamethriver/manifest.json
+  upload: gamethriver
+
+- url: /OneSignalSDKUpdaterWorker.js
+  static_files: gamethriver/OneSignalSDKUpdaterWorker.js
+  upload: gamethriver
+
+- url: /OneSignalSDKWorker.js
+  static_files: gamethriver/OneSignalSDKWorker.js
+  upload: gamethriver
+
 - url: /node_modules
   static_dir: node_modules
 
