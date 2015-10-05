@@ -1,8 +1,10 @@
+#Recursos Aplicacion
 import json
 import webapp2
 import time
 
 import model
+import gestor
 
 def AsDictMsg(historial):
     return {'user':historial.user, 'msg':historial.msg}
@@ -135,6 +137,13 @@ class NewPrivadoHandler(RestHandler):
             self.response.set_status(200)
 
 
+class NewNotificacionHandler(RestHandler):
+
+    def get(self):
+        gestor.Notificar()
+        self.response.set_status(200)
+
+
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
@@ -147,5 +156,6 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/fetchPersonaje', FetchPersonajeHandler),
     ('/rest/fetchPrivado', FetchPrivadoHandler),
     ('/rest/newPrivado', NewPrivadoHandler),
+    ('/rest/newNotificacion', NewNotificacionHandler),
 
 ], debug=True)

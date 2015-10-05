@@ -41,7 +41,7 @@ Released   : 20140228
     <script>
       var OneSignal = OneSignal || [];
 
-      OneSignal.push(["init", {path: "/", appId: "9ca2ab98-649f-11e5-abca-9f7581033bb2", subdomainName: "desmbarcodeltemplario", autoRegister: false}]);
+      OneSignal.push(["init", {path: "/", appId: "9ca2ab98-649f-11e5-abca-9f7581033bb2", subdomainName: "appspot", autoRegister: false}]);
     </script>
 
   <!-- Logica -->
@@ -114,6 +114,12 @@ Released   : 20140228
       document.getElementById("registerForPushLink").addEventListener('click', registerForPush, false);
 
     });
+/*
+      OneSignal.push(["getIdsAvailable", function(ids) {
+          console.log("getIdsAvailable:"
+          + "\nUserID: " + ids.userId
+          + "\nRegistration ID: " + ids.registrationId);
+        }]);*/
     </script>
   </body>
 </html>

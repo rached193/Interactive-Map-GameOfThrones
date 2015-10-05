@@ -47,6 +47,10 @@ class UserPj(ndb.Model):
     casa = ndb.StringProperty()
     validado = ndb.BooleanProperty()
 
+class UserIdPost(ndb.Model):
+    user = ndb.StringProperty()
+    api = ndb.StringProperty()
+
 #USUARIOS
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)
@@ -169,3 +173,10 @@ def NuevoPrivado(destinatario,remitente,msg):
                 conversacion.msgs.append(nuevaconver)
                 conversacion.put()
                 return conversacion
+
+#Notificaciones
+def RegistrarDispositivo(user,api):
+    return
+
+def FetchDispositivo(user):
+    return

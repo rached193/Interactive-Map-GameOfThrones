@@ -267,6 +267,19 @@ $scope.registrar = function () {
     alert("Casa no disponible");
   })
 };
+
+
+
+$scope.notificar = function () {
+  $http.get('/rest/newNotificacion')
+  .success(function(data, status, headers, config) {
+    alert("Notificacion enviada con exito");
+  })
+  .error(function (){
+    alert("Fallo al notificar");
+  })
+};
+
 }]);
 
 app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
