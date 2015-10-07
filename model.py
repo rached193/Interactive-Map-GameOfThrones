@@ -1,18 +1,43 @@
 from google.appengine.ext import ndb
 import string
 
+
+##Informacion del Sistema
 class Casa(ndb.Model):
     name = ndb.StringProperty()
     provincia = ndb.StringProperty()
     escudo = ndb.StringProperty()
     plot =  ndb.StringProperty()
 
+class Provincia(ndb.Model):
+    clave = ndb.StringProperty()
+    nombre = ndb.StringProperty()
+    colores = ndb.StringProperty()
+    propietario = ndb.StringProperty()
+
+##Informacion de los Usuarios
+#Datos personales del usuario
 class User(ndb.Model):
     name = ndb.StringProperty()
     email = ndb.StringProperty()
     passw = ndb.StringProperty()
     casa = ndb.StringProperty()
+    api = ndb.StringProperty() #Dipositivo Vinculado
 
+
+#Personaje del Usuario
+class UserPj(ndb.Model):
+    user = ndb.StringProperty()
+    nombre = ndb.StringProperty()
+    edad = ndb.IntegerProperty()
+    sexo = ndb.StringProperty()
+    apariencia = ndb.StringProperty()
+    historia = ndb.StringProperty()
+    casa = ndb.StringProperty()
+    validado = ndb.BooleanProperty()
+
+##Informacion de los Mensajes
+#Estructura Basica de Mensaje
 class Mensaje(ndb.Model):
     msg = ndb.StringProperty()
     user = ndb.StringProperty()
@@ -31,26 +56,7 @@ class MensajesPrivados(ndb.Model):
     destinatario = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Conversacion, repeated=True)
 
-class Provincia(ndb.Model):
-    clave = ndb.StringProperty()
-    nombre = ndb.StringProperty()
-    colores = ndb.StringProperty()
-    propietario = ndb.StringProperty()
-
-class UserPj(ndb.Model):
-    user = ndb.StringProperty()
-    nombre = ndb.StringProperty()
-    edad = ndb.IntegerProperty()
-    sexo = ndb.StringProperty()
-    apariencia = ndb.StringProperty()
-    historia = ndb.StringProperty()
-    casa = ndb.StringProperty()
-    validado = ndb.BooleanProperty()
-
-class UserIdPost(ndb.Model):
-    user = ndb.StringProperty()
-    api = ndb.StringProperty()
-
+##Funciones de acceso
 #USUARIOS
 def InsertUser(name, email, passw):
     qry = User.query(User.name == name)
@@ -150,13 +156,11 @@ def FechtPrivados(user):
 def NuevoPrivado(destinatario,remitente,msg):
     qry = UserPj.query(UserPj.casa == destinatario)
     personaje = qry.get()
-    print personaje
     if personaje is None:
         return None
     else:
         qry = UserPj.query(UserPj.casa == remitente)
         personaje = qry.get()
-        print personaje
         if personaje is None:
             return None
         else:
@@ -176,7 +180,28 @@ def NuevoPrivado(destinatario,remitente,msg):
 
 #Notificaciones
 def RegistrarDispositivo(user,api):
-    return
+    qry = User.query(User.name == user)
+    print api
+    usuario = qry.get()
+    print usuario
+    if usuario is None:
+        return None
+    else:
+        usuario.api = api
+        usuario.put()
+        print usuario
+        return usuario
+
 
 def FetchDispositivo(user):
-    return
+    qry = UserPj.query(UserPj.casa == user)
+    personaje = qry.get()
+    if personaje is None:
+        return None
+    else:
+        qry = User.query(User.name == personaje.user)
+        usuario = qry.get()
+        if usuario is None:
+            return None
+        else:
+            return usuario.api

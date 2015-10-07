@@ -127,9 +127,7 @@ app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies','$
 
   $rootScope.tab = 3;
   $scope.update = function(user){
-
     if (user.pass == user.repass){
-      console.log(user.pass);
       var checkuser = {
         name: $scope.user.name,
         email: $scope.user.email,
@@ -270,16 +268,6 @@ $scope.registrar = function () {
 
 
 
-$scope.notificar = function () {
-  $http.get('/rest/newNotificacion')
-  .success(function(data, status, headers, config) {
-    alert("Notificacion enviada con exito");
-  })
-  .error(function (){
-    alert("Fallo al notificar");
-  })
-};
-
 }]);
 
 app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
@@ -370,7 +358,14 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
   $rootScope.tab = 6;
 
   $scope.update = function(user){
+    OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
+    OneSignal.push(["getIdsAvailable", function(ids) {
+          $http.post("/rest/newDispositivo",{user:$cookies.user,api:ids.userId})
+            .success(function (){
 
+
+          })
+    }]);
       var checkuser = {
         user : $cookies.user,
         name: $scope.user.name,
@@ -379,6 +374,7 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
         apariencia: $scope.user.apariencia,
         historia: $scope.user.historia,
       };
+
       $http.post("/rest/newPersonaje",checkuser)
       .success(function (user){
         $cookies.personaje= $scope.user.name;
@@ -387,12 +383,20 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
         }else if ($scope.user.gender == "mujer"){
           $cookies.sexo = "Lady";
         }
+        OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
+        OneSignal.push(["getIdsAvailable", function(ids) {
+            console.log("getIdsAvailable:"
+          + "\nUserID: " + ids.userId
+          + "\nRegistration ID: " + ids.registrationId);
+        }]);
+
         $location.path("/index");
       })
       .error(function (data,status){
         alert("Error al Crear Personaje.");
       })
   };
+
 
 }]);
 

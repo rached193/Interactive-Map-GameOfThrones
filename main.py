@@ -134,15 +134,26 @@ class NewPrivadoHandler(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
+            gestor.Notificar(r['destinatario'])
             self.response.set_status(200)
 
 
 class NewNotificacionHandler(RestHandler):
 
     def get(self):
-        gestor.Notificar()
+        r = json.loads(self.request.body)
+        gestor.Notificar(r['user'])
         self.response.set_status(200)
 
+class NewDispositivoHandler(RestHandler):
+
+    def post(self):
+        r = json.loads(self.request.body)
+        checkres = model.RegistrarDispositivo(r['user'],r['api'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
@@ -157,5 +168,6 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/rest/fetchPrivado', FetchPrivadoHandler),
     ('/rest/newPrivado', NewPrivadoHandler),
     ('/rest/newNotificacion', NewNotificacionHandler),
+    ('/rest/newDispositivo', NewDispositivoHandler),
 
 ], debug=True)
