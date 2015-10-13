@@ -110,12 +110,11 @@ class Personaje(RestHandler):
         else:
             self.response.set_status(200)
 
+#Handler de Mensajes Privados
+class Privado(RestHandler):
 
-class FetchPrivadoHandler(RestHandler):
-
-    def post(self):
-        r = json.loads(self.request.body)
-        checkres = model.FechtPrivados(r['user'])
+    def get(self,destinatario):
+        checkres = model.FechtPrivados(destinatario)
         if checkres is None:
             self.response.set_status(400)
         else:
@@ -123,24 +122,14 @@ class FetchPrivadoHandler(RestHandler):
             self.SendJson(r)
 
 
-class NewPrivadoHandler(RestHandler):
-
-    def post(self):
+    def post(self,destinatario):
         r = json.loads(self.request.body)
-        checkres = model.NuevoPrivado(r['destinatario'],r['remitente'],r['mensaje'])
+        checkres = model.NuevoPrivado(destinatario,r['remitente'],r['mensaje'])
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.Notificar(r['destinatario'])
+            gestor.Notificar(destinatario)
             self.response.set_status(200)
-
-
-class NewNotificacionHandler(RestHandler):
-
-    def get(self):
-        r = json.loads(self.request.body)
-        gestor.Notificar(r['user'])
-        self.response.set_status(200)
 
 class NewDispositivoHandler(RestHandler):
 
@@ -160,9 +149,7 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('api/v1/Chat/<:.*>', Chat), #{sala:"Desembarco"}
     ('api/v1/allUser', AllUserHandler),
     ('api/v1/Personaje/<:.*>', Personaje),
-    ('api/v1/fetchPrivado', FetchPrivadoHandler),
-    ('api/v1/newPrivado', NewPrivadoHandler),
-    ('api/v1/newNotificacion', NewNotificacionHandler),
+    ('api/v1/Privado/<:.*>', Privado),
     ('api/v1/newDispositivo', NewDispositivoHandler),
 
 ], debug=True)
