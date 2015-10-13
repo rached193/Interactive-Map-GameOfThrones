@@ -62,27 +62,25 @@ class SeleccionarHandler(RestHandler):
       else:
           self.response.set_status(200)
 
-class QueryChatHandler(RestHandler):
+#Handler de Chat Regional
+class Chat(RestHandler):
 
-    def post(self):
-      r = json.loads(self.request.body)
-      mensajes = model.QuerySala(r['sala'])
+    def get(self,sala):
+      mensajes = model.QuerySala(sala)
       if mensajes is None:
           self.response.set_status(400)
       else:
           r = [ AsDictMsg(mensajes[mensaje]) for mensaje in range(len(mensajes)-1, -1, -1) ]
           self.SendJson(r)
 
+    def post(self,sala):
+        r = json.loads(self.request.body)
+        checkres = model.NuevoMensaje(sala,r['user'],r['msg'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
 
-class NewMessageHandler(RestHandler):
-
-    def post(self):
-      r = json.loads(self.request.body)
-      checkres = model.NuevoMensaje(r['sala'],r['user'],r['msg'])
-      if checkres is None:
-          self.response.set_status(400)
-      else:
-          self.response.set_status(200)
 
 class AllUserHandler(RestHandler):
 
@@ -94,25 +92,24 @@ class AllUserHandler(RestHandler):
             r = [ AsDictUser(user) for user in usuarios ]
             self.SendJson(r)
 
-class NewPersonajeHandler(RestHandler):
+#Handler de Personaje
+class Personaje(RestHandler):
 
-    def post(self):
+    def get(self,user):
+        checkres = model.FechtPersonaje(user)
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.SendJson({'user':checkres.user,'nombre':checkres.nombre,'edad':checkres.edad,'historia':checkres.historia,'apariencia':checkres.apariencia})
+
+    def post(self,user):
         r = json.loads(self.request.body)
-        checkres = model.RegistrarPersonaje(r['user'],r['name'],r['edad'],r['gender'],r['apariencia'],r['historia'])
+        checkres = model.RegistrarPersonaje(user,r['name'],r['edad'],r['gender'],r['apariencia'],r['historia'])
         if checkres is None:
             self.response.set_status(400)
         else:
             self.response.set_status(200)
 
-class FetchPersonajeHandler(RestHandler):
-
-    def post(self):
-        r = json.loads(self.request.body)
-        checkres = model.FechtPersonaje(r['user'])
-        if checkres is None:
-            self.response.set_status(400)
-        else:
-            self.SendJson({'user':checkres.user,'nombre':checkres.nombre,'edad':checkres.edad,'historia':checkres.historia,'apariencia':checkres.apariencia})
 
 class FetchPrivadoHandler(RestHandler):
 
@@ -157,17 +154,15 @@ class NewDispositivoHandler(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/rest/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('/rest/login', LoginHandler), #{name:"User",passw:"contra"}
-    ('/rest/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
-    ('/rest/queryChat', QueryChatHandler), #{sala:"Desembarco"}
-    ('/rest/newMessage', NewMessageHandler), #{sala:"Desembarco",user:"Usuario",msg:"Hello Work"}
-    ('/rest/allUser', AllUserHandler),
-    ('/rest/newPersonaje', NewPersonajeHandler),
-    ('/rest/fetchPersonaje', FetchPersonajeHandler),
-    ('/rest/fetchPrivado', FetchPrivadoHandler),
-    ('/rest/newPrivado', NewPrivadoHandler),
-    ('/rest/newNotificacion', NewNotificacionHandler),
-    ('/rest/newDispositivo', NewDispositivoHandler),
+    ('api/v1/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
+    ('api/v1/login', LoginHandler), #{name:"User",passw:"contra"}
+    ('api/v1/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
+    ('api/v1/Chat/<:.*>', Chat), #{sala:"Desembarco"}
+    ('api/v1/allUser', AllUserHandler),
+    ('api/v1/Personaje/<:.*>', Personaje),
+    ('api/v1/fetchPrivado', FetchPrivadoHandler),
+    ('api/v1/newPrivado', NewPrivadoHandler),
+    ('api/v1/newNotificacion', NewNotificacionHandler),
+    ('api/v1/newDispositivo', NewDispositivoHandler),
 
 ], debug=True)
