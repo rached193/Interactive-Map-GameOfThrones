@@ -143,13 +143,13 @@ class NewDispositivoHandler(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('api/v1/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('api/v1/login', LoginHandler), #{name:"User",passw:"contra"}
-    ('api/v1/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
-    ('api/v1/Chat/<:.*>', Chat), #{sala:"Desembarco"}
-    ('api/v1/allUser', AllUserHandler),
-    ('api/v1/Personaje/<:.*>', Personaje),
-    ('api/v1/Privado/<:.*>', Privado),
-    ('api/v1/newDispositivo', NewDispositivoHandler),
+    ('/api/v1/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
+    ('/api/v1/login', LoginHandler), #{name:"User",passw:"contra"}
+    ('/api/v1/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
+    ('/api/v1/Chat/<:.*>', Chat), #{sala:"Desembarco"}
+    ('/api/v1/allUser', AllUserHandler),
+    ('/api/v1/Personaje/(\s+)', Personaje),
+    ('/api/v1/Privado/<.*>', Privado),
+    ('/api/v1/newDispositivo', NewDispositivoHandler),
 
 ], debug=True)
