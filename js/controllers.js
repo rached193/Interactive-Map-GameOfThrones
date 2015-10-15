@@ -133,7 +133,7 @@ app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies','$
         email: $scope.user.email,
         passw: $scope.user.pass,
       };
-      $http.post("/rest/signup",checkuser)
+      $http.post("/api/v1/signup",checkuser)
       .success(function (user){
         $cookies.user= $scope.user.name;
         $location.path("/index");
@@ -156,7 +156,7 @@ app.controller("ControladorLogin", ['$scope','$http', '$location','$cookies','$r
       name: $scope.nombre,
       passw : $scope.pass,
     };
-    $http.post('/rest/login', user)
+    $http.post('/api/v1/login', user)
     .success(function(data, status, headers, config) {
       $cookies.user = data.nickname;
       $cookies.casa = data.casa;
@@ -255,7 +255,7 @@ $scope.nextSlide = function () {
 };
 
 $scope.registrar = function () {
-  $http.post('/rest/seleccionar',{user: $cookies.user, casa: $scope.slides[$scope.currentIndex].nombre})
+  $http.post('/api/v1/seleccionar',{user: $cookies.user, casa: $scope.slides[$scope.currentIndex].nombre})
   .success(function(data, status, headers, config) {
     $cookies.casa = $scope.slides[$scope.currentIndex].nombre;
     $location.path("/index");
@@ -272,14 +272,14 @@ $scope.registrar = function () {
 
 app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
   $rootScope.tab = 3;
-  $http.post('/rest/queryChat',{sala: "Desembarco"})
+  $http.get('/api/v1/Chat/Desembarco')
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
   });
 
   $scope.escribir = function (texto) {
     if ($cookies.personaje!=null){
-    $http.post('/rest/newMessage',{sala: "Desembarco",  user: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
+    $http.post('/api/v1/Chat/Desembarco',{user: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })
@@ -296,19 +296,19 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootSc
 
 app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
   $rootScope.tab = 8;
-  $http.post('/rest/fetchPrivado',{user: $cookies.casa})
+  $http.get('/api/v1/Privado/'+$cookies.casa)
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
   });
 
-    $http.get('/rest/allUser')
+    $http.get('/api/v1/allUser')
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
 
   $scope.escribir = function (mensaje) {
     if ($cookies.personaje!=null){
-    $http.post('/rest/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.casa, mensaje:mensaje.text})
+    $http.post('/api/v1/Privado/'+mensaje.destinatario, {remitente:$cookies.casa, mensaje:mensaje.text})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })
@@ -325,7 +325,7 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
 app.controller("ControladorListado",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
   $rootScope.tab = 2;
 
-  $http.get('/rest/allUser')
+  $http.get('/api/v1/allUser')
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
@@ -360,14 +360,13 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
   $scope.update = function(user){
     OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
     OneSignal.push(["getIdsAvailable", function(ids) {
-          $http.post("/rest/newDispositivo",{user:$cookies.user,api:ids.userId})
+          $http.post("/api/v1/newDispositivo",{user:$cookies.user,api:ids.userId})
             .success(function (){
 
 
           })
     }]);
       var checkuser = {
-        user : $cookies.user,
         name: $scope.user.name,
         gender: $scope.user.gender,
         edad: $scope.user.edad,
@@ -375,7 +374,7 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
         historia: $scope.user.historia,
       };
 
-      $http.post("/rest/newPersonaje",checkuser)
+      $http.post("/api/v1/Personaje/"+$cookies.user,checkuser)
       .success(function (user){
         $cookies.personaje= $scope.user.name;
         if ($scope.user.gender == "hombre"){

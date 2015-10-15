@@ -7,7 +7,7 @@ threadsafe: false
 
 handlers:
 
-- url: /rest/.*
+- url: /api/.*
   script: main.APP
 
 - url: (.*)/

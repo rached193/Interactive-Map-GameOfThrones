@@ -1,11 +1,12 @@
 #Recursos Aplicacion
 import json
 import webapp2
-import time
 
+#Modulos Aplicacion
 import model
 import gestor
 
+##Funciones auxioliares para enviar datos
 def AsDictMsg(historial):
     return {'user':historial.user, 'msg':historial.msg}
 
@@ -15,6 +16,7 @@ def AsDictUser(user):
 def AsDictPrivado(listados):
     return {'remitente':listados.remitente,'msgs':listados.msg}
 
+#Declaracion de la Handler Global
 class RestHandler(webapp2.RequestHandler):
 
   def dispatch(self):
@@ -26,7 +28,8 @@ class RestHandler(webapp2.RequestHandler):
     self.response.write(json.dumps(r))
 
 
-class SignUpHandler(RestHandler):
+#Handler del Registro de Usuario
+class Registrar(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -37,7 +40,8 @@ class SignUpHandler(RestHandler):
         self.response.set_status(400)
 
 
-class LoginHandler(RestHandler):
+#Handler del Logun de Usuario
+class Loguear(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -52,7 +56,8 @@ class LoginHandler(RestHandler):
               self.SendJson({'nickname': checkres.name,'casa':checkres.casa,'personaje':perso.nombre,'sexo':perso.sexo})
 
 
-class SeleccionarHandler(RestHandler):
+#Handler para Asignar una casa a un Usuario
+class SelecionarCasa(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -62,29 +67,27 @@ class SeleccionarHandler(RestHandler):
       else:
           self.response.set_status(200)
 
-class QueryChatHandler(RestHandler):
+#Handler de Chat Regional
+class Chat(RestHandler):
 
-    def post(self):
-      r = json.loads(self.request.body)
-      mensajes = model.QuerySala(r['sala'])
+    def get(self,sala):
+      mensajes = model.QuerySala(sala)
       if mensajes is None:
           self.response.set_status(400)
       else:
           r = [ AsDictMsg(mensajes[mensaje]) for mensaje in range(len(mensajes)-1, -1, -1) ]
           self.SendJson(r)
 
+    def post(self,sala):
+        r = json.loads(self.request.body)
+        checkres = model.NuevoMensaje(sala,r['user'],r['msg'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
 
-class NewMessageHandler(RestHandler):
 
-    def post(self):
-      r = json.loads(self.request.body)
-      checkres = model.NuevoMensaje(r['sala'],r['user'],r['msg'])
-      if checkres is None:
-          self.response.set_status(400)
-      else:
-          self.response.set_status(200)
-
-class AllUserHandler(RestHandler):
+class AllUsers(RestHandler):
 
     def get(self):
         usuarios = model.AllUsers()
@@ -94,31 +97,29 @@ class AllUserHandler(RestHandler):
             r = [ AsDictUser(user) for user in usuarios ]
             self.SendJson(r)
 
-class NewPersonajeHandler(RestHandler):
+#Handler de Personaje
+class Personaje(RestHandler):
 
-    def post(self):
-        r = json.loads(self.request.body)
-        checkres = model.RegistrarPersonaje(r['user'],r['name'],r['edad'],r['gender'],r['apariencia'],r['historia'])
-        if checkres is None:
-            self.response.set_status(400)
-        else:
-            self.response.set_status(200)
-
-class FetchPersonajeHandler(RestHandler):
-
-    def post(self):
-        r = json.loads(self.request.body)
-        checkres = model.FechtPersonaje(r['user'])
+    def get(self,user):
+        checkres = model.FechtPersonaje(user)
         if checkres is None:
             self.response.set_status(400)
         else:
             self.SendJson({'user':checkres.user,'nombre':checkres.nombre,'edad':checkres.edad,'historia':checkres.historia,'apariencia':checkres.apariencia})
 
-class FetchPrivadoHandler(RestHandler):
-
-    def post(self):
+    def post(self,user):
         r = json.loads(self.request.body)
-        checkres = model.FechtPrivados(r['user'])
+        checkres = model.RegistrarPersonaje(user,r['name'],r['edad'],r['gender'],r['apariencia'],r['historia'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
+
+#Handler de Mensajes Privados
+class Privado(RestHandler):
+
+    def get(self,destinatario):
+        checkres = model.FechtPrivados(destinatario)
         if checkres is None:
             self.response.set_status(400)
         else:
@@ -126,26 +127,16 @@ class FetchPrivadoHandler(RestHandler):
             self.SendJson(r)
 
 
-class NewPrivadoHandler(RestHandler):
-
-    def post(self):
+    def post(self,destinatario):
         r = json.loads(self.request.body)
-        checkres = model.NuevoPrivado(r['destinatario'],r['remitente'],r['mensaje'])
+        checkres = model.NuevoPrivado(destinatario,r['remitente'],r['mensaje'])
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.Notificar(r['destinatario'])
+            gestor.Notificar(destinatario)
             self.response.set_status(200)
 
-
-class NewNotificacionHandler(RestHandler):
-
-    def get(self):
-        r = json.loads(self.request.body)
-        gestor.Notificar(r['user'])
-        self.response.set_status(200)
-
-class NewDispositivoHandler(RestHandler):
+class RegistrarDispositivo(RestHandler):
 
     def post(self):
         r = json.loads(self.request.body)
@@ -157,17 +148,13 @@ class NewDispositivoHandler(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/rest/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('/rest/login', LoginHandler), #{name:"User",passw:"contra"}
-    ('/rest/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
-    ('/rest/queryChat', QueryChatHandler), #{sala:"Desembarco"}
-    ('/rest/newMessage', NewMessageHandler), #{sala:"Desembarco",user:"Usuario",msg:"Hello Work"}
-    ('/rest/allUser', AllUserHandler),
-    ('/rest/newPersonaje', NewPersonajeHandler),
-    ('/rest/fetchPersonaje', FetchPersonajeHandler),
-    ('/rest/fetchPrivado', FetchPrivadoHandler),
-    ('/rest/newPrivado', NewPrivadoHandler),
-    ('/rest/newNotificacion', NewNotificacionHandler),
-    ('/rest/newDispositivo', NewDispositivoHandler),
+    ('/api/v1/signup', Registrar), #{name:"User",email:"user@yahoo.es",passw:"contra"}
+    ('/api/v1/login', Loguear), #{name:"User",passw:"contra"}
+    ('/api/v1/seleccionar', SelecionarCasa), #{user:"User",casa:"Casa Stark"}
+    ('/api/v1/Chat/(\w+)', Chat), #{sala:"Desembarco"}
+    ('/api/v1/allUser', AllUsers),
+    ('/api/v1/Personaje/(\w+)', Personaje),
+    ('/api/v1/Privado/(\w+)', Privado),
+    ('/api/v1/newDispositivo', RegistrarDispositivo),
 
 ], debug=True)
