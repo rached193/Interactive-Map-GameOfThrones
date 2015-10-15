@@ -1,11 +1,12 @@
 #Recursos Aplicacion
 import json
 import webapp2
-import time
 
+#Modulos Aplicacion
 import model
 import gestor
 
+##Funciones auxioliares para enviar datos
 def AsDictMsg(historial):
     return {'user':historial.user, 'msg':historial.msg}
 
@@ -15,6 +16,7 @@ def AsDictUser(user):
 def AsDictPrivado(listados):
     return {'remitente':listados.remitente,'msgs':listados.msg}
 
+#Declaracion de la Handler Global
 class RestHandler(webapp2.RequestHandler):
 
   def dispatch(self):
@@ -26,7 +28,8 @@ class RestHandler(webapp2.RequestHandler):
     self.response.write(json.dumps(r))
 
 
-class SignUpHandler(RestHandler):
+#Handler del Registro de Usuario
+class Registrar(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -37,7 +40,8 @@ class SignUpHandler(RestHandler):
         self.response.set_status(400)
 
 
-class LoginHandler(RestHandler):
+#Handler del Logun de Usuario
+class Loguear(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -52,7 +56,8 @@ class LoginHandler(RestHandler):
               self.SendJson({'nickname': checkres.name,'casa':checkres.casa,'personaje':perso.nombre,'sexo':perso.sexo})
 
 
-class SeleccionarHandler(RestHandler):
+#Handler para Asignar una casa a un Usuario
+class SelecionarCasa(RestHandler):
 
     def post(self):
       r = json.loads(self.request.body)
@@ -82,7 +87,7 @@ class Chat(RestHandler):
             self.response.set_status(200)
 
 
-class AllUserHandler(RestHandler):
+class AllUsers(RestHandler):
 
     def get(self):
         usuarios = model.AllUsers()
@@ -131,7 +136,7 @@ class Privado(RestHandler):
             gestor.Notificar(destinatario)
             self.response.set_status(200)
 
-class NewDispositivoHandler(RestHandler):
+class RegistrarDispositivo(RestHandler):
 
     def post(self):
         r = json.loads(self.request.body)
@@ -143,13 +148,13 @@ class NewDispositivoHandler(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/api/v1/signup', SignUpHandler), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('/api/v1/login', LoginHandler), #{name:"User",passw:"contra"}
-    ('/api/v1/seleccionar', SeleccionarHandler), #{user:"User",casa:"Casa Stark"}
-    ('/api/v1/Chat/(\w+)>', Chat), #{sala:"Desembarco"}
-    ('/api/v1/allUser', AllUserHandler),
+    ('/api/v1/signup', Registrar), #{name:"User",email:"user@yahoo.es",passw:"contra"}
+    ('/api/v1/login', Loguear), #{name:"User",passw:"contra"}
+    ('/api/v1/seleccionar', SelecionarCasa), #{user:"User",casa:"Casa Stark"}
+    ('/api/v1/Chat/(\w+)', Chat), #{sala:"Desembarco"}
+    ('/api/v1/allUser', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
-    ('/api/v1/newDispositivo', NewDispositivoHandler),
+    ('/api/v1/newDispositivo', RegistrarDispositivo),
 
 ], debug=True)

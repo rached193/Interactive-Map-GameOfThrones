@@ -296,7 +296,7 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootSc
 
 app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
   $rootScope.tab = 8;
-  $http.post('/api/v1/Privado/'+$cookies.casa)
+  $http.get('/api/v1/Privado/'+$cookies.casa)
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
   });
@@ -308,7 +308,7 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
 
   $scope.escribir = function (mensaje) {
     if ($cookies.personaje!=null){
-    $http.post('/api/v1/newPrivado',{destinatario: mensaje.destinatario,  remitente:$cookies.casa, mensaje:mensaje.text})
+    $http.post('/api/v1/Privado/'+mensaje.destinatario, {remitente:$cookies.casa, mensaje:mensaje.text})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })
