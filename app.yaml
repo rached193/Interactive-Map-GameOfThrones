@@ -8,7 +8,7 @@ threadsafe: false
 handlers:
 
 - url: /api/.*
-  script: main.APP
+  script: server.main.APP
 
 - url: (.*)/
   static_files: index.html
