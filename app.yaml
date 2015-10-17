@@ -6,14 +6,20 @@ threadsafe: false
 
 
 handlers:
-
+#Ruta del Server
 - url: /api/.*
-  script: main.APP
-
+  script: server.main.APP
+#Ruta del index
 - url: (.*)/
-  static_files: index.html
-  upload: index.html
-
+  static_files: webapp/index.html
+  upload: webapp
+#Ruta de los Templates
+- url: /view
+  static_dir: webapp/view
+#Ruta de las librerias de auxiliares
+- url: /node_modules
+  static_dir: webapp/node_modules
+#Rutas de librerias de Notifaciones Push
 - url: /manifest.json
   static_files: gamethriver/manifest.json
   upload: gamethriver
@@ -26,48 +32,43 @@ handlers:
   static_files: gamethriver/OneSignalSDKWorker.js
   upload: gamethriver
 
-- url: /node_modules
-  static_dir: node_modules
-
+#Rutas de demas tipos de archivos
 - url: (/.*\.js)
-  static_files: js\1
-  upload: js
+  static_files: webapp/js\1
+  upload: webapp/js
 
 - url: (/.*\.css)
-  static_files: css\1
-  upload: css
+  static_files: webapp/css\1
+  upload: webapp/css
 
 - url: (/.*\.woff)
-  static_files: css\1
-  upload: css
+  static_files: webapp/css\1
+  upload: webapp/css
 
 - url: (/.*\.ttf)
-  static_files: css\1
-  upload: css
+  static_files: webapp/css\1
+  upload: webapp/css
 
 - url: (/.*\.map)
-  static_files: css\1
-  upload: css
-
-- url: /view
-  static_dir: view
+  static_files: webapp/css\1
+  upload: webapp/css
 
 - url: (/.*\.ico)
-  static_files: img\1
-  upload: img
+  static_files: webapp/img\1
+  upload: webapp/img
 
 - url: (/.*\.gif)
-  static_files: img\1
-  upload: img
+  static_files: webapp/img\1
+  upload: webapp/img
 
 - url: (/.*\.jpg)
-  static_files: img\1
-  upload: img
+  static_files: webapp/img\1
+  upload: webapp/img
 
 - url: (/.*\.png)
-  static_files: img\1
-  upload: img
+  static_files: webapp/img\1
+  upload: webapp/img
 
 - url: (/.*\.svg)
-  static_files: img\1
-  upload: img
+  static_files: webapp/img\1
+  upload: webapp/img
