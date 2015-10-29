@@ -105,11 +105,11 @@ def AllUsers():
 #Region
 def QuerySala(user):
     qrySala = UserPj.query(UserPj.user == user)
-    sala = qrySala.get().localizacion
+    sala = qrySala.get()
     if sala is None:
         return None
     else:
-        qry = Chat.query(Chat.sala == sala)
+        qry = Chat.query(Chat.sala == sala.localizacion)
         salachat = qry.get()
         if salachat is None:
             return None
@@ -124,7 +124,6 @@ def NuevoMensaje(user,userpj,msg):
     else:
         qry = Chat.query(Chat.sala == sala)
         salachat = qry.get()
-        logging.info(salachat)
         if salachat is None:
             return None
         else:
@@ -136,14 +135,11 @@ def NuevoMensaje(user,userpj,msg):
 def CambiarRegion(user,region):
     qryUser = UserPj.query(UserPj.user == user)
     personaje = qryUser.get()
-    logging.info(user)
-    logging.info(personaje)
     if personaje is None:
         return None
     else:
         qrySala = qry = Chat.query(Chat.sala == region)
         sala = qrySala.get()
-        logging.info(sala)
         if sala is None:
             return None
         else:
@@ -157,17 +153,27 @@ def CambiarRegion(user,region):
 
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
+    region = "Desembarco"
     qry = UserPj.query(UserPj.user == user)
     personaje = qry.get()
+    qryC = User.query(User.name == user)
+    userC = qryC.get()
+    qrySala = qry = Chat.query(Chat.sala == region)
+    sala = qrySala.get()
+    sala.usuarios.append(userC.api)
+    sala.put()
     if personaje is None:
         qryC = User.query(User.name == user)
         userC = qryC.get()
         if userC is None:
             return None
         else:
-            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,validado=False)
+            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion=region,validado=False)
             nuevoPersonaje.put()
-            CambiarRegion(userC.name,"Desembarco")
+            qrySala = qry = Chat.query(Chat.sala == region)
+            sala = qrySala.get()
+            sala.usuarios.append(userC.api)
+            sala.put()
             return nuevoPersonaje
     else:
         return None

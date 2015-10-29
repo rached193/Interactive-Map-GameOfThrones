@@ -1,6 +1,7 @@
 #Recursos Aplicacion
 import json
 import webapp2
+import logging
 
 #Modulos Aplicacion
 import model
@@ -141,6 +142,7 @@ class Dispositivo(RestHandler):
 
     def post(self,user):
         r = json.loads(self.request.body)
+        logging.info(r['api'])
         checkres = model.RegistrarDispositivo(user,r['api'])
         if checkres is None:
             self.response.set_status(400)
@@ -152,7 +154,7 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/signup', Registrar),
     ('/api/v1/login', Loguear),
     ('/api/v1/seleccionar', SelecionarCasa),
-    ('/api/v1/Chat/(\w+)', Chat), 
+    ('/api/v1/Chat/(\w+)', Chat),
     ('/api/v1/allUser', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),

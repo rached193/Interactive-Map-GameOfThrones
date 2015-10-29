@@ -345,9 +345,8 @@ app.controller("ControladorHistoria",['$scope','$http','$rootScope',function($sc
 }]);
 
 app.controller("ControladorFichaUsuario",['$scope','$http','$rootScope','$location','$cookies','$routeParams',function($scope,$http,$rootScope,$location,$cookies,$routeParams){
-var seriecode =  {user: $routeParams.userID};
 
-$http.post('rest/fetchPersonaje',seriecode).success(function(data, status, headers, config) {
+$http.get('/api/v1/Personaje/'+$routeParams.userID).success(function(data, status, headers, config) {
 $scope.usuario = data;
 });
 
@@ -359,7 +358,8 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
   $scope.update = function(user){
     OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
     OneSignal.push(["getIdsAvailable", function(ids) {
-          $http.post("/api/v1/Dispositivo/ "+$cookies.user,{api:ids.userId})
+      console.log(ids)
+          $http.post("/api/v1/Dispositivo/"+$cookies.user,{api:ids.userId})
             .success(function (){
 
 
