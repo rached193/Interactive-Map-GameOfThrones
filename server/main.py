@@ -1,6 +1,7 @@
 #Recursos Aplicacion
 import json
 import webapp2
+import logging
 
 #Modulos Aplicacion
 import model
@@ -70,20 +71,21 @@ class SelecionarCasa(RestHandler):
 #Handler de Chat Regional
 class Chat(RestHandler):
 
-    def get(self,sala):
-      mensajes = model.QuerySala(sala)
+    def get(self,usuario):
+      mensajes = model.QuerySala(usuario)
       if mensajes is None:
           self.response.set_status(400)
       else:
           r = [ AsDictMsg(mensajes[mensaje]) for mensaje in range(len(mensajes)-1, -1, -1) ]
           self.SendJson(r)
 
-    def post(self,sala):
+    def post(self,usuario):
         r = json.loads(self.request.body)
-        checkres = model.NuevoMensaje(sala,r['user'],r['msg'])
+        checkres = model.NuevoMensaje(usuario,r['pjmsg'],r['msg'])
         if checkres is None:
             self.response.set_status(400)
         else:
+            gestor.NotificarChat(usuario)
             self.response.set_status(200)
 
 
@@ -133,14 +135,15 @@ class Privado(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.Notificar(destinatario)
+            gestor.NotificarPrivado(destinatario)
             self.response.set_status(200)
 
-class RegistrarDispositivo(RestHandler):
+class Dispositivo(RestHandler):
 
-    def post(self):
+    def post(self,user):
         r = json.loads(self.request.body)
-        checkres = model.RegistrarDispositivo(r['user'],r['api'])
+        logging.info(r['api'])
+        checkres = model.RegistrarDispositivo(user,r['api'])
         if checkres is None:
             self.response.set_status(400)
         else:
@@ -148,13 +151,13 @@ class RegistrarDispositivo(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/api/v1/signup', Registrar), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('/api/v1/login', Loguear), #{name:"User",passw:"contra"}
-    ('/api/v1/seleccionar', SelecionarCasa), #{user:"User",casa:"Casa Stark"}
-    ('/api/v1/Chat/(\w+)', Chat), #{sala:"Desembarco"}
+    ('/api/v1/signup', Registrar),
+    ('/api/v1/login', Loguear),
+    ('/api/v1/seleccionar', SelecionarCasa),
+    ('/api/v1/Chat/(\w+)', Chat),
     ('/api/v1/allUser', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
-    ('/api/v1/newDispositivo', RegistrarDispositivo),
+    ('/api/v1/Dispositivo/(\w+)', Dispositivo),
 
 ], debug=True)
