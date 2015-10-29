@@ -137,11 +137,11 @@ class Privado(RestHandler):
             gestor.NotificarPrivado(destinatario)
             self.response.set_status(200)
 
-class RegistrarDispositivo(RestHandler):
+class Dispositivo(RestHandler):
 
-    def post(self):
+    def post(self,user):
         r = json.loads(self.request.body)
-        checkres = model.RegistrarDispositivo(r['user'],r['api'])
+        checkres = model.RegistrarDispositivo(user,r['api'])
         if checkres is None:
             self.response.set_status(400)
         else:
@@ -149,13 +149,13 @@ class RegistrarDispositivo(RestHandler):
 
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
-    ('/api/v1/signup', Registrar), #{name:"User",email:"user@yahoo.es",passw:"contra"}
-    ('/api/v1/login', Loguear), #{name:"User",passw:"contra"}
-    ('/api/v1/seleccionar', SelecionarCasa), #{user:"User",casa:"Casa Stark"}
-    ('/api/v1/Chat/(\w+)', Chat), #{sala:"Desembarco"}
+    ('/api/v1/signup', Registrar),
+    ('/api/v1/login', Loguear),
+    ('/api/v1/seleccionar', SelecionarCasa),
+    ('/api/v1/Chat/(\w+)', Chat), 
     ('/api/v1/allUser', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
-    ('/api/v1/Dispositivo', RegistrarDispositivo),
+    ('/api/v1/Dispositivo/(\w+)', Dispositivo),
 
 ], debug=True)

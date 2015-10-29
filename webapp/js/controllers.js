@@ -359,7 +359,7 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
   $scope.update = function(user){
     OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
     OneSignal.push(["getIdsAvailable", function(ids) {
-          $http.post("/api/v1/Dispositivo",{user:$cookies.user,api:ids.userId})
+          $http.post("/api/v1/Dispositivo/ "+$cookies.user,{api:ids.userId})
             .success(function (){
 
 

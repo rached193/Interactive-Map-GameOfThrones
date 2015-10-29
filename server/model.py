@@ -102,7 +102,7 @@ def RegistrarCasa(name,casa):
 def AllUsers():
     return User.query()
 
-#CHAT
+#Region
 def QuerySala(user):
     qrySala = UserPj.query(UserPj.user == user)
     sala = qrySala.get().localizacion
@@ -133,6 +133,28 @@ def NuevoMensaje(user,userpj,msg):
             salachat.put()
             return salachat
 
+def CambiarRegion(user,region):
+    qryUser = UserPj.query(UserPj.user == user)
+    personaje = qryUser.get()
+    logging.info(user)
+    logging.info(personaje)
+    if personaje is None:
+        return None
+    else:
+        qrySala = qry = Chat.query(Chat.sala == region)
+        sala = qrySala.get()
+        logging.info(sala)
+        if sala is None:
+            return None
+        else:
+            personaje.localizacion = region
+            personaje.put()
+            qryUser = User.query(User.user == user)
+            user = qryUser.get()
+            sala.usuarios.append(user.api)
+            sala.put()
+            return sala
+
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
     qry = UserPj.query(UserPj.user == user)
@@ -143,8 +165,9 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
         if userC is None:
             return None
         else:
-            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion="Desembarco",validado=False)
+            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,validado=False)
             nuevoPersonaje.put()
+            CambiarRegion(userC.name,"Desembarco")
             return nuevoPersonaje
     else:
         return None
@@ -217,10 +240,12 @@ def FetchDispositivo(user):
 
 
 def FetchDispositivoRegion(user):
-    qry = UserPj.query(UserPj.casa == destinatario)
-    nombreSala = qry.get().localizacion
+    qrySala = UserPj.query(UserPj.user == user)
+    nombreSala = qrySala.get().localizacion
+    logging.info(nombreSala)
     if nombreSala is None:
         return None
+    else:
         qry = Chat.query(Chat.sala == nombreSala)
         region = qry.get()
         if region is None:
