@@ -34,6 +34,7 @@ class UserPj(ndb.Model):
     apariencia = ndb.StringProperty()
     historia = ndb.StringProperty()
     casa = ndb.StringProperty()
+    localizacion = ndb.StringProperty()
     validado = ndb.BooleanProperty()
 
 ##Informacion de los Mensajes
@@ -46,6 +47,7 @@ class Mensaje(ndb.Model):
 class Chat(ndb.Model):
     sala = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Mensaje, repeated=True)
+    usuarios = ndb.StringProperty(repeated=True)
 
 class Conversacion(ndb.Model):
     remitente = ndb.StringProperty()
@@ -101,25 +103,31 @@ def AllUsers():
 
 #CHAT
 def QuerySala(sala):
-    qry = Chat.query(Chat.sala == sala)
-    salachat = qry.get()
-    if salachat is None:
-        salaN = Chat(sala=sala)
-        salaN.put();
-        return salaN.msgs
-    else:
-        return salachat.msgs
-
-def NuevoMensaje(sala,user,msg):
-    qry = Chat.query(Chat.sala == sala)
-    salachat = qry.get()
-    if salachat is None:
+    qrySala = UserPj.query(UserPj.localizacion == sala)
+    if qrySala is None:
         return None
     else:
-        nuevomsg = Mensaje(msg=msg,user=user)
-        salachat.msgs.append(nuevomsg)
-        salachat.put()
-        return salachat
+        qry = Chat.query(Chat.sala == qrySala)
+        salachat = qry.get()
+        if salachat is None:
+            return None
+        else:
+            return salachat.msgs
+
+def NuevoMensaje(sala,user,msg):
+    qrySala = UserPj.query(UserPj.localizacion == sala)
+    if qrySala is None:
+        return None
+    else:
+        qry = Chat.query(Chat.sala == qrySala)
+        salachat = qry.get()
+        if salachat is None:
+            return None
+        else:
+            nuevomsg = Mensaje(msg=msg,user=user)
+            salachat.msgs.append(nuevomsg)
+            salachat.put()
+            return salachat
 
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
@@ -181,15 +189,12 @@ def NuevoPrivado(destinatario,remitente,msg):
 #Notificaciones
 def RegistrarDispositivo(user,api):
     qry = User.query(User.name == user)
-    print api
     usuario = qry.get()
-    print usuario
     if usuario is None:
         return None
     else:
         usuario.api = api
         usuario.put()
-        print usuario
         return usuario
 
 
@@ -205,3 +210,12 @@ def FetchDispositivo(user):
             return None
         else:
             return usuario.api
+
+
+def FetchDispositivoSala(nombreSala):
+    qry = Chat.query(Chat.sala == nombreSala)
+    region = qry.get()
+    if region is None:
+        return None
+    else:
+        return region.usuarios

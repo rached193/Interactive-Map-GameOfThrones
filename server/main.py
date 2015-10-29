@@ -70,18 +70,19 @@ class SelecionarCasa(RestHandler):
 #Handler de Chat Regional
 class Chat(RestHandler):
 
-    def get(self,sala):
-      mensajes = model.QuerySala(sala)
+    def get(self,usuario):
+      mensajes = model.QuerySala(usuario)
       if mensajes is None:
           self.response.set_status(400)
       else:
           r = [ AsDictMsg(mensajes[mensaje]) for mensaje in range(len(mensajes)-1, -1, -1) ]
           self.SendJson(r)
 
-    def post(self,sala):
+    def post(self,usuario):
         r = json.loads(self.request.body)
-        checkres = model.NuevoMensaje(sala,r['user'],r['msg'])
+        checkres = model.NuevoMensaje(usuario,r['user'],r['msg'])
         if checkres is None:
+            NotificarChat(usuario)
             self.response.set_status(400)
         else:
             self.response.set_status(200)
@@ -133,7 +134,7 @@ class Privado(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.Notificar(destinatario)
+            gestor.NotificarPrivado(destinatario)
             self.response.set_status(200)
 
 class RegistrarDispositivo(RestHandler):

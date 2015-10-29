@@ -5,7 +5,6 @@ var app = angular.module('app-web', [
 
 
 //Constantes
-var addr = "192.168.1.2:8090";
 var partial = "view/"
 
 app.config(['$routeProvider',
