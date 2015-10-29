@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 import string
+import logging
 
 
 ##Informacion del Sistema
@@ -102,29 +103,32 @@ def AllUsers():
     return User.query()
 
 #CHAT
-def QuerySala(sala):
-    qrySala = UserPj.query(UserPj.localizacion == sala)
-    if qrySala is None:
+def QuerySala(user):
+    qrySala = UserPj.query(UserPj.user == user)
+    sala = qrySala.get().localizacion
+    if sala is None:
         return None
     else:
-        qry = Chat.query(Chat.sala == qrySala)
+        qry = Chat.query(Chat.sala == sala)
         salachat = qry.get()
         if salachat is None:
             return None
         else:
             return salachat.msgs
 
-def NuevoMensaje(sala,user,msg):
-    qrySala = UserPj.query(UserPj.localizacion == sala)
-    if qrySala is None:
+def NuevoMensaje(user,userpj,msg):
+    qrySala = UserPj.query(UserPj.user == user)
+    sala = qrySala.get().localizacion
+    if sala is None:
         return None
     else:
-        qry = Chat.query(Chat.sala == qrySala)
+        qry = Chat.query(Chat.sala == sala)
         salachat = qry.get()
+        logging.info(salachat)
         if salachat is None:
             return None
         else:
-            nuevomsg = Mensaje(msg=msg,user=user)
+            nuevomsg = Mensaje(msg=msg,user=userpj)
             salachat.msgs.append(nuevomsg)
             salachat.put()
             return salachat
@@ -139,7 +143,7 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
         if userC is None:
             return None
         else:
-            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,validado=False)
+            nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion="Desembarco",validado=False)
             nuevoPersonaje.put()
             return nuevoPersonaje
     else:
@@ -212,10 +216,14 @@ def FetchDispositivo(user):
             return usuario.api
 
 
-def FetchDispositivoSala(nombreSala):
-    qry = Chat.query(Chat.sala == nombreSala)
-    region = qry.get()
-    if region is None:
+def FetchDispositivoRegion(user):
+    qry = UserPj.query(UserPj.casa == destinatario)
+    nombreSala = qry.get().localizacion
+    if nombreSala is None:
         return None
-    else:
-        return region.usuarios
+        qry = Chat.query(Chat.sala == nombreSala)
+        region = qry.get()
+        if region is None:
+            return None
+        else:
+            return region.usuarios

@@ -2,6 +2,7 @@ import urllib
 from google.appengine.api import urlfetch
 import json
 import model
+import logging
 
 
 
@@ -26,7 +27,9 @@ def NotificarPrivado(user):
 def NotificarChat(sala):
     header = {"Content-Type": "application/json",
               "Authorization": "Basic OWNhMmFjMzgtNjQ5Zi0xMWU1LWFiY2ItMDdmMjUyNDg2ZjBm"}
-    usuarios = model.FetchDispositivoSala(sala)
+    usuarios = model.FetchDispositivoRegion(sala)
+    logging.info("Baila Morena")
+    logging.info(usuarios)
     payload = {"app_id": "9ca2ab98-649f-11e5-abca-9f7581033bb2",
                "include_player_ids": [usuarios],
                "contents": {"en": "News in the region","es":"Hay novedades en la region"},

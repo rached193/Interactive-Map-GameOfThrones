@@ -271,14 +271,14 @@ $scope.registrar = function () {
 
 app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootScope',function($scope,$cookies,$http,$window,$rootScope){
   $rootScope.tab = 3;
-  $http.get('/api/v1/Chat/Desembarco')
+  $http.get('/api/v1/Chat/'+$cookies.user)
   .success(function(data, status, headers, config) {
     $scope.msgs=data;
   });
 
   $scope.escribir = function (texto) {
     if ($cookies.personaje!=null){
-    $http.post('/api/v1/Chat/Desembarco',{user: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
+    $http.post('/api/v1/Chat/'+$cookies.user,{pjmsg: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
     .success(function(data, status, headers, config) {
       $window.location.reload();
     })
@@ -359,7 +359,7 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
   $scope.update = function(user){
     OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
     OneSignal.push(["getIdsAvailable", function(ids) {
-          $http.post("/api/v1/newDispositivo",{user:$cookies.user,api:ids.userId})
+          $http.post("/api/v1/Dispositivo",{user:$cookies.user,api:ids.userId})
             .success(function (){
 
 

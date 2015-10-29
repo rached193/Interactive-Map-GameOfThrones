@@ -80,11 +80,11 @@ class Chat(RestHandler):
 
     def post(self,usuario):
         r = json.loads(self.request.body)
-        checkres = model.NuevoMensaje(usuario,r['user'],r['msg'])
+        checkres = model.NuevoMensaje(usuario,r['pjmsg'],r['msg'])
         if checkres is None:
-            NotificarChat(usuario)
             self.response.set_status(400)
         else:
+            gestor.NotificarChat(usuario)
             self.response.set_status(200)
 
 
@@ -156,6 +156,6 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/allUser', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
-    ('/api/v1/newDispositivo', RegistrarDispositivo),
+    ('/api/v1/Dispositivo', RegistrarDispositivo),
 
 ], debug=True)
