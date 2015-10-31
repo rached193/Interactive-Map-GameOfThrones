@@ -54,8 +54,7 @@ a:hover
 .container
 {
 	overflow: hidden;
-	margin: 0em auto;
-	width: 1200px;
+	margin: 0em auto;S
 }
 
 /*********************************************************************************/
@@ -256,6 +255,7 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 .title
 {
+	dispay: inline;
 	margin-bottom: 3em;
 }
 
@@ -287,8 +287,9 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #header-wrapper
 {
-	position: relative;
-	padding: 5em 0em 7em 0em;
+	position: absolute 0 0 0;
+	height: 550px;
+	padding: 80px 0px 0px 0px;
 	background: #111111 url(header-bg.jpg) no-repeat center;
 	background-size: cover;
 }
@@ -296,7 +297,7 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 #header
 {
 	position: relative;
-	padding: 5em 0em;
+	height: 450px;
 }
 
 /*********************************************************************************/
@@ -305,15 +306,16 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #logo
 {
-	position: absolute;
-	top: 3.6em;
-	left: 0;
+	position: relative;
+	height: 270px;
+	display: inline;
+	float: left;
 }
 
-#logo h1
+#logo h2
 {
-	font-size: 2.6em;
-	color: #79C255;
+	font-size: 2em;
+	color: #ffffff;
 }
 
 #logo a
@@ -328,9 +330,11 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #menu
 {
-	position: absolute;
-	top: 4.5em;
-	right: 0;
+	position: relative;
+	top: 20px;
+	bottom: 20px;
+	display: inline;
+	float: right;
 }
 
 #menu ul
@@ -340,7 +344,8 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #menu li
 {
-	display: block;
+	display: inline;
+	margin: 5px 0px 5px 0px;
 	float: left;
 	text-align: center;
 }
@@ -472,7 +477,6 @@ ul.contact li a.icon-rss:before { background: #F2600B; }
 
 #welcome .container
 {
-	width: 1000px;
 	padding: 0px 100px;
 	color: rgba(255,255,255,0.8);
 }
