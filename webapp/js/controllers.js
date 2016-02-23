@@ -1,5 +1,5 @@
 var app = angular.module('app-web', [
-  'lvl.directives.dragdrop','ngRoute','ngCookies','ngAnimate','ngGrid',
+'ngRoute','ngCookies','ngAnimate','ngGrid',
 ]);
 
 
@@ -122,18 +122,20 @@ $scope.dropped = function() {
   //clear the previously applied color, if it exists
   var bgClass = drop.attr('data-color');
   if (bgClass) {
-    drop.removeClass(bgClass);
+    drop.removeAttr('data-color');
   }
+
 
   //add the dragged color
   bgClass = drag.attr("data-color");
-  //drop.addClass(bgClass);
+  //drag.attr('data-color', "");
+  drop.addClass(bgClass);
   drop.attr('fill',bgClass);
   drop.attr('data-color', bgClass);
 
   //if element has been dragged from the grid, clear dragged color
   if (drag.attr("x-lvl-drop-target")) {
-    drag.removeClass(bgClass);
+    drag.removeAttr('data-color');
   }
 };
 

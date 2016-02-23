@@ -43,12 +43,8 @@ angular.module('app-web').directive('mapTest', ['$compile', function ($compile) 
       angular.forEach(regions, function (path, key) {
         var regionElement = angular.element(path);
         //regionElement.attr("region", "");
-        //x-lvl-draggable='true' x-lvl-drop-target="true" x-on-drop="dropped(dragEl, dropEl)"
-        regionElement.attr("x-lvl-draggable", "true");
-        regionElement.attr("x-lvl-drop-target", "true");
-        regionElement.attr("x-on-drop", "dropped()");
-        //class="slot"
-        regionElement.attr("class", "slot ciudad");
+
+        regionElement.attr("class", "dropzone");
         $compile(regionElement)(scope);
       })
     }

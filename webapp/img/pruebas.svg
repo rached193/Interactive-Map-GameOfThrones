@@ -1,28 +1,16 @@
-<svg width="282" height="214" xmlns="http://www.w3.org/2000/svg">
+<svg width="500" height="200" xmlns="http://www.w3.org/2000/svg">
  <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
 
- <g>
   <title>background</title>
-  <defs>
+  <!--<defs>
     <style type="text/css"><![CDATA[
   .ciudad 		{fill:red; stroke:black; stroke-width:1;fill-opacity:0.90;}
 
   ]]></style>
 </defs>
-  <rect fill="#fff" id="canvas_background" height="216" width="284" y="-1" x="-1"/>
-  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
-   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
-  </g>
- </g>
- <g>
-  <title>Layer 1</title>
-  <rect id="svg_1" class="ciudad" height="26" width="28" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <rect id="svg_2" class="ciudad" height="29" width="25" y="78.5" x="198" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <rect id="svg_3" class="ciudad" height="27" width="31" y="133.5" x="82" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <rect id="svg_8" class="ciudad" height="28" width="41" y="131.5" x="179" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="#fff"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_9" y2="92.5" x2="209" y1="90.5" x1="93" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_11" y2="145.5" x2="200" y1="92.5" x1="207" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_13" y2="146.5" x2="94" y1="143.5" x1="200" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
-  <line stroke-linecap="null" stroke-linejoin="null" id="svg_14" y2="146.5" x2="95" y1="89.5" x1="95" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" stroke="#000" fill="none"/>
- </g>
+-->
+
+  <rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <rect id="svg_2" class="ciudad" height="100" width="100" y="79.5" x="200" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <rect id="svg_3" class="ciudad" height="100" width="100" y="79.5" x="330" stroke-width="1.5" stroke="#000" fill="#fff"/>
 </svg>
