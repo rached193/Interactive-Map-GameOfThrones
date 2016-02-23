@@ -1,5 +1,5 @@
 var app = angular.module('app-web', [
-  'ngRoute','ngCookies','ngAnimate','ngGrid',
+  'lvl.directives.dragdrop','ngRoute','ngCookies','ngAnimate','ngGrid',
 ]);
 
 
@@ -66,8 +66,8 @@ app.controller("ControladorPortada",['$scope','$cookies','$rootScope',function($
   };
 
   $scope.isSelected = function(checkTab){
-  return $rootScope.tab === checkTab;
-};
+    return $rootScope.tab === checkTab;
+  };
 
   $scope.logOut = function(){
     delete $cookies["user"];
@@ -112,6 +112,31 @@ var coloresProvincia = ["rgba(255,0,0,1)","rgba(0,255,9,1)","rgba(0,239,255,1)",
 "rgba(23,198,29,1)","rgba(255,94,0,1)","rgba(165,165,1,1)","rgba(255,133,1,1)","rgba(0,0,0,1)","rgba(144,144,0,1)","rgba(253,117,38,1)","rgba(22,31,169,1)",
 "rgba(135,134,134,1)","rgba(71,76,198,1)","rgba(1,166,178,1)","rgba(218,112,6,1)","rgba(255,255,255,1)","rgba(111,110,110,1)","rgba(101,100,100,1)","rgba(0,0,0,1)","rgba(255,128,0,1)",
 ];
+
+$scope.dropped = function() {
+  //this is application logic, for the demo we just want to color the grid squares
+  //the directive provides a native dom object, wrap with jqlite
+  var drop = angular.element($rootScope.dropEl);
+  var drag = angular.element($rootScope.dragEl);
+
+  //clear the previously applied color, if it exists
+  var bgClass = drop.attr('data-color');
+  if (bgClass) {
+    drop.removeClass(bgClass);
+  }
+
+  //add the dragged color
+  bgClass = drag.attr("data-color");
+  //drop.addClass(bgClass);
+  drop.attr('fill',bgClass);
+  drop.attr('data-color', bgClass);
+
+  //if element has been dragged from the grid, clear dragged color
+  if (drag.attr("x-lvl-drop-target")) {
+    drag.removeClass(bgClass);
+  }
+};
+
 $scope.createDummyData = function () {
   var dataTemp = {};
   angular.forEach(provinces, function (province, key) {
@@ -119,7 +144,7 @@ $scope.createDummyData = function () {
   });
   $scope.dummyData = dataTemp;
 };
-$scope.createDummyData();
+//$scope.createDummyData();
 }]);
 
 app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies','$rootScope', function($scope, $http, $location,$cookies,$rootScope){
@@ -278,16 +303,16 @@ app.controller("ControladorChat",['$scope','$cookies','$http','$window','$rootSc
 
   $scope.escribir = function (texto) {
     if ($cookies.personaje!=null){
-    $http.post('/api/v1/Chat/'+$cookies.user,{pjmsg: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
-    .success(function(data, status, headers, config) {
-      $window.location.reload();
-    })
-    .error(function (){
-      alert("Fallo en conexion");
-    })
-  }else{
-    alert("Registra Personaje");
-  }
+      $http.post('/api/v1/Chat/'+$cookies.user,{pjmsg: $cookies.sexo+" "+$cookies.personaje +" "+$cookies.casa , msg:texto})
+      .success(function(data, status, headers, config) {
+        $window.location.reload();
+      })
+      .error(function (){
+        alert("Fallo en conexion");
+      })
+    }else{
+      alert("Registra Personaje");
+    }
   };
 
 }]);
@@ -300,23 +325,23 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
     $scope.msgs=data;
   });
 
-    $http.get('/api/v1/allUser')
+  $http.get('/api/v1/allUser')
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
 
   $scope.escribir = function (mensaje) {
     if ($cookies.personaje!=null){
-    $http.post('/api/v1/Privado/'+mensaje.destinatario, {remitente:$cookies.casa, mensaje:mensaje.text})
-    .success(function(data, status, headers, config) {
-      $window.location.reload();
-    })
-    .error(function (){
-      alert("Fallo en conexion");
-    })
-  }else{
-    alert("Registra Personaje");
-  }
+      $http.post('/api/v1/Privado/'+mensaje.destinatario, {remitente:$cookies.casa, mensaje:mensaje.text})
+      .success(function(data, status, headers, config) {
+        $window.location.reload();
+      })
+      .error(function (){
+        alert("Fallo en conexion");
+      })
+    }else{
+      alert("Registra Personaje");
+    }
   };
 
 }]);
@@ -346,9 +371,9 @@ app.controller("ControladorHistoria",['$scope','$http','$rootScope',function($sc
 
 app.controller("ControladorFichaUsuario",['$scope','$http','$rootScope','$location','$cookies','$routeParams',function($scope,$http,$rootScope,$location,$cookies,$routeParams){
 
-$http.get('/api/v1/Personaje/'+$routeParams.userID).success(function(data, status, headers, config) {
-$scope.usuario = data;
-});
+  $http.get('/api/v1/Personaje/'+$routeParams.userID).success(function(data, status, headers, config) {
+    $scope.usuario = data;
+  });
 
 }]);
 
@@ -359,40 +384,40 @@ app.controller("ControladorPersonaje",['$scope','$http','$rootScope','$location'
     OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
     OneSignal.push(["getIdsAvailable", function(ids) {
       console.log(ids)
-          $http.post("/api/v1/Dispositivo/"+$cookies.user,{api:ids.userId})
-            .success(function (){
+      $http.post("/api/v1/Dispositivo/"+$cookies.user,{api:ids.userId})
+      .success(function (){
 
 
-          })
+      })
     }]);
-      var checkuser = {
-        name: $scope.user.name,
-        gender: $scope.user.gender,
-        edad: $scope.user.edad,
-        apariencia: $scope.user.apariencia,
-        historia: $scope.user.historia,
-      };
+    var checkuser = {
+      name: $scope.user.name,
+      gender: $scope.user.gender,
+      edad: $scope.user.edad,
+      apariencia: $scope.user.apariencia,
+      historia: $scope.user.historia,
+    };
 
-      $http.post("/api/v1/Personaje/"+$cookies.user,checkuser)
-      .success(function (user){
-        $cookies.personaje= $scope.user.name;
-        if ($scope.user.gender == "hombre"){
-          $cookies.sexo = "Lord";
-        }else if ($scope.user.gender == "mujer"){
-          $cookies.sexo = "Lady";
-        }
-        OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
-        OneSignal.push(["getIdsAvailable", function(ids) {
-            console.log("getIdsAvailable:"
-          + "\nUserID: " + ids.userId
-          + "\nRegistration ID: " + ids.registrationId);
-        }]);
+    $http.post("/api/v1/Personaje/"+$cookies.user,checkuser)
+    .success(function (user){
+      $cookies.personaje= $scope.user.name;
+      if ($scope.user.gender == "hombre"){
+        $cookies.sexo = "Lord";
+      }else if ($scope.user.gender == "mujer"){
+        $cookies.sexo = "Lady";
+      }
+      OneSignal.push(["registerForPushNotifications"], {modalPrompt: true});
+      OneSignal.push(["getIdsAvailable", function(ids) {
+        console.log("getIdsAvailable:"
+        + "\nUserID: " + ids.userId
+        + "\nRegistration ID: " + ids.registrationId);
+      }]);
 
-        $location.path("/index");
-      })
-      .error(function (data,status){
-        alert("Error al Crear Personaje.");
-      })
+      $location.path("/index");
+    })
+    .error(function (data,status){
+      alert("Error al Crear Personaje.");
+    })
   };
 
 

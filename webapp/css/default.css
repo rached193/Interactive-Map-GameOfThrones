@@ -550,6 +550,22 @@ svg path:hover , path.active { /* Amend this */
 	display: inline-block;
 }
 
+.lvl-over {
+	/* applied to a drop target when a draggable object is over it */
+	border: 2px dashed black !important;
+}
+
+[draggable] {
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	/* Required to make elements draggable in old WebKit */
+	-khtml-user-drag: element;
+	-webkit-user-drag: element;
+	cursor: move;
+	border:1px solid black;
+}
 
 /* #### bootstrap Form #### */
 .bootstrap-frm {
