@@ -75,6 +75,10 @@ interact('.dropzone').dropzone({
     event.relatedTarget.textContent = 'Dragged out';
   },
   ondrop: function (event) {
+    var scope = angular.element(document.getElementById("wrapper")).scope();
+    scope.$apply(function() {
+    scope.sitio = event.target.id;
+  });
     event.relatedTarget.textContent = 'Dropped';
   },
   ondropdeactivate: function (event) {

@@ -113,31 +113,11 @@ var coloresProvincia = ["rgba(255,0,0,1)","rgba(0,255,9,1)","rgba(0,239,255,1)",
 "rgba(135,134,134,1)","rgba(71,76,198,1)","rgba(1,166,178,1)","rgba(218,112,6,1)","rgba(255,255,255,1)","rgba(111,110,110,1)","rgba(101,100,100,1)","rgba(0,0,0,1)","rgba(255,128,0,1)",
 ];
 
-$scope.dropped = function() {
-  //this is application logic, for the demo we just want to color the grid squares
-  //the directive provides a native dom object, wrap with jqlite
-  var drop = angular.element($rootScope.dropEl);
-  var drag = angular.element($rootScope.dragEl);
 
-  //clear the previously applied color, if it exists
-  var bgClass = drop.attr('data-color');
-  if (bgClass) {
-    drop.removeAttr('data-color');
-  }
+$scope.sitio = "Fuera";
 
+$scope.ciudadinicial = "svg_1";
 
-  //add the dragged color
-  bgClass = drag.attr("data-color");
-  //drag.attr('data-color', "");
-  drop.addClass(bgClass);
-  drop.attr('fill',bgClass);
-  drop.attr('data-color', bgClass);
-
-  //if element has been dragged from the grid, clear dragged color
-  if (drag.attr("x-lvl-drop-target")) {
-    drag.removeAttr('data-color');
-  }
-};
 
 $scope.createDummyData = function () {
   var dataTemp = {};
