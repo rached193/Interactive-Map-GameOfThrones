@@ -126,7 +126,7 @@ $scope.createDummyData = function () {
   });
   $scope.dummyData = dataTemp;
 };
-//$scope.createDummyData();
+$scope.createDummyData();
 }]);
 
 app.controller("ControladorSignUp", ['$scope','$http', '$location','$cookies','$rootScope', function($scope, $http, $location,$cookies,$rootScope){

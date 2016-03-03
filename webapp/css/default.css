@@ -545,29 +545,32 @@ svg path:hover , path.active { /* Amend this */
 	opacity: 1;
 }
 
-.gridStyle {
-	border: 1px solid rgb(212,212,212);
-	display: inline-block;
-}
+/*********************************************************************************/
+/* Draggable                                                                     */
+/*********************************************************************************/
 
-.lvl-over {
-	/* applied to a drop target when a draggable object is over it */
-	border: 2px dashed black !important;
-}
+	.drag-drop {
+		display: inline-block;
+		min-width: 30px;
+		padding: 2em 0.5em;
 
-[draggable] {
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
-	/* Required to make elements draggable in old WebKit */
-	-khtml-user-drag: element;
-	-webkit-user-drag: element;
-	cursor: move;
-	border:1px solid black;
-}
+		color: #fff;
+		background-color: #29e;
+		border: solid 2px #fff;
 
-/* #### bootstrap Form #### */
+		-webkit-transform: translate(0px, 0px);
+						transform: translate(0px, 0px);
+
+		transition: background-color 0.3s;
+	}
+
+	.drag-drop.can-drop {
+		color: #000;
+		background-color: #4e4;
+	}
+/*********************************************************************************/
+/* Bootstrap Form                                                                */
+/*********************************************************************************/
 .bootstrap-frm {
 		margin-left:auto;
 		margin-right:auto;

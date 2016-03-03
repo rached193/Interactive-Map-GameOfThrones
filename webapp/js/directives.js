@@ -28,6 +28,7 @@ angular.module('app-web').directive('region', ['$compile', function ($compile) {
       };
       element.attr("ng-click", "regionClick()");
       element.attr("ng-attr-fill", "{{dummyData[elementId].color}}"); //<--- THIS BIT!
+      element.attr("class", "dropzone");
       element.removeAttr("region"); //Region
       $compile(element)(scope);
     }
@@ -45,6 +46,7 @@ angular.module('app-web').directive('mapTest', ['$compile', function ($compile) 
         //regionElement.attr("region", "");
 
         regionElement.attr("class", "dropzone");
+        //regionElement.attr("class", "draggable drag-drop dropzone");
         $compile(regionElement)(scope);
       })
     }
