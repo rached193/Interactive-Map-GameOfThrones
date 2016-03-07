@@ -116,7 +116,7 @@ var coloresProvincia = ["rgba(255,0,0,1)","rgba(0,255,9,1)","rgba(0,239,255,1)",
 
 $scope.sitio = "Fuera";
 
-$scope.ciudadinicial = "svg_1";
+$scope.ciudadinicial = "win";
 
 
 $scope.createDummyData = function () {

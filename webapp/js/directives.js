@@ -8,6 +8,20 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
         var regionElement = angular.element(path);
         regionElement.attr("region", "");
         regionElement.attr("dummy-data", "dummyData");
+
+        var regionId = regionElement.attr("id");
+
+        //Colocar Perosnajes
+        if(regionId == scope.ciudadinicial){
+        var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        var b = path.getBBox();
+        t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
+        t.textContent = "a";
+        t.setAttribute("fill", "red");
+        t.setAttribute("font-size", "14");
+        path.parentNode.insertBefore(t, path.nextSibling);
+
+      }
         $compile(regionElement)(scope);
       })
     }
