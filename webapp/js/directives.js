@@ -13,12 +13,19 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
 
         //Colocar Perosnajes
         if(regionId == scope.ciudadinicial){
-        var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        var t = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         var b = path.getBBox();
-        t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
-        t.textContent = "a";
+        //<rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
+        //t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
+        //t.setAttribute("x", (b.x + b.width/2));
+        //t.setAttribute("y", (b.y + b.height/2));
+      //  t.setAttribute("data-x", (b.x + b.width/2));
+        //t.setAttribute("data-y", (b.y + b.height/2));
+        //t.setAttribute("style","transform: translate("+ (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
         t.setAttribute("fill", "red");
-        t.setAttribute("font-size", "14");
+        t.setAttribute("width", "30");
+        t.setAttribute("height", "30");
+        t.setAttribute("class","draggable drag-drop");
         path.parentNode.insertBefore(t, path.nextSibling);
 
       }

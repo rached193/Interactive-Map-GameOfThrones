@@ -1,4 +1,4 @@
-
+//http://interactjs.io/
 
 // target elements with the "draggable" class
 interact('.draggable')
@@ -18,12 +18,11 @@ interact('.draggable')
     onmove: dragMoveListener,
     // call this function on every dragend event
     onend: function (event) {
-      var textEl = event.target.querySelector('p');
-
-      textEl && (textEl.textContent =
-        'moved a distance of '
-        + (Math.sqrt(event.dx * event.dx +
-                     event.dy * event.dy)|0) + 'px');
+      console.log("Movido");
+      //textEl && (textEl.textContent =
+        //'moved a distance of '
+      //  + (Math.sqrt(event.dx * event.dx +
+      //               event.dy * event.dy)|0) + 'px');
     }
   });
 
@@ -49,7 +48,6 @@ interact('.draggable')
   // enable draggables to be dropped into this
 interact('.dropzone').dropzone({
   // only accept elements matching this CSS selector
-  accept: '#yes-drop',
   // Require a 75% element overlap for a drop to be possible
   overlap: 0.75,
 
@@ -66,20 +64,22 @@ interact('.dropzone').dropzone({
     // feedback the possibility of a drop
     dropzoneElement.classList.add('drop-target');
     draggableElement.classList.add('can-drop');
-    draggableElement.textContent = 'Dragged in';
+    //draggableElement.textContent = 'Dragged in';
   },
   ondragleave: function (event) {
     // remove the drop feedback style
     event.target.classList.remove('drop-target');
     event.relatedTarget.classList.remove('can-drop');
-    event.relatedTarget.textContent = 'Dragged out';
+    //event.relatedTarget.textContent = 'Dragged out';
   },
   ondrop: function (event) {
+    //Asociamos al scope de angular
     var scope = angular.element(document.getElementById("wrapper")).scope();
+    console.log("Dropped");
     scope.$apply(function() {
     scope.sitio = event.target.id;
   });
-    event.relatedTarget.textContent = 'Dropped';
+    //event.relatedTarget.textContent = 'Dropped';
   },
   ondropdeactivate: function (event) {
     // remove active dropzone feedback
