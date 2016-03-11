@@ -5,6 +5,8 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
     link: function (scope, element, attrs) {
       var regions = element[0].querySelectorAll('.nopower');
       var frame = element[0].querySelectorAll('.frame');
+      var regionInicial = scope.dameLocalizacion();
+      console.log(regionInicial);
       angular.forEach(regions, function (path, key) {
         var regionElement = angular.element(path);
         regionElement.attr("region", "");
@@ -15,7 +17,7 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
 
 
         //Colocar Perosnajes
-        if(regionId == scope.ciudadinicial){
+        if(regionId == regionInicial){
         var t = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         var b = path.getBBox();
         //<rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>

@@ -153,15 +153,9 @@ def CambiarRegion(user,region):
 
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
-    region = "Desembarco"
+    region = "vim"
     qry = UserPj.query(UserPj.user == user)
     personaje = qry.get()
-    qryC = User.query(User.name == user)
-    userC = qryC.get()
-    qrySala = qry = Chat.query(Chat.sala == region)
-    sala = qrySala.get()
-    sala.usuarios.append(userC.api)
-    sala.put()
     if personaje is None:
         qryC = User.query(User.name == user)
         userC = qryC.get()
@@ -170,9 +164,13 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
         else:
             nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion=region,validado=False)
             nuevoPersonaje.put()
-            qrySala = qry = Chat.query(Chat.sala == region)
+            qrySala = Chat.query(Chat.sala == region)
             sala = qrySala.get()
-            sala.usuarios.append(userC.api)
+            if sala is None:
+                sala = Chat(sala=region)
+                sala.usuarios.append("userC.api")   #REVISAR REGISTRAR DISPOSITIVO
+            else:
+                sala.usuarios.append("userC.api")
             sala.put()
             return nuevoPersonaje
     else:
@@ -248,7 +246,6 @@ def FetchDispositivo(user):
 def FetchDispositivoRegion(user):
     qrySala = UserPj.query(UserPj.user == user)
     nombreSala = qrySala.get().localizacion
-    logging.info(nombreSala)
     if nombreSala is None:
         return None
     else:
@@ -258,3 +255,12 @@ def FetchDispositivoRegion(user):
             return None
         else:
             return region.usuarios
+
+#Mapa
+def FetchLocalizacion(user):
+    qryLocalizacion = UserPj.query(UserPj.user == user)
+    nombreProvincia = qryLocalizacion.get().localizacion
+    if nombreProvincia is None:
+        return None
+    else:
+        return nombreProvincia

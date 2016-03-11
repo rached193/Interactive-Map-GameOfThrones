@@ -78,7 +78,7 @@ app.controller("ControladorPortada",['$scope','$cookies','$rootScope',function($
 }]);
 
 
-app.controller("ControladorMapa",['$scope','$rootScope',function($scope,$rootScope){
+app.controller("ControladorMapa",['$http','$scope','$cookies','$rootScope',function($http,$scope,$cookies,$rootScope){
 
   $rootScope.tab = 7;
 
@@ -113,7 +113,13 @@ var coloresProvincia = ["rgba(255,0,0,1)","rgba(0,255,9,1)","rgba(0,239,255,1)",
 "rgba(135,134,134,1)","rgba(71,76,198,1)","rgba(1,166,178,1)","rgba(218,112,6,1)","rgba(255,255,255,1)","rgba(111,110,110,1)","rgba(101,100,100,1)","rgba(0,0,0,1)","rgba(255,128,0,1)",
 ];
 
-
+$scope.dameLocalizacion = function() { //!!!!!!DIRECTRICES NO ASINCRONAS TOCA CAMBIARLO
+  $http.get('/api/v1/Mapa/'+$cookies.user)
+  .success(function(data, status, headers, config) {
+    console.log(data);
+    return data.localizacion;
+  });
+}
 $scope.sitio = "Fuera";
 
 $scope.ciudadinicial = "win";

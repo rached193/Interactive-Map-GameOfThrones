@@ -7,7 +7,7 @@ import logging
 import model
 import gestor
 
-##Funciones auxioliares para enviar datos
+##Funciones auxuiliares para enviar datos
 def AsDictMsg(historial):
     return {'user':historial.user, 'msg':historial.msg}
 
@@ -142,13 +142,20 @@ class Dispositivo(RestHandler):
 
     def post(self,user):
         r = json.loads(self.request.body)
-        logging.info(r['api'])
         checkres = model.RegistrarDispositivo(user,r['api'])
         if checkres is None:
             self.response.set_status(400)
         else:
             self.response.set_status(200)
 
+
+class Mapa(RestHandler):
+    def get(self,user):
+        checkres = model.FetchLocalizacion(user)
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.SendJson({'localizacion': checkres})
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/signup', Registrar),
@@ -159,5 +166,6 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
     ('/api/v1/Dispositivo/(\w+)', Dispositivo),
+    ('/api/v1/Mapa/(\w+)', Mapa),
 
 ], debug=True)
