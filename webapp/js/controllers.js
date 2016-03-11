@@ -11,7 +11,7 @@ app.config(['$routeProvider',
 function($routeProvider){
   $routeProvider
   .when("/mapa", {
-    templateUrl: partial + "partialmain.html",
+    templateUrl: partial + "partialMapa.html",
     controller: "ControladorMapa"
   })
   .when("/index", {

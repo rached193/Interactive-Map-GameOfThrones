@@ -4,6 +4,7 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
     templateUrl: 'westeros.svg',
     link: function (scope, element, attrs) {
       var regions = element[0].querySelectorAll('.nopower');
+      var frame = element[0].querySelectorAll('.frame');
       angular.forEach(regions, function (path, key) {
         var regionElement = angular.element(path);
         regionElement.attr("region", "");
@@ -11,14 +12,16 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
 
         var regionId = regionElement.attr("id");
 
+
+
         //Colocar Perosnajes
         if(regionId == scope.ciudadinicial){
         var t = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         var b = path.getBBox();
         //<rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
         //t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
-        //t.setAttribute("x", (b.x + b.width/2));
-        //t.setAttribute("y", (b.y + b.height/2));
+        t.setAttribute("x", (b.x + b.width/2));
+        t.setAttribute("y", (b.y + b.height/2));
       //  t.setAttribute("data-x", (b.x + b.width/2));
         //t.setAttribute("data-y", (b.y + b.height/2));
         //t.setAttribute("style","transform: translate("+ (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
@@ -26,7 +29,8 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
         t.setAttribute("width", "30");
         t.setAttribute("height", "30");
         t.setAttribute("class","draggable drag-drop");
-        path.parentNode.insertBefore(t, path.nextSibling);
+        //t.setAttribute("z-index","999999999");
+        frame[0].appendChild(t);
 
       }
         $compile(regionElement)(scope);

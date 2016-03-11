@@ -564,10 +564,6 @@ svg path:hover , path.active { /* Amend this */
 		transition: background-color 0.3s;
 	}
 
-	.drag-drop.can-drop {
-		color: #000;
-		background-color: #4e4;
-	}
 /*********************************************************************************/
 /* Bootstrap Form                                                                */
 /*********************************************************************************/
