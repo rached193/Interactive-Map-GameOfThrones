@@ -78,6 +78,7 @@ interact('.dropzone').dropzone({
     console.log("Dropped");
     scope.$apply(function() {
     scope.sitio = event.target.id;
+    scope.mueveLocalizacion(event.target.id);
   });
     //event.relatedTarget.textContent = 'Dropped';
   },

@@ -150,12 +150,22 @@ class Dispositivo(RestHandler):
 
 
 class Mapa(RestHandler):
+
     def get(self,user):
         checkres = model.FetchLocalizacion(user)
         if checkres is None:
             self.response.set_status(400)
         else:
             self.SendJson({'localizacion': checkres})
+
+    def post(self,user):
+        r = json.loads(self.request.body)
+        checkres = model.MoverPersonaje(user,r['movimiento'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
+
 
 APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/signup', Registrar),

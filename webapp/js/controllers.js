@@ -113,7 +113,7 @@ app.controller("ControladorMapa", ['$http', '$scope', '$cookies', '$rootScope', 
     ];
 
 
-    $scope.dameLocalizacion = function () { //!!!!!!DIRECTRICES NO ASINCRONAS TOCA CAMBIARLO
+    $scope.dameLocalizacion = function () {
         var defered = $q.defer();
         var promise = defered.promise;
         $http.get('/api/v1/Mapa/' + $cookies.user)
@@ -128,6 +128,16 @@ app.controller("ControladorMapa", ['$http', '$scope', '$cookies', '$rootScope', 
     $scope.sitio = "Fuera";
 
     $scope.ciudadinicial = "win";
+
+    $scope.mueveLocalizacion = function (movimiento) {
+      $http.post('/api/v1/Mapa/' + $cookies.user,{movimiento: movimiento})
+          .success(function (data, status, headers, config) {
+            console.log(data);
+          }).error(function (err) {
+            alert("Algo exploto");
+    });
+
+  };
 
 
     $scope

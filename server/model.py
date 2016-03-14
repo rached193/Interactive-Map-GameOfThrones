@@ -132,28 +132,30 @@ def NuevoMensaje(user,userpj,msg):
             salachat.put()
             return salachat
 
-def CambiarRegion(user,region):
+def MoverPersonaje(user,region):
     qryUser = UserPj.query(UserPj.user == user)
     personaje = qryUser.get()
+    print personaje
     if personaje is None:
         return None
     else:
-        qrySala = qry = Chat.query(Chat.sala == region)
+        qrySala = Chat.query(Chat.sala == region)
         sala = qrySala.get()
-        if sala is None:
-            return None
-        else:
-            personaje.localizacion = region
-            personaje.put()
-            qryUser = User.query(User.user == user)
-            user = qryUser.get()
-            sala.usuarios.append(user.api)
-            sala.put()
-            return sala
+        #print sala
+        #if sala is None:
+            #return None
+        #else:
+        personaje.localizacion = region
+        personaje.put()
+        #qryUser = User.query(User.user == user)
+        #user = qryUser.get()
+        #sala.usuarios.append(user.api)
+        #sala.put()
+        return personaje
 
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
-    region = "vim"
+    region = "win"
     qry = UserPj.query(UserPj.user == user)
     personaje = qry.get()
     if personaje is None:
