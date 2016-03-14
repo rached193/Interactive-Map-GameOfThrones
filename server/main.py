@@ -155,7 +155,7 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/login', Loguear),
     ('/api/v1/seleccionar', SelecionarCasa),
     ('/api/v1/Chat/(\w+)', Chat),
-    ('/api/v1/allUser', AllUsers),
+    ('/api/v1/Personaje', AllUsers),
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
     ('/api/v1/Dispositivo/(\w+)', Dispositivo),

@@ -300,7 +300,7 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
     $scope.msgs=data;
   });
 
-    $http.get('/api/v1/allUser')
+    $http.get('/api/v1/Personaje')
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
@@ -324,7 +324,7 @@ app.controller("ControladorPrivados",['$scope','$cookies','$http','$window','$ro
 app.controller("ControladorListado",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
   $rootScope.tab = 2;
 
-  $http.get('/api/v1/allUser')
+  $http.get('/api/v1/Personaje')
   .success(function(data, status, headers, config) {
     $scope.myData=data;
   });
