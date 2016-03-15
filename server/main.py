@@ -6,6 +6,7 @@ import logging
 #Modulos Aplicacion
 import model
 import gestor
+import init
 
 ##Funciones auxuiliares para enviar datos
 def AsDictMsg(historial):
@@ -92,6 +93,7 @@ class Chat(RestHandler):
 class AllUsers(RestHandler):
 
     def get(self):
+        init.initMap()
         usuarios = model.AllUsers()
         if usuarios is None:
             self.response.set_status(400)

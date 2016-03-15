@@ -13,7 +13,7 @@ class Casa(ndb.Model):
 class Provincia(ndb.Model):
     clave = ndb.StringProperty()
     nombre = ndb.StringProperty()
-    colores = ndb.StringProperty()
+    color = ndb.StringProperty()
     propietario = ndb.StringProperty()
 
 ##Informacion de los Usuarios
@@ -139,7 +139,7 @@ def MoverPersonaje(user,region):
     if personaje is None:
         return None
     else:
-        qrySala = Chat.query(Chat.sala == region)
+        qrySala = Chat.query(Chat.sala == region)  #!!!!!CHATS TEMPORALMENTE DESABILITADOS
         sala = qrySala.get()
         #print sala
         #if sala is None:
@@ -266,3 +266,6 @@ def FetchLocalizacion(user):
         return None
     else:
         return nombreProvincia
+
+def NuevaProvincia(id,color,nombre):
+    return None
