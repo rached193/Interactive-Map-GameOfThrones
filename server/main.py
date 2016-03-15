@@ -6,8 +6,9 @@ import logging
 #Modulos Aplicacion
 import model
 import gestor
+import init
 
-##Funciones auxioliares para enviar datos
+##Funciones auxuiliares para enviar datos
 def AsDictMsg(historial):
     return {'user':historial.user, 'msg':historial.msg}
 
@@ -92,6 +93,7 @@ class Chat(RestHandler):
 class AllUsers(RestHandler):
 
     def get(self):
+        init.initMap()
         usuarios = model.AllUsers()
         if usuarios is None:
             self.response.set_status(400)
@@ -142,8 +144,25 @@ class Dispositivo(RestHandler):
 
     def post(self,user):
         r = json.loads(self.request.body)
-        logging.info(r['api'])
         checkres = model.RegistrarDispositivo(user,r['api'])
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.response.set_status(200)
+
+
+class Mapa(RestHandler):
+
+    def get(self,user):
+        checkres = model.FetchLocalizacion(user)
+        if checkres is None:
+            self.response.set_status(400)
+        else:
+            self.SendJson({'localizacion': checkres})
+
+    def post(self,user):
+        r = json.loads(self.request.body)
+        checkres = model.MoverPersonaje(user,r['movimiento'])
         if checkres is None:
             self.response.set_status(400)
         else:
@@ -159,5 +178,6 @@ APP = webapp2.WSGIApplication([    #Router del Back-End
     ('/api/v1/Personaje/(\w+)', Personaje),
     ('/api/v1/Privado/(\w+)', Privado),
     ('/api/v1/Dispositivo/(\w+)', Dispositivo),
+    ('/api/v1/Mapa/(\w+)', Mapa),
 
 ], debug=True)

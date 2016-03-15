@@ -13,7 +13,7 @@ class Casa(ndb.Model):
 class Provincia(ndb.Model):
     clave = ndb.StringProperty()
     nombre = ndb.StringProperty()
-    colores = ndb.StringProperty()
+    color = ndb.StringProperty()
     propietario = ndb.StringProperty()
 
 ##Informacion de los Usuarios
@@ -132,36 +132,32 @@ def NuevoMensaje(user,userpj,msg):
             salachat.put()
             return salachat
 
-def CambiarRegion(user,region):
+def MoverPersonaje(user,region):
     qryUser = UserPj.query(UserPj.user == user)
     personaje = qryUser.get()
+    print personaje
     if personaje is None:
         return None
     else:
-        qrySala = qry = Chat.query(Chat.sala == region)
+        qrySala = Chat.query(Chat.sala == region)  #!!!!!CHATS TEMPORALMENTE DESABILITADOS
         sala = qrySala.get()
-        if sala is None:
-            return None
-        else:
-            personaje.localizacion = region
-            personaje.put()
-            qryUser = User.query(User.user == user)
-            user = qryUser.get()
-            sala.usuarios.append(user.api)
-            sala.put()
-            return sala
+        #print sala
+        #if sala is None:
+            #return None
+        #else:
+        personaje.localizacion = region
+        personaje.put()
+        #qryUser = User.query(User.user == user)
+        #user = qryUser.get()
+        #sala.usuarios.append(user.api)
+        #sala.put()
+        return personaje
 
 #PERSONAJES
 def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
-    region = "Desembarco"
+    region = "win"
     qry = UserPj.query(UserPj.user == user)
     personaje = qry.get()
-    qryC = User.query(User.name == user)
-    userC = qryC.get()
-    qrySala = qry = Chat.query(Chat.sala == region)
-    sala = qrySala.get()
-    sala.usuarios.append(userC.api)
-    sala.put()
     if personaje is None:
         qryC = User.query(User.name == user)
         userC = qryC.get()
@@ -170,9 +166,13 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
         else:
             nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion=region,validado=False)
             nuevoPersonaje.put()
-            qrySala = qry = Chat.query(Chat.sala == region)
+            qrySala = Chat.query(Chat.sala == region)
             sala = qrySala.get()
-            sala.usuarios.append(userC.api)
+            if sala is None:
+                sala = Chat(sala=region)
+                sala.usuarios.append("userC.api")   #REVISAR REGISTRAR DISPOSITIVO
+            else:
+                sala.usuarios.append("userC.api")
             sala.put()
             return nuevoPersonaje
     else:
@@ -248,7 +248,6 @@ def FetchDispositivo(user):
 def FetchDispositivoRegion(user):
     qrySala = UserPj.query(UserPj.user == user)
     nombreSala = qrySala.get().localizacion
-    logging.info(nombreSala)
     if nombreSala is None:
         return None
     else:
@@ -258,3 +257,15 @@ def FetchDispositivoRegion(user):
             return None
         else:
             return region.usuarios
+
+#Mapa
+def FetchLocalizacion(user):
+    qryLocalizacion = UserPj.query(UserPj.user == user)
+    nombreProvincia = qryLocalizacion.get().localizacion
+    if nombreProvincia is None:
+        return None
+    else:
+        return nombreProvincia
+
+def NuevaProvincia(id,color,nombre):
+    return None

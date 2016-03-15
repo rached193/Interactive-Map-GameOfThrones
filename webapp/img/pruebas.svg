@@ -1,0 +1,16 @@
+<svg width="500" height="200" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+  <title>background</title>
+  <!--<defs>
+    <style type="text/css"><![CDATA[
+  .ciudad 		{fill:red; stroke:black; stroke-width:1;fill-opacity:0.90;}
+
+  ]]></style>
+</defs>
+-->
+
+  <rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <rect id="svg_2" class="ciudad" height="100" width="100" y="79.5" x="200" stroke-width="1.5" stroke="#000" fill="#fff"/>
+  <rect id="svg_3" class="ciudad" height="100" width="100" y="79.5" x="330" stroke-width="1.5" stroke="#000" fill="#fff"/>
+</svg>

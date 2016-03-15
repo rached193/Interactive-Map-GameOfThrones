@@ -545,13 +545,28 @@ svg path:hover , path.active { /* Amend this */
 	opacity: 1;
 }
 
-.gridStyle {
-	border: 1px solid rgb(212,212,212);
-	display: inline-block;
-}
+/*********************************************************************************/
+/* Draggable                                                                     */
+/*********************************************************************************/
 
+	.drag-drop {
+		display: inline-block;
+		min-width: 30px;
+		padding: 2em 0.5em;
 
-/* #### bootstrap Form #### */
+		color: #fff;
+		background-color: #29e;
+		border: solid 2px #fff;
+
+		-webkit-transform: translate(0px, 0px);
+						transform: translate(0px, 0px);
+
+		transition: background-color 0.3s;
+	}
+
+/*********************************************************************************/
+/* Bootstrap Form                                                                */
+/*********************************************************************************/
 .bootstrap-frm {
 		margin-left:auto;
 		margin-right:auto;
