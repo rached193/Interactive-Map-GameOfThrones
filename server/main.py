@@ -93,7 +93,7 @@ class Chat(RestHandler):
 class AllUsers(RestHandler):
 
     def get(self):
-        init.initMap()
+        #init.initMap()
         usuarios = model.AllUsers()
         if usuarios is None:
             self.response.set_status(400)

@@ -631,19 +631,13 @@ app.controller("ControladorListado",['$scope','$http','$rootScope',function($sco
   });
   $scope.mySelections = [];
 
-    $scope.escribir = function (mensaje) {
-        if ($cookies.personaje != null) {
-            $http.post('/api/v1/Privado/' + mensaje.destinatario, {remitente: $cookies.casa, mensaje: mensaje.text})
-                .success(function (data, status, headers, config) {
-                    $window.location.reload();
-                })
-                .error(function () {
-                    alert("Fallo en conexion");
-                })
-        } else {
-            alert("Registra Personaje");
-        }
-    };
+
+      $scope.gridOptions = {
+          data: 'myData',
+          columnDefs: [{field: 'name', displayName: 'Nombre'}, {field: 'casa', displayName: 'Casa'}],
+          multiSelect: false,
+          selectedItems: $scope.mySelections
+      };
 
 }]);
 
