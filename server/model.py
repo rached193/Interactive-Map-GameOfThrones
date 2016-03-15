@@ -103,6 +103,12 @@ def AllUsers():
     return User.query()
 
 #Region
+def NuevaSala(id):
+    sala = Chat(sala=id)
+    sala.put()
+    return sala
+
+
 def QuerySala(user):
     qrySala = UserPj.query(UserPj.user == user)
     sala = qrySala.get()
@@ -168,11 +174,7 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
             nuevoPersonaje.put()
             qrySala = Chat.query(Chat.sala == region)
             sala = qrySala.get()
-            if sala is None:
-                sala = Chat(sala=region)
-                sala.usuarios.append("userC.api")   #REVISAR REGISTRAR DISPOSITIVO
-            else:
-                sala.usuarios.append("userC.api")
+            sala.usuarios.append("userC.api")
             sala.put()
             return nuevoPersonaje
     else:
@@ -268,4 +270,14 @@ def FetchLocalizacion(user):
         return nombreProvincia
 
 def NuevaProvincia(id,color,nombre):
-    return None
+    qryProvincia = Provincia.query(Provincia.clave == id)
+    existeProvincia = qryProvincia.get()
+    if existeProvincia is None:
+        provincia = Provincia(clave = id, nombre = nombre, color = color)
+        provincia.put()
+        return provincia
+    else:
+        return None
+
+def CargarMapa():
+    return Provincia.query()

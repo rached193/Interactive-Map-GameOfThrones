@@ -6,14 +6,17 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
             var regions = element[0].querySelectorAll('.nopower');
             var frame = element[0].querySelectorAll('.frame');
             var regionInicial = scope.dameLocalizacion();
+
             regionInicial.then(function (data) {
-                console.log(data);
+              scope.Region = data.mapa;
+              scope.CargarMapa();
                 angular.forEach(regions, function (path, key) {
                     var regionElement = angular.element(path);
                     regionElement.attr("region", "");
                     regionElement.attr("dummy-data", "dummyData");
 
                     var regionId = regionElement.attr("id");
+
 
 
                     //Colocar Perosnajes
