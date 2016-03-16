@@ -111,7 +111,7 @@ app.controller("ControladorMapa", ['$http', '$scope', '$cookies', '$rootScope', 
         .CargarMapa = function () {
         var dataTemp = {};
         angular.forEach($scope.Region, function (province, key) {
-            dataTemp[province.provinces] = { name: province.nombresProvincia, color: province.coloresProvincia}
+            dataTemp[province.provinces] = { name: province.nombresProvincia, color: province.coloresProvincia, usuarios: province.usuarios}
         });
         $scope.dummyData = dataTemp;
     };

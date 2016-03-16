@@ -19,7 +19,7 @@ def AsDictPrivado(listados):
     return {'remitente':listados.remitente,'msgs':listados.msg}
 
 def AsDictProvincia(region):
-    return {'provinces':region.clave, 'nombresProvincia':region.nombre, 'coloresProvincia':region.color}
+    return {'provinces':region.clave, 'nombresProvincia':region.nombre, 'coloresProvincia':region.color, 'usuarios':region.personajes}
 
 #Declaracion de la Handler Global
 class RestHandler(webapp2.RequestHandler):
