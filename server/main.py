@@ -89,7 +89,7 @@ class Chat(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.NotificarChat(usuario)
+            #gestor.NotificarChat(usuario)
             self.response.set_status(200)
 
 
