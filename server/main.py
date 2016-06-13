@@ -18,6 +18,9 @@ def AsDictUser(user):
 def AsDictPrivado(listados):
     return {'remitente':listados.remitente,'msgs':listados.msg}
 
+def AsDictProvincia(region):
+    return {'provinces':region.clave, 'nombresProvincia':region.nombre, 'coloresProvincia':region.color, 'usuarios':region.personajes}
+
 #Declaracion de la Handler Global
 class RestHandler(webapp2.RequestHandler):
 
@@ -86,14 +89,13 @@ class Chat(RestHandler):
         if checkres is None:
             self.response.set_status(400)
         else:
-            gestor.NotificarChat(usuario)
+            #gestor.NotificarChat(usuario)
             self.response.set_status(200)
 
 
 class AllUsers(RestHandler):
 
     def get(self):
-        #init.initMap()
         usuarios = model.AllUsers()
         if usuarios is None:
             self.response.set_status(400)
@@ -153,12 +155,16 @@ class Dispositivo(RestHandler):
 
 class Mapa(RestHandler):
 
+
     def get(self,user):
+        init.initMap()
         checkres = model.FetchLocalizacion(user)
         if checkres is None:
             self.response.set_status(400)
         else:
-            self.SendJson({'localizacion': checkres})
+            mapa = model.CargarMapa()
+            r = [ AsDictProvincia(region) for region in mapa ]
+            self.SendJson({'localizacion': checkres, 'mapa':r})
 
     def post(self,user):
         r = json.loads(self.request.body)

@@ -1,4 +1,4 @@
-
+import model
 
 provinces = ["ah", "arb", "bg", "bi", "bit", "bla", "blu", "boc", "boi", "bos", "bwb", "bwk", "bzb", "cas", "ccp", "cid", "cks", "cra", "crk",
         "cw", "dm", "dra", "drm", "dus", "ess", "eyr", "ff", "fgs", "fin", "fmi", "frozen_short", "gde", "gol", "gul", "gwk", "gww",
@@ -32,4 +32,9 @@ coloresProvincia = ["rgba(255,0,0,1)", "rgba(0,255,9,1)", "rgba(0,239,255,1)", "
     ];
 
 def initMap():
-    print coloresProvincia
+    validar = model.Provincia.query()
+    if validar.get() is None:
+        for index in range(len(provinces)):
+            model.NuevaProvincia(provinces[index],coloresProvincia[index],nombresProvincia[index])
+            model.NuevaSala(provinces[index])
+    return
