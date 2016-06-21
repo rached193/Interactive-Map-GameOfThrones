@@ -1,5 +1,5 @@
 var app = angular.module('app-web', [
-    'ngRoute', 'ngCookies', 'ngAnimate', 'ngGrid',
+    'ngRoute', 'ngCookies', 'ngAnimate', 'ngGrid'
 ]);
 
 
@@ -51,73 +51,6 @@ app.config(['$routeProvider',
             })
             .otherwise({redirectTo: "/index"});
     }]);
-
-
-app.controller("ControladorPortada", ['$scope', '$cookies', '$rootScope', function ($scope, $cookies, $rootScope) {
-    $scope.isLogged = function () {
-        $scope.Usuario = $cookies.user;
-        $scope.Casa = $cookies.casa;
-        return !angular.isUndefined($cookies.user);
-    };
-
-    $scope.isRegister = function () {
-        return !angular.isUndefined($cookies.user) && $cookies.personaje != "null";
-    };
-
-    $scope.isSelected = function (checkTab) {
-        return $rootScope.tab === checkTab;
-    };
-
-    $scope.logOut = function () {
-        delete $cookies["user"];
-        delete $cookies["casa"];
-        delete $cookies["personaje"];
-        delete $cookies["sexo"];
-    };
-}]);
-
-
-app.controller("ControladorMapa", ['$http', '$scope', '$cookies', '$rootScope', '$q', function ($http, $scope, $cookies, $rootScope, $q) {
-
-    $rootScope.tab = 7;
-
-    $scope.dameLocalizacion = function () {
-        var defered = $q.defer();
-        var promise = defered.promise;
-        $http.get('/api/v1/Mapa/' + $cookies.user)
-            .success(function (data, status, headers, config) {
-                defered.resolve(data);
-            }).error(function (err) {
-            defered.reject(err)
-        });
-        return promise;
-    };
-    $scope.sitio = "Fuera";
-
-    $scope.ciudadinicial = "win";
-
-    $scope.mueveLocalizacion = function (movimiento) {
-      $http.post('/api/v1/Mapa/' + $cookies.user,{movimiento: movimiento})
-          .success(function (data, status, headers, config) {
-            console.log(data);
-          }).error(function (err) {
-            alert("Algo exploto");
-    });
-
-  };
-
-
-    $scope
-        .CargarMapa = function () {
-        var dataTemp = {};
-        angular.forEach($scope.Region, function (province, key) {
-            dataTemp[province.provinces] = { name: province.nombresProvincia, color: province.coloresProvincia, usuarios: province.usuarios}
-        });
-        $scope.dummyData = dataTemp;
-    };
-
-}]);
-
 app.controller("ControladorSignUp", ['$scope', '$http', '$location', '$cookies', '$rootScope', function ($scope, $http, $location, $cookies, $rootScope) {
 
     $rootScope.tab = 3;
