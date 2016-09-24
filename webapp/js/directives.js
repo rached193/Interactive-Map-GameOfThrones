@@ -16,6 +16,7 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
                     regionElement.attr("dummy-data", "dummyData");
 
                     var regionId = regionElement.attr("id");
+                    console.log(scope.dummyData[regionId]);
                     console.log(scope.dummyData[regionId].usuarios.length)
 
                     //if (regionId == data.localizacion) {
