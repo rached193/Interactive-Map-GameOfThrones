@@ -2,13 +2,14 @@
 
     'use strict';
 
-    angular.module('app-web').controller('ControladorPortada', ControladorPortada);
+    angular.module('app').controller('ControladorPortada', ControladorPortada);
 
-    ControladorPortada.$inject = ['$scope', '$cookies', '$rootScope'];
+    ControladorPortada.$inject = ['$scope', '$cookies', '$rootScope','mainFactory'];
 
-    function ControladorPortada($scope, $cookies, $rootScope) {
+    function ControladorPortada($scope, $cookies, $rootScope,mainFactory) {
         var vm = this;
         vm.pruebas = "gatitos";
+
         $scope.isLogged = function () {
             $scope.Usuario = $cookies.user;
             $scope.Casa = $cookies.casa;
@@ -23,13 +24,21 @@
             return $rootScope.tab === checkTab;
         };
 
-        $scope.logOut = function () {
+        $scope.logOut = function () { //Sustituir por Local Storage
             delete $cookies["user"];
             delete $cookies["casa"];
             delete $cookies["personaje"];
             delete $cookies["sexo"];
         };
+
+        // function init() {
+        //     mainFactory.getCasas().then(function (response) {
+        //         console.log(response);
+        //     });
+        // }
+        //     init();
     }
+
 
 
 })();

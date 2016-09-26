@@ -1,4 +1,4 @@
-angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
+angular.module('app').directive('svgMap', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         templateUrl: 'westeros.svg',
@@ -55,7 +55,7 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
 }]);
 
 
-angular.module('app-web').directive('region', ['$compile', function ($compile) {
+angular.module('app').directive('region', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         scope: {
@@ -75,7 +75,7 @@ angular.module('app-web').directive('region', ['$compile', function ($compile) {
     }
 }]);
 
-angular.module('app-web').directive('mapTest', ['$compile', function ($compile) {
+angular.module('app').directive('mapTest', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         templateUrl: 'pruebas.svg',

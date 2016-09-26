@@ -1,4 +1,4 @@
-var app = angular.module('app-web', [
+var app = angular.module('app', [
     'ngRoute', 'ngCookies', 'ngAnimate', 'ngGrid'
 ]);
 
@@ -59,7 +59,7 @@ app.controller("ControladorSignUp", ['$scope', '$http', '$location', '$cookies',
             var checkuser = {
                 name: $scope.user.name,
                 email: $scope.user.email,
-                passw: $scope.user.pass,
+                passw: $scope.user.pass
             };
             $http.post("/api/v1/signup", checkuser)
                 .success(function (user) {

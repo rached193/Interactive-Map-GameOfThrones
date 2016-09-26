@@ -3,7 +3,7 @@
     'use strict';
 
 
-    angular.module('app-web').controller('ControladorMapa', ControladorMapa);
+    angular.module('app').controller('ControladorMapa', ControladorMapa);
 
 
     ControladorMapa.$inject = ['$http', '$scope', '$cookies', '$rootScope', '$q'];
