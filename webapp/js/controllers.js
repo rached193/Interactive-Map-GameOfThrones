@@ -31,7 +31,10 @@ app.config(['$routeProvider',
             })
             .when("/casas", {
                 templateUrl: partial + "partialSeleccionarCasa.html",
-                controller: "ControladorSelecionarCasa"
+                controller: "ControladorSelecionarCasa",
+                resolve: {
+                    initData: initCasas
+                }
             })
             .when("/signup", {
                 templateUrl: partial + "partialsignupsimple.html",
@@ -51,6 +54,29 @@ app.config(['$routeProvider',
             })
             .otherwise({redirectTo: "/index"});
     }]);
+
+
+angular.module('app').factory('initCasas', initCasas);
+
+initCasas.$inject = ['$http', '$q'];
+
+
+function initCasas($http, q) {
+
+    var defered = q.defer();
+    var promise = defered.promise;
+
+    $http.get('/api/v1/seleccionar')
+        .success(function (data) {
+            console.log(data);
+            defered.resolve(data);
+        }).error(function (err) {
+        defered.reject(err)
+    });
+    return promise;
+}
+
+
 app.controller("ControladorSignUp", ['$scope', '$http', '$location', '$cookies', '$rootScope', function ($scope, $http, $location, $cookies, $rootScope) {
 
     $rootScope.tab = 3;
@@ -477,9 +503,9 @@ app.controller("ControladorChat", ['$scope', '$cookies', '$http', '$window', '$r
     $scope.escribir = function (texto) {
         if ($cookies.personaje != null) {
             $http.post('/api/v1/Chat/' + $cookies.user, {
-                    pjmsg: $cookies.sexo + " " + $cookies.personaje + " " + $cookies.casa,
-                    msg: texto
-                })
+                pjmsg: $cookies.sexo + " " + $cookies.personaje + " " + $cookies.casa,
+                msg: texto
+            })
                 .success(function (data, status, headers, config) {
                     $window.location.reload();
                 })
@@ -502,42 +528,42 @@ app.controller("ControladorPrivados", ['$scope', '$cookies', '$http', '$window',
         });
 
     $http.get('/api/v1/Personaje')
-  .success(function(data, status, headers, config) {
-    $scope.myData=data;
-  });
+        .success(function (data, status, headers, config) {
+            $scope.myData = data;
+        });
 
-  $scope.escribir = function (mensaje) {
-    if ($cookies.personaje!=null){
-    $http.post('/api/v1/Privado/'+mensaje.destinatario, {remitente:$cookies.casa, mensaje:mensaje.text})
-    .success(function(data, status, headers, config) {
-      $window.location.reload();
-    })
-    .error(function (){
-      alert("Fallo en conexion");
-    })
-  }else{
-    alert("Registra Personaje");
-  }
-  };
+    $scope.escribir = function (mensaje) {
+        if ($cookies.personaje != null) {
+            $http.post('/api/v1/Privado/' + mensaje.destinatario, {remitente: $cookies.casa, mensaje: mensaje.text})
+                .success(function (data, status, headers, config) {
+                    $window.location.reload();
+                })
+                .error(function () {
+                    alert("Fallo en conexion");
+                })
+        } else {
+            alert("Registra Personaje");
+        }
+    };
 
 }]);
 
-app.controller("ControladorListado",['$scope','$http','$rootScope',function($scope,$http,$rootScope){
-  $rootScope.tab = 2;
+app.controller("ControladorListado", ['$scope', '$http', '$rootScope', function ($scope, $http, $rootScope) {
+    $rootScope.tab = 2;
 
-  $http.get('/api/v1/Personaje')
-  .success(function(data, status, headers, config) {
-    $scope.myData=data;
-  });
-  $scope.mySelections = [];
+    $http.get('/api/v1/Personaje')
+        .success(function (data, status, headers, config) {
+            $scope.myData = data;
+        });
+    $scope.mySelections = [];
 
 
-      $scope.gridOptions = {
-          data: 'myData',
-          columnDefs: [{field: 'name', displayName: 'Nombre'}, {field: 'casa', displayName: 'Casa'}],
-          multiSelect: false,
-          selectedItems: $scope.mySelections
-      };
+    $scope.gridOptions = {
+        data: 'myData',
+        columnDefs: [{field: 'name', displayName: 'Nombre'}, {field: 'casa', displayName: 'Casa'}],
+        multiSelect: false,
+        selectedItems: $scope.mySelections
+    };
 
 }]);
 

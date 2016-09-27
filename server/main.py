@@ -27,6 +27,10 @@ def AsDictProvincia(region):
             'usuarios': region.personajes}
 
 
+def AsDictCasas(item):
+    return {'nombre': item.name, 'provincia': item.provincia, 'escudo': item.escudo, 'plot': item.plot}
+
+
 # Declaracion de la Handler Global
 class RestHandler(webapp2.RequestHandler):
     def dispatch(self):
@@ -73,6 +77,14 @@ class SelecionarCasa(RestHandler):
             self.response.set_status(400)
         else:
             self.response.set_status(200)
+
+    def get(self):
+        repuesta = model.CargarCasas()
+        if repuesta is None:
+            self.response.set_status(500)
+        else:
+            r = [AsDictCasas(item) for item in repuesta]
+            self.SendJson(r)
 
 
 # Handler de Chat Regional

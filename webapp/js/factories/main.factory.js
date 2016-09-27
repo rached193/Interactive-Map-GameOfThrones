@@ -4,19 +4,19 @@
 
     angular.module('app').factory('mainFactory', mainFactory);
 
-    mainFactory.$inject = ['$scope', '$rootScope', '$http', '$q'];
+    mainFactory.$inject = [ '$http', '$q'];
 
 
-    function mainFactory($scope, $rootScope, $http, q) {
+    function mainFactory( $http, q) {
 
       var factory = {
-            getCasas: _getCasas()
+            getCasas: _getCasas
         };
         function _getCasas() {
             var defered = q.defer();
             var promise = defered.promise;
 
-            $http.get('/api/v1/Personaje')
+            $http.get('/api/v1/seleccionar')
                 .success(function (data, status, headers, config) {
                     console.log(data);
                      defered.resolve(data);
