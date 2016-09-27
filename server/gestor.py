@@ -31,7 +31,7 @@ def NotificarPrivado(user):
 def NotificarChat(sala):
     header = {"Content-Type": "application/json",
               "Authorization": "Basic OWNhMmFjMzgtNjQ5Zi0xMWU1LWFiY2ItMDdmMjUyNDg2ZjBm"}
-    usuarios = model.FetchDispositivoRegion(sala)
+    usuarios = model.FetchDispositivoRegion(sala) #!!!!FALTA BUSCAR LAS APIS 
 
     usuariosDecode = json.dumps(usuarios)
     r =[ mensaje for mensaje in usuarios ]

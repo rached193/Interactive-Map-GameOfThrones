@@ -6,18 +6,22 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
             var regions = element[0].querySelectorAll('.nopower');
             var frame = element[0].querySelectorAll('.frame');
             var regionInicial = scope.dameLocalizacion();
+
             regionInicial.then(function (data) {
-                console.log(data);
+              scope.Region = data.mapa;
+              scope.CargarMapa();
                 angular.forEach(regions, function (path, key) {
                     var regionElement = angular.element(path);
                     regionElement.attr("region", "");
                     regionElement.attr("dummy-data", "dummyData");
 
                     var regionId = regionElement.attr("id");
+                    console.log(scope.dummyData[regionId].usuarios.length)
 
+                    //if (regionId == data.localizacion) {
 
                     //Colocar Perosnajes
-                    if (regionId == data.localizacion) {
+                    if (scope.dummyData[regionId].usuarios.length>0) {
                         var t = document.createElementNS("http://www.w3.org/2000/svg", "rect");
                         var b = path.getBBox();
                         //<rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
@@ -27,10 +31,15 @@ angular.module('app-web').directive('svgMap', ['$compile', function ($compile) {
                         //  t.setAttribute("data-x", (b.x + b.width/2));
                         //t.setAttribute("data-y", (b.y + b.height/2));
                         //t.setAttribute("style","transform: translate("+ (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
-                        t.setAttribute("fill", "red");
+
                         t.setAttribute("width", "30");
                         t.setAttribute("height", "30");
-                        t.setAttribute("class", "draggable drag-drop");
+                        if (regionId == data.localizacion) {
+                          t.setAttribute("fill", "red");
+                          t.setAttribute("class", "draggable drag-drop");
+                        }else{
+                          t.setAttribute("fill", "blue");
+                        }
                         //t.setAttribute("z-index","999999999");
                         frame[0].appendChild(t);
 

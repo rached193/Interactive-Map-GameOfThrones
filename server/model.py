@@ -15,6 +15,7 @@ class Provincia(ndb.Model):
     nombre = ndb.StringProperty()
     color = ndb.StringProperty()
     propietario = ndb.StringProperty()
+    personajes = ndb.StringProperty(repeated=True)
 
 ##Informacion de los Usuarios
 #Datos personales del usuario
@@ -48,7 +49,6 @@ class Mensaje(ndb.Model):
 class Chat(ndb.Model):
     sala = ndb.StringProperty()
     msgs = ndb.StructuredProperty(Mensaje, repeated=True)
-    usuarios = ndb.StringProperty(repeated=True)
 
 class Conversacion(ndb.Model):
     remitente = ndb.StringProperty()
@@ -103,13 +103,19 @@ def AllUsers():
     return User.query()
 
 #Region
+def NuevaSala(id):
+    sala = Chat(sala=id)
+    sala.put()
+    return sala
+
+
 def QuerySala(user):
-    qrySala = UserPj.query(UserPj.user == user)
-    sala = qrySala.get()
-    if sala is None:
+    qryUser = UserPj.query(UserPj.user == user)
+    user = qryUser.get()
+    if user is None:
         return None
     else:
-        qry = Chat.query(Chat.sala == sala.localizacion)
+        qry = Chat.query(Chat.sala == user.localizacion)
         salachat = qry.get()
         if salachat is None:
             return None
@@ -139,18 +145,20 @@ def MoverPersonaje(user,region):
     if personaje is None:
         return None
     else:
-        qrySala = Chat.query(Chat.sala == region)  #!!!!!CHATS TEMPORALMENTE DESABILITADOS
-        sala = qrySala.get()
-        #print sala
-        #if sala is None:
-            #return None
-        #else:
+        qryProvinciaOrigen = Provincia.query(Provincia.clave==personaje.localizacion)
+        provinciaOrigen = qryProvinciaOrigen.get()
+        listado = provinciaOrigen.personajes
+        listado.remove(user)
+        provinciaOrigen.personajes = listado
+        provinciaOrigen.put()
+
+        qryProvinciaDestino = Provincia.query(Provincia.clave==region)
+        provinciaDestino = qryProvinciaDestino.get()
+        provinciaDestino.personajes.append(user)
+        provinciaDestino.put()
+
         personaje.localizacion = region
         personaje.put()
-        #qryUser = User.query(User.user == user)
-        #user = qryUser.get()
-        #sala.usuarios.append(user.api)
-        #sala.put()
         return personaje
 
 #PERSONAJES
@@ -166,14 +174,10 @@ def RegistrarPersonaje(user,nombre,edad,gender,apariencia,historia):
         else:
             nuevoPersonaje = UserPj(user=user,nombre=nombre,edad=int(edad),sexo=gender,historia=historia,apariencia=apariencia,casa=userC.casa,localizacion=region,validado=False)
             nuevoPersonaje.put()
-            qrySala = Chat.query(Chat.sala == region)
-            sala = qrySala.get()
-            if sala is None:
-                sala = Chat(sala=region)
-                sala.usuarios.append("userC.api")   #REVISAR REGISTRAR DISPOSITIVO
-            else:
-                sala.usuarios.append("userC.api")
-            sala.put()
+            qryProvincia = Provincia.query(Provincia.clave == region)
+            provincia = qryProvincia.get()
+            provincia.personajes.append(user)
+            provincia.put()
             return nuevoPersonaje
     else:
         return None
@@ -246,26 +250,37 @@ def FetchDispositivo(user):
 
 
 def FetchDispositivoRegion(user):
-    qrySala = UserPj.query(UserPj.user == user)
-    nombreSala = qrySala.get().localizacion
+    qryUser = UserPj.query(UserPj.user == user)
+    provincia = qryUser.get().localizacion
     if nombreSala is None:
         return None
     else:
-        qry = Chat.query(Chat.sala == nombreSala)
+        qry = Provincia.query(Provincia.clave == provincia)
         region = qry.get()
         if region is None:
             return None
         else:
-            return region.usuarios
+            return region.personajes
 
 #Mapa
 def FetchLocalizacion(user):
     qryLocalizacion = UserPj.query(UserPj.user == user)
     nombreProvincia = qryLocalizacion.get().localizacion
+
     if nombreProvincia is None:
         return None
     else:
         return nombreProvincia
 
 def NuevaProvincia(id,color,nombre):
-    return None
+    qryProvincia = Provincia.query(Provincia.clave == id)
+    existeProvincia = qryProvincia.get()
+    if existeProvincia is None:
+        provincia = Provincia(clave = id, nombre = nombre, color = color)
+        provincia.put()
+        return provincia
+    else:
+        return None
+
+def CargarMapa():
+    return Provincia.query()
