@@ -1,0 +1,28 @@
+{
+  "name": "desembarcodeltemplario",
+  "description": "Aplicacion web basada en Juego de Tronos",
+  "main": "js/controllers.js",
+  "authors": [
+    "Rached <archer193@hotmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "Web"
+  ],
+  "homepage": "https://github.com/rached193/Interactive-Map-GameOfThrones",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.3.20",
+    "angular-route": "1.3.20",
+    "angular-cookies": "1.3.20",
+    "angular-animate": "1.3.20",
+    "isteven-angular-multiselect": "angular-multi-select#^4.0.0"
+  }
+}
