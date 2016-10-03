@@ -1,34 +1,52 @@
 <div id="wrapper">
-  <div class="container">
-    <div align=center >
-      <h1 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >Casa {{slide.nombre}}</h1>
-    </div>
-  </br>
-    <div align=center class="container slider">
-      <img class="images" data-ng-repeat="slide in slides"
-      data-ng-src="casas/{{slide.escudo}}" data-ng-hide="!isCurrentSlideIndex($index)">
-    </div>
-  </br>
-  <div align=center >
-    <h3 style="color:black;" data-ng-repeat="slide in slides" data-ng-hide="!isCurrentSlideIndex($index)" >{{slide.plot}}</h3>
-  </div>
-</br>
-  <div align=center >
-    <button ng-click="registrar()" type="submit" class="btn btn-lg btn-primary" style="margin-bottom: 10px">Registrar Casa</button>
-  </div>
-</br>
-<div align=center >
-<a href="" data-ng-click="nextSlide()">Anterior</a>
-<a href="" data-ng-click="prevSlide()">Siguiente</a>
-</div>
-</br>
-<div align=center id="opc">
-  <ul>
-    <li data-ng-repeat="slide in slides">
-      <a href="" data-ng-click="setCurrentSlideIndex($index)">Casa {{slide.nombre}}</a>
-    </li>
-  </ul>
+    <div class="container">
+        <div class="nav-casas">
+            <ul>
+                <li><span class="glyphicon glyphicon-arrow-left"></span></li>
+                <li>
+                    <div
+                            isteven-multi-select
+                            input-model="casasVM.slides"
+                            output-model="casasVM.out"
+                            button-label="pic nombre"
+                            item-label="pic nombre maker"
+                            tick-property="ticked"
+                            selection-mode="single"
+                            on-item-click="casasVM.pick(data)"
+                    >
+                    </div>
+                </li>
+                <li><span class="glyphicon glyphicon-arrow-right"></span></li>
+            </ul>
+        </div>
 
-</div>
-</div>
+        {{casasVM.out}}
+
+        <div align=center>
+            <h1 style="color:black;" data-ng-repeat="slide in casasVM.slides" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">Casa
+                {{slide.nombre}}</h1>
+        </div>
+        </br>
+        <div align=center class="container slider">
+            <img class="images" data-ng-repeat="slide in casasVM.slides"
+                 data-ng-src="casas/{{slide.escudo}}" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">
+        </div>
+        </br>
+        <div align=center>
+            <h3 style="color:black;" data-ng-repeat="slide in casasVM.slides" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">
+                {{slide.plot}}</h3>
+        </div>
+        </br>
+        <div align=center>
+            <button ng-click="casasVM.registrar()" type="submit" class="btn btn-lg btn-primary" style="margin-bottom: 10px">
+                Registrar Casa
+            </button>
+        </div>
+        </br>
+        <div align=center>
+            <a href="" data-ng-click="casasVM.nextSlide()">Anterior</a>
+            <a href="" data-ng-click="casasVM.prevSlide()">Siguiente</a>
+        </div>
+        </br>
+    </div>
 </div>

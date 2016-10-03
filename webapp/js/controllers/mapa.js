@@ -4,9 +4,8 @@
 
 
     angular.module('app').controller('ControladorMapa', ControladorMapa);
-
-
     ControladorMapa.$inject = ['$http', '$scope', '$cookies', '$rootScope', '$q'];
+
     function ControladorMapa($http, $scope, $cookies, $rootScope, $q) {
         var vm = this;
         $rootScope.tab = 7;

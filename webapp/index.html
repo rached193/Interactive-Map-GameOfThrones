@@ -20,10 +20,12 @@ Released   : 20140228
 
     <!-- Estilos de la web-->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="node_modules/ng-grid/ng-grid.css">
+    <!--<link rel="stylesheet" href="node_modules/ng-grid/ng-grid.css">-->
     <link href="http://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet"/>
     <link href="default.css" rel="stylesheet" type="text/css" media="all"/>
     <link href="fonts.css" rel="stylesheet" type="text/css" media="all"/>
+
+    <link rel="stylesheet" href="bower_components/isteven-angular-multiselect/isteven-multi-select.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -31,11 +33,13 @@ Released   : 20140228
 
     <!-- Librerias -->
       <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.20/angular.min.js"></script>-->
-    <script src="node_modules/angular/angular.min.js" type="text/javascript"></script>
-    <script src="node_modules/angular-route/angular-route.min.js" type="text/javascript"></script>
-    <script src="node_modules/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
-    <script src="node_modules/angular-animate/angular-animate.js" type="text/javascript"></script>
-    <script src="node_modules/ng-grid/build/ng-grid.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular/angular.min.js" type="text/javascript"></script>
+    <script src="bower_components\ng-lodash\build\ng-lodash.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js" type="text/javascript"></script>
+    <script src="bower_components/angular-animate/angular-animate.js" type="text/javascript"></script>
+    <script src=bower_components/isteven-angular-multiselect/isteven-multi-select.js type="text/javascript"></script>
+    <!--<script src="bower_components/ng-grid/build/ng-grid.min.js" type="text/javascript"></script>-->
 
     <!-- Notificaciones Push -->
     <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
@@ -54,12 +58,13 @@ Released   : 20140228
 
 
     <!-- Logica -->
-
+    <script src="app.js" type="text/javascript"></script>
     <script src="controllers.js" type="text/javascript"></script>
 
     <script src="directives.js" type="text/javascript"></script>
     <script src="controllers/portada.js" type="text/javascript"></script>
     <script src="controllers/mapa.js" type="text/javascript"></script>
+    <script src="controllers/casas.js" type="text/javascript"></script>
     <script src="factories/main.factory.js" type="text/javascript"></script>
 
     <script src="filters.js" type="text/javascript"></script>
