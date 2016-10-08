@@ -31,25 +31,20 @@
 
         vm.prevSlide = function () {
             vm.currentIndex = (vm.currentIndex < vm.slides.length - 1) ? ++vm.currentIndex : 0;
-            var casas = initData;
-            casas[vm.currentIndex]['ticked'] = true;
-            vm.slides = casas;
-            vm.out = [];
+            vm.slides = angular.copy(initData);
+            vm.slides[vm.currentIndex]['ticked'] = true;
         };
 
         vm.nextSlide = function () {
             vm.currentIndex = (vm.currentIndex > 0) ? --vm.currentIndex : vm.slides.length - 1;
-            var casas = initData;
-            casas[vm.currentIndex]['ticked'] = true;
-            vm.slides = casas;
-            vm.out = [];
+            vm.slides = angular.copy(initData);
+            vm.slides[vm.currentIndex]['ticked'] = true;
         };
 
 
         function init() {
-            var casas = initData;
-            casas[0]['ticked'] = true;
-            vm.slides = casas;
+            vm.slides = angular.copy(initData);
+            vm.slides[0]['ticked'] = true;
         }
 
         init();

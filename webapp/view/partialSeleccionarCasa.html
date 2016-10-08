@@ -2,7 +2,7 @@
     <div class="container">
         <div class="nav-casas">
             <ul>
-                <li><span class="glyphicon glyphicon-arrow-left"></span></li>
+                <li><a data-ng-click="casasVM.nextSlide()" class="glyphicon glyphicon-arrow-left"></a></li>
                 <li>
                     <div
                             isteven-multi-select
@@ -13,14 +13,14 @@
                             tick-property="ticked"
                             selection-mode="single"
                             on-item-click="casasVM.pick(data)"
+                            helper-elements=""
                     >
                     </div>
                 </li>
-                <li><span class="glyphicon glyphicon-arrow-right"></span></li>
+                <li><a data-ng-click="casasVM.prevSlide()" class="glyphicon glyphicon-arrow-right"></a></li>
             </ul>
         </div>
 
-        {{casasVM.out}}
 
         <div align=center>
             <h1 style="color:black;" data-ng-repeat="slide in casasVM.slides" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">Casa
@@ -29,7 +29,7 @@
         </br>
         <div align=center class="container slider">
             <img class="images" data-ng-repeat="slide in casasVM.slides"
-                 data-ng-src="casas/{{slide.escudo}}" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">
+                 data-ng-src="casas/{{slide.nombre |formatEscudo}}" data-ng-hide="!casasVM.isCurrentSlideIndex($index)">
         </div>
         </br>
         <div align=center>
@@ -42,11 +42,5 @@
                 Registrar Casa
             </button>
         </div>
-        </br>
-        <div align=center>
-            <a href="" data-ng-click="casasVM.nextSlide()">Anterior</a>
-            <a href="" data-ng-click="casasVM.prevSlide()">Siguiente</a>
-        </div>
-        </br>
     </div>
 </div>

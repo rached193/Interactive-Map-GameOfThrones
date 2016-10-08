@@ -70,7 +70,7 @@ function initCasas($http, q, lodash) {
     $http.get('/api/v1/seleccionar')
         .success(function (data) {
             lodash.forEach(data, function (item, index) {
-                data[index]['pic'] = '<img src="casas/' + item.nombre.toLowerCase() + '.png"/>';
+                data[index]['pic'] = '<img src="casas/' + item.nombre.toLowerCase().replace(/ /g,"_") + '.png"/>';
                 data[index]['indice'] = index;
             });
             defered.resolve(data);

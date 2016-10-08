@@ -7,7 +7,7 @@ import logging
 class Casa(ndb.Model):
     name = ndb.StringProperty()
     provincia = ndb.StringProperty()
-    escudo = ndb.StringProperty()
+    disponible = ndb.BooleanProperty()
     plot = ndb.StringProperty()
 
 
@@ -301,11 +301,11 @@ def NuevaProvincia(id, color, nombre):
         return None
 
 
-def NuevaCasa(nombre, provincia, escudo, plot):
+def NuevaCasa(nombre, provincia, disponible, plot):
     qryCasa = Casa.query(Casa.name == nombre)
     existeCasa = qryCasa.get()
     if existeCasa is None:
-        casa = Casa(name=nombre, provincia=provincia, escudo=escudo, plot=plot)
+        casa = Casa(name=nombre, provincia=provincia, disponible=disponible, plot=plot)
         casa.put()
         return casa
     else:

@@ -1,26 +1,4 @@
-app.controller("ControladorSignUp", ['$scope', '$http', '$location', '$cookies', '$rootScope', function ($scope, $http, $location, $cookies, $rootScope) {
 
-    $rootScope.tab = 3;
-    $scope.update = function (user) {
-        if (user.pass == user.repass) {
-            var checkuser = {
-                name: $scope.user.name,
-                email: $scope.user.email,
-                passw: $scope.user.pass
-            };
-            $http.post("/api/v1/signup", checkuser)
-                .success(function (user) {
-                    $cookies.user = $scope.user.name;
-                    $location.path("/index");
-                })
-                .error(function () {
-                    alert("Nombre o email ya registrado.");
-                })
-        } else {
-            alert("Las contraseñas no coinciden");
-        }
-    };
-}]);
 
 
 app.controller("ControladorLogin", ['$scope', '$http', '$location', '$cookies', '$rootScope', function ($scope, $http, $location, $cookies, $rootScope) {

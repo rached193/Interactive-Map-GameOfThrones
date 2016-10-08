@@ -28,7 +28,7 @@ def AsDictProvincia(region):
 
 
 def AsDictCasas(item):
-    return {'nombre': item.name, 'provincia': item.provincia, 'escudo': item.escudo, 'plot': item.plot}
+    return {'nombre': item.name, 'provincia': item.provincia, 'disponible': item.disponible, 'plot': item.plot}
 
 
 # Declaracion de la Handler Global

@@ -68,10 +68,10 @@ def initMap():
 
 
 def initCasas():
-    validar = model.Provincia.query()
+    validar = model.Casa.query()
     if validar.get() is None:
         with open('server/data/casa_info.json') as json_data:
             listado_casas = json.load(json_data)
             for item in listado_casas:
-                model.NuevaCasa(item['nombre'], item['provincia'], item['escudo'], item['plot'])
+                model.NuevaCasa(item['nombre'], item['provincia'], item['disponible'], item['plot'])
     return
