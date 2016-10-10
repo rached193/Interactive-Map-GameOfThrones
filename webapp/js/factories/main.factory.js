@@ -4,29 +4,44 @@
 
     angular.module('app').factory('mainFactory', mainFactory);
 
-    mainFactory.$inject = [ '$http', '$q'];
+    mainFactory.$inject = ['$http', '$q'];
 
 
-    function mainFactory( $http, q) {
+    function mainFactory($http, q) {
 
-      var factory = {
-            getCasas: _getCasas
+        var factory = {
+            getCasas: _getCasas,
+            registrar: _registrar
         };
+
         function _getCasas() {
-            var defered = q.defer();
-            var promise = defered.promise;
+            var deferred = q.defer();
+            var promise = deferred.promise;
 
             $http.get('/api/v1/seleccionar')
-                .success(function (data, status, headers, config) {
-                    console.log(data);
-                     defered.resolve(data);
-                }) .error(function(err) {
-                defered.reject(err)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (err) {
+                deferred.reject(err)
             });
             return promise;
         }
 
-            return factory;
+        function _registrar(dataPost) {
+            var deferred = q.defer();
+            var promise = deferred.promise;
+
+            $http.post('/api/v1/signup',dataPost)
+                .success(function (data) {
+                    deferred.resolve(data);
+                }).error(function (err) {
+                deferred.reject(err)
+            });
+            return promise;
+        }
+
+
+        return factory;
     }
 
 })();

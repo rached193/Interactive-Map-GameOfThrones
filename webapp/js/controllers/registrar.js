@@ -5,30 +5,29 @@
     angular.module('app').controller('ControladorSignUp', ControladorSignUp);
 
 
-    ControladorSignUp.$inject = ['$scope', '$http', '$location', '$cookies', '$rootScope'];
-    function ControladorSignUp($scope, $http, $location, $cookies, $rootScope) {
+    ControladorSignUp.$inject = ['$scope', '$http', '$location', '$rootScope', 'mainFactory'];
+    function ControladorSignUp($scope, $http, $location, $rootScope, mainFactory) {
         var vm = this;
-        vm.tab = 3;
+        $rootScope.situacion = "Login";
 
-        $scope.update = function (user) {
-            if (user.pass == user.repass) {
-                var checkuser = {
-                    name: $scope.user.name,
-                    email: $scope.user.email,
-                    passw: $scope.user.pass
+        vm.registar = registrar;
+
+        function registrar(user) {
+            if (user.password == user.password_val) {
+                var info = {
+                    name: user.name,
+                    email: user.email,
+                    password: user.password
                 };
-                $http.post("/api/v1/signup", checkuser)
-                    .success(function (user) {
-                        $cookies.user = $scope.user.name;
-                        $location.path("/index");
-                    })
-                    .error(function () {
-                        alert("Nombre o email ya registrado.");
-                    })
+                mainFactory.registar(info).then(function () {
+                    var usuario = {username:user.name};
+
+                    $location.path("/index");
+                }, alert("Nombre o email ya registrado."))
             } else {
                 alert("Las contraseñas no coinciden");
             }
-        };
+        }
 
     }
 })();

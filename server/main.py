@@ -45,18 +45,18 @@ class RestHandler(webapp2.RequestHandler):
 class Registrar(RestHandler):
     def post(self):
         r = json.loads(self.request.body)
-        checkres = model.InsertUser(r['name'], r['email'], r['passw'])
-        if checkres:
+        response = model.InsertUser(r['name'], r['email'], r['password'])
+        if response:
             self.response.set_status(200)
         else:
-            self.response.set_status(400)
+            self.response.set_status(500)
 
 
 # Handler del Logun de Usuario
 class Loguear(RestHandler):
     def post(self):
         r = json.loads(self.request.body)
-        checkres = model.CheckUser(r['name'], r['passw'])
+        checkres = model.CheckUser(r['name'], r['password'])
         if checkres is None:
             self.response.set_status(400)
         else:
