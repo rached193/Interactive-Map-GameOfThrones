@@ -7,7 +7,7 @@ app.controller("ControladorLogin", ['$scope', '$http', '$location', '$cookies', 
     $scope.submitLogin = function () {
         var user = {
             name: $scope.nombre,
-            passw: $scope.pass,
+            password: $scope.pass,
         };
         $http.post('/api/v1/login', user)
             .success(function (data, status, headers, config) {
