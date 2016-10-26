@@ -4,7 +4,7 @@ angular.module('app').directive('svgMap', ['$compile', function ($compile) {
         templateUrl: 'westeros.svg',
         link: function (scope, element, attrs) {
             var regions = element[0].querySelectorAll('.nopower');
-            var frame = element[0].querySelectorAll('.frame');
+            var  frame = element[0].querySelectorAll('.frame');
             var regionInicial = scope.dameLocalizacion();
 
             regionInicial.then(function (data) {
@@ -35,18 +35,16 @@ angular.module('app').directive('svgMap', ['$compile', function ($compile) {
 
                         t.setAttribute("x", x);
                         t.setAttribute("y", y);
-                        t.setAttribute("data-pj", y);
-                        t.setAttribute("z-index",'999999999999');
+                        t.setAttribute("z-index",'999999999');
 
-                        // if (regionId == data.localizacion) {
-                        //     t.setAttribute("fill", "red");
-                        //     t.setAttribute("class", "draggable drag-drop");
-                        // } else {
-                        //     t.setAttribute("fill", "blue");
-                        // }
+                        if (regionId == data.localizacion) {
+                            t.setAttribute("fill", "red");
+                            t.setAttribute("class", "draggable drag-drop");
+                        } else {
+                            t.setAttribute("fill", "blue");
+                        }
 
                         $compile(t)(scope);
-                        console.log(t);
 
                         //<rect id="svg_1" class="ciudad" height="100" width="100" y="79.5" x="84" stroke-width="1.5" stroke="#000" fill="#fff"/>
                         //t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
@@ -66,7 +64,7 @@ angular.module('app').directive('svgMap', ['$compile', function ($compile) {
                         // } else {
                         //     t.setAttribute("fill", "blue");
                         // }
-                        frame[0].appendChild(t);
+                       frame[0].append(t);
 
                     }
                     $compile(regionElement)(scope);
@@ -87,7 +85,6 @@ angular.module('app').directive('iconPj', ['$compile', function ($compile) {
         transclude: true,
         replace: true,
         link: function (scope, element, attrs) {
-           // element.attr("x", scope.dataX);
            // element.attr("y", scope.dataY);
         }
 
