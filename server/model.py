@@ -93,11 +93,13 @@ def CheckUser(name, passw):
 def RegistrarCasa(name, casa):
     qry = User.query(User.name == name)
     usuario = qry.get()
+    print usuario
     if usuario is None:
         return None
     else:
         qryC = User.query(User.casa == casa)
         existe = qryC.get()
+        print existe
         if existe is None:
             if usuario.casa is None:
                 usuario.casa = casa

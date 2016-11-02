@@ -3,9 +3,9 @@
     'use strict';
 
     angular.module('app').controller('ControladorCasas', ControladorCasas);
-    ControladorCasas.$inject = ['$scope', '$http', '$location', '$rootScope', 'initData'];
+    ControladorCasas.$inject = ['$scope', '$http', '$location','$cookies', '$rootScope', 'initData'];
 
-    function ControladorCasas($scope, $http, $location, $rootScope, initData) {
+    function ControladorCasas($scope, $http, $location,$cookies, $rootScope, initData) {
         var vm = this;
         $rootScope.tab = 4;
 
@@ -48,17 +48,19 @@
         }
 
         init();
-        // vm.registrar = function () {
-        //     $http.post('/api/v1/seleccionar', {user: $cookies.user, casa: $scope.slides[$scope.currentIndex].nombre})
-        //         .success(function (data, status, headers, config) {
-        //             $cookies.casa = $scope.slides[$scope.currentIndex].nombre;
-        //             $location.path("/index");
-        //             alert("Casa Registrada con exito");
-        //         })
-        //         .error(function () {
-        //             alert("Casa no disponible");
-        //         })
-        // };
+        vm.registrar = function () {
+            console.log(vm.currentIndex);
+            console.log(vm.slides[vm.currentIndex]);
+            $http.post('/api/v1/seleccionar', {user: $cookies.user, casa:  vm.slides[vm.currentIndex].nombre})
+                .success(function (data, status, headers, config) {
+                    $cookies.casa =  vm.slides[vm.currentIndex].nombre;
+                    $location.path("/index");
+                    alert("Casa Registrada con exito");
+                })
+                .error(function () {
+                    alert("Casa no disponible");
+                })
+        };
 
 
     }

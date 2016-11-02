@@ -4,32 +4,30 @@
 
       <!-- Formulario de registro-->
       <div class="dark-matter">
-        <h2>Registro</h2>
+        <h2 class="dark-matter">Registro {{registrarVM.gatetes}}</h2>
         <form role="form" name="form">
-          <div class="">
             <!-- nombre -->
-            <div class="">
-              <span class=""><span class="glyphicon glyphicon-user" ></span></span>
-              <input type="text" class="" placeholder="Nombre" name="uName" ng-model="user.name"/>
-            </div>
+            <label>
+              <span class="glyphicon glyphicon-user" ></span>
+              <input type="text"  placeholder="Nombre" name="uName" ng-model="user.name"/>
+            </label>
             <!-- email -->
             <!--<div class="">-->
               <!--<span class=""><span class="glyphicon glyphicon-envelope"></span></span>-->
               <!--<input type="email" class="" placeholder="Email" name="uEmail" ng-model="user.email"/>-->
             <!--</div>-->
             <!-- pass -->
-            <div class="input-group" style="margin-top: 10px">
-              <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-              <input type="password" class="form-control" placeholder="Contraseña" name="uPass" ng-model="user.pass"/>
-            </div>
+            <label>
+              <span class="glyphicon glyphicon-lock"></span>
+              <input type="password"  placeholder="Contraseña" name="uPass" ng-model="user.password"/>
+            </label>
             <!-- repass -->
-            <div class="">
-              <span class=""><span class="glyphicon glyphicon-lock"></span></span>
-              <input type="password" class="" placeholder="Repita su contraseña" name="uRepass" ng-model="user.repass" />
-            </div>
-            <button type="submit" class="btn"    ng-click="update(user)">Registrar</button>
+            <label>
+              <span class="glyphicon glyphicon-lock"></span>
+              <input type="password"  placeholder="Repita su contraseña" name="uRepass" ng-model="user.re_password" />
+            </label>
+            <button class="button" ng-click="registrarVM.registrar(user)">Registrar</button>
             <br/>
-          </div>
         </form>
       </div>
   </div>

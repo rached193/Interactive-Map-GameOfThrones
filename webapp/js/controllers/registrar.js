@@ -10,18 +10,28 @@
         var vm = this;
         $rootScope.situacion = "Login";
 
-        vm.registar = registrar;
+        vm.registrar = registrar;
+        vm.gatetes = "Miau";
+        vm.pruebas = pruebas;
+
+        function pruebas() {
+            console.log("EUUU");
+        }
 
         function registrar(user) {
-            if (user.password == user.password_val) {
+            console.log(user);
+             console.log("miauu");
+            if (user.password == user.re_password) {
                 var info = {
                     name: user.name,
-                    email: user.email,
+                    email: "test",
                     password: user.password
                 };
-                mainFactory.registar(info).then(function () {
-                    var usuario = {username:user.name};
+                console.log(info);
+                mainFactory.registrar(info).then(function () {
+                    var usuario = {username: user.name};
 
+                    /** Guardar usuario en LocalStorage **/
                     $location.path("/index");
                 }, alert("Nombre o email ya registrado."))
             } else {

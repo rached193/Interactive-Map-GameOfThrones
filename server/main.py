@@ -72,6 +72,7 @@ class Loguear(RestHandler):
 class SelecionarCasa(RestHandler):
     def post(self):
         r = json.loads(self.request.body)
+        print "hello"
         checkres = model.RegistrarCasa(r['user'], r['casa'])
         if checkres is None:
             self.response.set_status(400)
