@@ -38,7 +38,7 @@ app.config(['$routeProvider',
                 }
             })
             .when("/signup", {
-                templateUrl: partial + "partialsignupsimple.html",
+                templateUrl: partial + "registro.html",
                 controller: "ControladorSignUp as registrarVM"
             })
             .when("/usuarios", {
