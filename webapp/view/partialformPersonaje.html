@@ -1,34 +1,34 @@
 <div id="wrapper">
   <div  id="three-column" class="container">
-    <form name="form" novalidate class="bootstrap-frm">
-      <h1>Registro de Personaje
-        <span>Please fill all the texts in the fields.</span>
-      </h1>
+ <h2 class="dark-matter">Registro de Personaje</h2>
+<form name="form"  class="dark-matter">
+
       <label>
         <span>Nombre:</span>
-        <input id="name" type="text" name="name" placeholder="*Sin apellido" ng-model="user.name" required/>
+        <input id="name" type="text" name="name" placeholder="*Sin apellido" ng-model="user.name"/>
       </label>
       <label>
-      <span>Sexo :</span><input type="radio" ng-model="user.gender" value="hombre" />Hombre
+      <span>Sexo:</span>
+        <input type="radio" ng-model="user.gender" value="hombre" />Hombre
     <input type="radio" ng-model="user.gender" value="mujer" />Mujer<br />
     </label>
       <label>
-        <span>Edad :</span>
-        <input id="edad" type="number" name="edad" placeholder="" ng-model="user.edad" required/>
+        <span>Edad:</span>
+        <input id="edad" type="number" name="edad" placeholder="" ng-model="user.edad"/>
       </label>
       <label>
-        <span>Apariencia :</span>
+        <span>Apariencia:</span>
         <textarea id="apariencia" name="apariencia" placeholder="Apariencia del personaje" ng-model="user.apariencia" required></textarea>
       </label>
       <label>
-        <span>Historia :</span>
+        <span>Historia:</span>
         <textarea id="historia" name="historia" placeholder="Historia del personaje" ng-model="user.historia" required></textarea>
       </label>
         <label>
         <span>&nbsp;</span>
-        <input type="button" class="button" ng-disabled="form.$pending" ng-click="update(user)" value="Registrar" />
+        <input type="button" class="button"  ng-click="update(user)" value="Registrar" />
       </label>
-    </form>
+   </form>
   </div>
 </div>
 <!--<a href="#" id="registerForPushLink">Subscribe to Notifications</a>*/-->
