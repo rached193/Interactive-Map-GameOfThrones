@@ -520,7 +520,7 @@ svg path:hover, path.active { /* Amend this */
     max-width: 80%;
     /*background: #555;*/
     color: #D3D3D3;
-    border: none;
+    border: 1px solid #1a1a13;
     border-radius: 5px;
     padding: 20px 30px 20px 30px;
     font-size-adjust: 12;
@@ -531,7 +531,7 @@ h2.dark-matter {
     background: #555;
     display: block;
     border-bottom: 1px solid #444;
-    margin: -5px -30px 30px -30px;
+    /*margin: -20px -60px 20px -30px;
     /*color: white;*/
 }
 
@@ -555,11 +555,10 @@ h2.dark-matter {
 	height: 25px;
 	line-height:15px;
 	margin-bottom: 16px;
-	margin-right: 6px;
 	margin-top: 2px;
 	outline: 0 none;
 	padding: 5px 0px 5px 5px;
-	width: 65%;
+	width: 100%;
 	border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
@@ -586,9 +585,6 @@ h2.dark-matter {
     color: #333;
     background-color: #EBEBEB;
 }
-
-
-
 
 /*********************************************************************************/
 /* NAV  --- CASAS                                                                */
